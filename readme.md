@@ -23,13 +23,17 @@
 
 #
 
-#
-
-#
-
 # Developer Notes:
 
 These are notes that are meant to help maintain, understand, and re-launch the project in case things go wrong.
+
+#
+
+#
+
+#
+
+
 ```bash
 # To refresh the server after changing most files (HTML, CSS, JS)
 
