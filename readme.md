@@ -525,3 +525,40 @@ npm audit --production
 ## VSCode Multiple Line Selections for faster editing:
 
 https://code.visualstudio.com/docs/editor/codebasics
+
+## Running the Server Project (for development/locally):
+
+```bash
+# terminal window 0 - Run Django
+cd coldcmerch
+python manage.py runserver
+
+# terminal window 1 - Run React
+cd react
+cd client
+npm start
+
+# terminal window 2 - Run Express
+cd react
+npm start
+
+```
+
+## Clear your project's database:
+
+```bash
+python manage.py flush
+yes
+```
+
+## ${} isn't working in Javascript ("template literals"):
+
+https://stackoverflow.com/questions/37245679/ecmascript-template-literals-like-some-string-are-not-working
+
+> Summary: template literals require grave accents, not straight quotation marks
+>
+> i.e.: <`> and not <'>
+
+## localhost versus 127.0.0.1! (I want to murder!)
+
+When attempting to bridge React and Django via django's api views and urls, try changing localhost:8000 within the react directory to 127.0.0.1:8000. This is because Django runs on 127.0.0.1, not on localhost. Weird, right? Imagine spending 12 hours trying to fix that problem. Not me! Ahahahaha.

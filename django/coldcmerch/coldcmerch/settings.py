@@ -142,3 +142,5 @@ SIMPLE_JWT = {
 
 # Cannot be change (after migrations) without destroying your entire project:
 AUTH_USER_MODEL = 'users.UserAccount'
+
+CORS_ALLOWED_ORIGINS = ['*']

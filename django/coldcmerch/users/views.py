@@ -12,10 +12,6 @@ class RegisterView(APIView):
 
     def post(self, request):
         data = request.data # such as: fname, lname, email, password
-        first_name = data['first_name']
-        last_name = data['last_name']
-        email = data['email']
-        password = data['password']
 
         # Create our user! :D
         serializer = UserCreateSerializer(data = data)
@@ -24,7 +20,9 @@ class RegisterView(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
         user = serializer.create(serializer.validated_data)
-        user = UserCreateSerializer(user)
+        user = UserSerializer(user)
+
+        print("User created in models- coldcmerch/users/views.py")
         
         return Response(user.data, status = status.HTTP_201_CREATED)
 

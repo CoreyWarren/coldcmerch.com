@@ -21,6 +21,8 @@ class UserCreateSerializer(serializers.ModelSerializer):
 
     # Validate validity of the password, such as if it is too common
     # or too short.
+    # We write this function so that even normal users get
+    # advanced password validation/security warnings.
     def validate(self, data):
         user = User(**data)
         password = data.get('password')
@@ -37,7 +39,9 @@ class UserCreateSerializer(serializers.ModelSerializer):
         return data
 
             
-
+    # This function creates the user,
+    # whereas models.py UserAccountManager returns the user
+    # after it is created and saved.
     def create(self, validated_data):
         user = User.objects.create_user(
             first_name = validated_data['first_name'],
@@ -46,6 +50,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
             password = validated_data['password'],
         )
         
+
         return user
 
 
