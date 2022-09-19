@@ -8,7 +8,7 @@ const LoginPage = () => {
     const dispatch = useDispatch();
 
     // '{}' to destructure loading
-    const { loading, isAuthenticated } = useSelector(state => state.user);
+    const { loading, isAuthenticated, registered } = useSelector(state => state.user);
 
     // create a state to edit, which will be an object with 4 keys,
     //  whose strings will be, by default, empty, or: ''.
@@ -18,8 +18,8 @@ const LoginPage = () => {
     });
 
     useEffect(() => {
-        dispatch(resetRegistered());
-    }, []);
+        if (registered) dispatch(resetRegistered());
+    }, [registered]);
 
     // Destructure so they can be used directly.
     const { email, password } = formData;

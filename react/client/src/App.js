@@ -1,15 +1,25 @@
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Provider } from 'react-redux';
+import { checkAuth } from 'features/user';
 
 import HomePage from 'containers/HomePage';
 import DashboardPage from 'containers/DashboardPage';
 import LoginPage from 'containers/LoginPage';
 import RegisterPage from 'containers/RegisterPage';
 
-import { store } from 'store';
 
-const App = () => (
-  <Provider store={store}>
+
+const App = () => {
+
+  const dispatch = useDispatch();
+
+  // just when this component mounts, run our checkAuth function.
+  useEffect(() => {
+    dispatch(checkAuth());
+  }, []);
+
+  return (
     <Router>
       <Routes>
         <Route path='/' element={<HomePage/>} />
@@ -18,8 +28,7 @@ const App = () => (
         <Route path='/register' element={<RegisterPage/>} />
       </Routes>
     </Router>
-  </Provider>
-  
-);
+  )
+  };
 
 export default App;

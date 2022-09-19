@@ -129,6 +129,42 @@ export const login = createAsyncThunk(
 );
 
 
+// verify user authentication - checkAuth
+export const checkAuth = createAsyncThunk('users/verify', async(_, thunkAPI) => {
+  try {
+    const res = await fetch(
+      '/api/users/verify', {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+          },
+        });
+
+    // on successful request, send back user data,
+    // as seen in 'django/users/views.py'
+    const data = await res.json();
+
+    // successful if response status is 201:
+    if (res.status === 200) {
+      // success
+      const { dispatch } = thunkAPI;
+
+      // use our getUser() function
+      dispatch(getUser());
+
+      return data;
+    } else {
+      // failure:
+      return thunkAPI.rejectWithValue(data);
+    }
+  } catch(err) {
+    // in situation where we don't have the actual data:
+    return thunkAPI.rejectWithValue(err.response.data);
+  }
+})
+
+
+
 // logout
 export const logout = createAsyncThunk(
   'users/logout', 
@@ -237,6 +273,18 @@ const userSlice = createSlice({
         state.user = null;
       })
       .addCase( logout.rejected, state => {
+        state.loading = false;
+      })
+
+      // checkAuth:
+      .addCase( checkAuth.pending, state => {
+        state.loading = true;
+      })
+      .addCase( checkAuth.fulfilled, state => {
+        state.loading = false;
+        state.isAuthenticated = true;
+      })
+      .addCase( checkAuth.rejected, state => {
         state.loading = false;
       });
 
