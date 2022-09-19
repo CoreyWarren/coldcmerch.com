@@ -1,9 +1,5 @@
 # Coldcut Website - Website Django Project README
 
-Hey ColdCut. Hope you're doing well. This is the webpage I'm working on for ya. It's going to be an arduous process. One thing I want you to realize: IF you don't want to work with me any more, you WILL have this Django (framework) code to work with when all is said and done. You WON'T be left in the dust. Because that's what "Open Source" coding is all about.
-
-...Of course, obviously I'm hoping to make this a long-term partnership. One that we both benefit from greatly. Onwards, on the path to Victory! VALHALLAH, YEAHAHHHH!!!
-
 ### Website Progress
 
 09/19/2022 - I feel like I'm roughly 50% done with what I wanted to achieve with this basic e-commerce website. User authentication was the hardest part of this, I feel, and as far as I know, setting up web application s(such as this project) is relatively simple with DigitalOcean and their Ubuntu servers/droplets. My main focus after finishing authentication and user recognition will be to start finding ways to SHOW you guys (or even just myself) the full order history of the website so we will be able to ship these shirts with minimal hassle. 
