@@ -2,6 +2,8 @@ import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import Layout from 'components/Layout';
 
+// To-Do: Implement User Order History
+
 const DashboardPage = () => {
     // Bring in the 'user' and 'loading' states.
     const { isAuthenticated, user, loading } = useSelector(state => state.user);

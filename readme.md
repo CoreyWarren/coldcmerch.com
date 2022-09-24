@@ -530,3 +530,25 @@ https://stackoverflow.com/questions/37245679/ecmascript-template-literals-like-s
 ## localhost versus 127.0.0.1! (I want to murder!)
 
 When attempting to bridge React and Django via django's api views and urls, try changing localhost:8000 within the react directory to 127.0.0.1:8000. This is because Django runs on 127.0.0.1, not on localhost. Weird, right? Imagine spending 12 hours trying to fix that problem. Not me! Ahahahaha.
+
+## ManyToMany - Product Attributes, Sizes, Colors, Images, and so on...
+
+https://stackoverflow.com/questions/69199430/django-models-for-creating-multiple-variations-of-t-shirts
+
+## Properly storing images in Django/media/static with models fields:
+
+https://stackoverflow.com/questions/34563454/django-imagefield-upload-to-path
+
+## Cart Example Django:
+
+https://github.com/bmentges/django-cart/blob/master/cart/models.py
+
+## Display Frontend Categorization of Models in html via Django:
+
+https://stackoverflow.com/questions/48670101/django-list-items-based-on-a-foreign-key
+
+## Display BACKEND Admin.py Categorization of Model Objects in /admin via Django:
+
+https://docs.djangoproject.com/en/3.2/intro/tutorial07/
+
+This was so useful for displaying everything Coldcut will need on one page! SICK! They'll be able to add shirt sizes, colors, and images with just a few clicks! (if they ever need to)

@@ -1,3 +1,17 @@
+# serializers.py
+
+#
+# This function is responsible for formatting received or to-be-sent data
+# so that the Django and ReactJS ends of this application can communicate
+# with each other.
+
+# Without serializers.py, our models.py would not be able to work well enough
+# with our urls.py when it comes to transferring data from the Python (Django)
+# backend to the Javascript webpages (React) that the end users sees.
+#
+# In other words, users would not be able to login, register, view order histories,
+# and so much more.
+
 # Serializers for User Authentication Operations:
 
 from django.core import exceptions

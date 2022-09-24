@@ -1,3 +1,5 @@
+from email.quoprimime import body_check
+from turtle import title
 from django.db import models
 
 # Create custom user model.
@@ -64,5 +66,3 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
         return self.email
 
 
-
-    

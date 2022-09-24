@@ -14,20 +14,33 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 
+# Token API setup
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
     TokenVerifyView
 )
 
+# Media and Static files support
+from django.conf import settings
+from django.views.static import serve
+
 # https://django-rest-framework-simplejwt.readthedocs.io/en/latest/getting_started.html
+
+# Urls below:
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/users/verify/', TokenVerifyView.as_view(), name='token_verify'),
     path('api/users/', include('users.urls')),
+
+	re_path(r'^media/(?P<path>.*)$', serve, {'document_root' : settings.MEDIA_ROOT}),
+	re_path(r'^static/(?P<path>.*)$', serve, {'document_root' : settings.STATIC_ROOT}),
+
 ]
