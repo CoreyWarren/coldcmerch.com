@@ -34,3 +34,16 @@ I had forgotten that the original/primary django tutorial explains this exact si
 ## Next problem: Filtering this stuff for React/end-user viewing. Can we use this?:
 
 https://django-shop.readthedocs.io/en/latest/reference/filters.html
+
+## Show multiple choices for superusers in admin.py for objects:
+
+https://www.geeksforgeeks.org/how-to-use-django-field-choices/
+
+
+## admin.py show uneditable fields (readonly_fields):
+
+https://books.agiliq.com/projects/django-admin-cookbook/en/latest/uneditable_field.html
+
+## Inline Items Readonly:
+
+https://stackoverflow.com/questions/6727372/get-readonly-fields-in-a-tabularinline-class-in-django
