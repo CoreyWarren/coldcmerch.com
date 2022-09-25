@@ -1,6 +1,6 @@
+from tabnanny import check
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from users.models import UserAccount
 
 #
 # Items for Sale:
@@ -50,10 +50,27 @@ class ProductColor(models.Model):
 # Shopping Cart:
 #
 
+class CartManager(models.Manager):
+    # Orders are basically checked-out carts that are ready
+    # to be shipped by us. That's why it has all this info.
+    def create_cart(self, checked_out, cart_item, final_total, my_user):
+
+        cart = self.model(
+            checked_out = checked_out,
+            cart_item = cart_item,
+            final_total = final_total,
+            my_user = my_user,
+        )
+        cart.save(using=self._db)
+        return cart
+
 class Cart(models.Model):
     checked_out         = models.BooleanField(default=False, verbose_name=('checked out'))
-    cartitem            = models.ForeignKey('CartItem', related_name="my_item", on_delete=models.CASCADE, null = True, blank = True, default = None)
+    cart_item           = models.ForeignKey('CartItem', related_name="my_item", on_delete=models.CASCADE, null = True, blank = True, default = None)
     final_total         = models.FloatField(default = 0, blank = False, null = False)
+    my_user             = models.ForeignKey('users.UserAccount', on_delete=models.CASCADE, null = False, blank = False, default=1)
+
+    objects = CartManager()
 
     def __str__(self):
         myStatus = ""
@@ -69,6 +86,27 @@ class Cart(models.Model):
         verbose_name = _('cart')
         verbose_name_plural = _('carts')
 
+
+
+
+    # Cart Items:
+
+class CartItemManager(models.Manager):
+    # Orders are basically checked-out carts that are ready
+    # to be shipped by us. That's why it has all this info.
+    def create_cart_item(self, cart, product, adjusted_total, color, size, quantity):
+
+        cart_item = self.model(
+            cart = cart,
+            product = product,
+            adjusted_total = adjusted_total,
+            color = color,
+            size = size,
+            quantity = quantity,
+        )
+        cart_item.save(using=self._db)
+        return cart_item
+
 class CartItem(models.Model):
     cart                = models.ForeignKey('Cart', related_name="my_cart", on_delete=models.CASCADE, null = True, blank = True, default=None)
     product             = models.ForeignKey('Product', verbose_name=_('product'), on_delete=models.CASCADE)
@@ -77,6 +115,8 @@ class CartItem(models.Model):
     size                = models.CharField(max_length = 50, null = False, blank = False, default = "None specified.")
     quantity            = models.IntegerField(default = 1, null = False, blank = False)
 
+    objects = CartItemManager()
+
     def __str__(self):
         return str(self.id) \
         + ', ' + str(self.product.title) \
@@ -84,18 +124,47 @@ class CartItem(models.Model):
         + ', Size: ' + str(self.size) \
         + ', for ' + str(self.adjusted_total) + ' USD.'
 
+
+
+
 #
 # Orders: 
 #
 
+class OrderManager(models.Manager):
+    # Orders are basically checked-out carts that are ready
+    # to be shipped by us. That's why it has all this info.
+    def create_order(self, cart, date_placed, user, street_address, zip_code, city, state, first_name, last_name):
+
+        order = self.model(
+            cart = cart,
+            date_placed = date_placed,
+            user = user,
+            street_address = street_address,
+            zip_code = zip_code,
+            city = city,
+            state = state,
+            first_name = first_name,
+            last_name = last_name,
+        )
+        order.save(using=self._db)
+        return order
+    
 class Order(models.Model):
     cart            = models.ForeignKey(Cart, null = True, blank = False, on_delete=models.CASCADE)
     date_placed     = models.DateTimeField(auto_now_add=True)
-    user            = models.ForeignKey(UserAccount, null = True, blank = False, on_delete=models.CASCADE)
-    street_address  = models.CharField(max_length= 300, default="No Address given...")
-    first_name      = models.CharField(max_length= 100, default ='None...' )
-    last_name       = models.CharField(max_length= 100, default ='None...')
+    user            = models.ForeignKey('users.UserAccount', null = True, blank = False, on_delete=models.CASCADE)
+    street_address  = models.CharField(max_length= 300, default="")
+    zip_code        = models.CharField(max_length= 12, default="")
+    city            = models.CharField(max_length= 200, default="")
+    state           = models.CharField(max_length= 100, default="")
+    first_name      = models.CharField(max_length= 100, default ="")
+    last_name       = models.CharField(max_length= 100, default ="")
 
+    objects = OrderManager()
 
     def __str__(self):
         return 'Order ' + str(self.id) + ' filled: ' + str(self.date_placed)
+
+    
+

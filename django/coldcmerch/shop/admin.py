@@ -38,22 +38,22 @@ class CartItemAdmin(admin.ModelAdmin):
 
 
 # We don't need to edit Cart Items, or even to necessarily view them outside of placed Orders.
-# admin.site.register(CartItem, CartItemAdmin)
+admin.site.register(CartItem, CartItemAdmin)
 
 
 class CartAdmin(admin.ModelAdmin):
     fieldsets = [
-        (None,               {'fields': ['final_total', 'checked_out']}),
+        (None,               {'fields': ['final_total', 'checked_out', 'my_user']}),
     ]
     
     inlines = [CartItemInline]
     readonly_fields = ['checked_out', 'final_total']
 
-# admin.site.register(Cart, CartAdmin)
+admin.site.register(Cart, CartAdmin)
 
 
 class OrderAdmin(admin.ModelAdmin):
-    readonly_fields = ['cart', 'user', 'date_placed', 'street_address', 'first_name', 'last_name']
+    readonly_fields = ['cart', 'user', 'date_placed', 'street_address', 'first_name', 'last_name', 'zip_code', 'city', 'state']
 
 admin.site.register(Order, OrderAdmin)
 

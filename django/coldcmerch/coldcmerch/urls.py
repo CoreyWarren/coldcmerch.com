@@ -32,14 +32,22 @@ from django.views.static import serve
 # Urls below:
 
 urlpatterns = [
+    # Admin URL:
     path('admin/', admin.site.urls),
 
 
+    # User authentication API endpoints:
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/users/verify/', TokenVerifyView.as_view(), name='token_verify'),
-    path('api/users/', include('users.urls')),
 
+
+    # Django apps API endpoints (INCLUDE):
+    path('api/users/', include('users.urls')),
+    path('api/shop/', include('shop.urls')),
+
+
+    # Models images, and other static/media files:
 	re_path(r'^media/(?P<path>.*)$', serve, {'document_root' : settings.MEDIA_ROOT}),
 	re_path(r'^static/(?P<path>.*)$', serve, {'document_root' : settings.STATIC_ROOT}),
 

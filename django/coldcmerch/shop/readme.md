@@ -47,3 +47,15 @@ https://books.agiliq.com/projects/django-admin-cookbook/en/latest/uneditable_fie
 ## Inline Items Readonly:
 
 https://stackoverflow.com/questions/6727372/get-readonly-fields-in-a-tabularinline-class-in-django
+
+## Serializers in Django (Django-Rest-Framework):
+
+https://www.django-rest-framework.org/api-guide/serializers/
+
+## POST? GET? what??
+
+https://www.w3schools.com/tags/ref_httpmethods.asp
+
+## Managers!
+
+https://docs.djangoproject.com/en/4.0/topics/db/managers/
