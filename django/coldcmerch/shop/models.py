@@ -53,13 +53,11 @@ class ProductColor(models.Model):
 class CartManager(models.Manager):
     # Orders are basically checked-out carts that are ready
     # to be shipped by us. That's why it has all this info.
-    def create_cart(self, checked_out, cart_item, final_total, my_user):
+    def create_cart(self, checked_out, my_user):
 
         cart = self.model(
-            checked_out = checked_out,
-            cart_item = cart_item,
-            final_total = final_total,
-            my_user = my_user,
+            checked_out     = checked_out,
+            my_user         = my_user,
         )
         cart.save(using=self._db)
         return cart
@@ -67,7 +65,6 @@ class CartManager(models.Manager):
 class Cart(models.Model):
     checked_out         = models.BooleanField(default=False, verbose_name=('checked out'))
     cart_item           = models.ForeignKey('CartItem', related_name="my_item", on_delete=models.CASCADE, null = True, blank = True, default = None)
-    final_total         = models.FloatField(default = 0, blank = False, null = False)
     my_user             = models.ForeignKey('users.UserAccount', on_delete=models.CASCADE, null = False, blank = False, default=1)
 
     objects = CartManager()
@@ -79,12 +76,8 @@ class Cart(models.Model):
         else:
             myStatus = "Pending"
         
-        return str(self.id) + ', ' + myStatus + ' for ' + str(self.final_total) + ' USD.'
+        return str(self.id) + ', ' + myStatus + ', for ' + str(self.my_user)
 
-
-    class Meta:
-        verbose_name = _('cart')
-        verbose_name_plural = _('carts')
 
 
 

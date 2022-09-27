@@ -59,3 +59,15 @@ https://www.w3schools.com/tags/ref_httpmethods.asp
 ## Managers!
 
 https://docs.djangoproject.com/en/4.0/topics/db/managers/
+
+## Django database queries Documentation:
+
+(tags: get, filter, first, queryset, exclude)
+
+https://docs.djangoproject.com/en/4.1/topics/db/queries/
+
+## Importing JSON in Django (import json):
+
+(tags: json.loads, json parser, parse json, request.data)
+
+https://www.w3schools.com/python/python_json.asp

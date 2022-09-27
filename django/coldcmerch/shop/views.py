@@ -1,8 +1,10 @@
 from django.shortcuts import render
 from shop.serializers import OrderCreateSerializer, OrderSerializer, ProductSerializer, CartSerializer, CartItemSerializer, CreateCartItemSerializer, CreateCartSerializer
+from shop.models import Cart, CartItem
 from rest_framework.views import APIView
 from rest_framework import permissions, status
 from rest_framework.response import Response
+import json
 
 
 # Create your views here.
@@ -51,13 +53,34 @@ class RetrieveProductView(APIView):
 
 # CART
 
+
+# EXPECTED JSON INPUT:
+# {
+# "checked_out" : "True/False",
+# "my_user" : "#"
+# }
 class RetrieveCartView(APIView):
     # GET (request) data from Django backend
     def get(self,request):
-        cart = request.cart
+        # grab the request data
+        # so that we can determine which user's cart data we want:
+        data = json.loads(request.body)
+        requested_user = data['my_user']
+        # use our serializer
+        cart = Cart.objects.filter( checked_out = False, my_user=requested_user ).first()
         cart = CartSerializer(cart)
+        # return it along with a 200_ok response
+        # EXPECTED OUTPUT:
+        # cart items, final total.
         return Response(cart.data, status=status.HTTP_200_OK)
 
+
+# EXPECTED JSON INPUT:
+# {
+# "checked_out" : "True/False",
+# "cart_item": "#",
+# "my_user" : "#"
+# }
 class CreateCartView(APIView):
     def post(self, request):
         data = request.data
@@ -73,6 +96,15 @@ class CreateCartView(APIView):
         print("Cart created in models - coldcmerch/shop/views.py")
 
         return Response(cart.data, status=status.HTTP_201_CREATED)
+
+# We need to be able to checkout our cart,
+# so that an order can be assigned to it,
+# and that order can be processed
+class CheckoutCartView(APIView):
+    def post(self, request):
+        pass
+    pass
+
     
 
 # CART ITEM
@@ -80,8 +112,10 @@ class CreateCartView(APIView):
 class RetrieveCartItemView(APIView):
     # GET (request) data from Django backend
     def get(self,request):
-        cart_item = request.cart_item
-        cart_item = CartItemSerializer(cart_item)
+        data = json.loads(request.body)
+        requested_cart = data['cart']
+        cart_item = CartItem.objects.filter(cart = requested_cart,)
+        cart_item = CartItemSerializer(cart_item, many=True)
         return Response(cart_item.data, status=status.HTTP_200_OK)
 
 

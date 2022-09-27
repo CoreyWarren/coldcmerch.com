@@ -52,21 +52,21 @@ class ProductSerializer(serializers.ModelSerializer):
 
 # Cart
 
+# Serializer is used for both creation and retrieval of an object such as this.
 class CartSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cart
-        fields = ('checked_out', 'cart_item', 'final_total', 'my_user')
+        fields = ('checked_out', 'cart_item', 'my_user')
 
 class CreateCartSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cart
-        fields = ('checked_out', 'cart_item', 'final_total', 'my_user')
+        fields = ('checked_out', 'cart_item', 'my_user')
     
     def create(self, validated_data):
         cart = Cart.objects.create_cart(
             checked_out     = validated_data['checked_out'],
             cart_item       = validated_data['cart_item'],
-            final_total     = validated_data['final_total'],
             my_user         = validated_data['my_user'],
         )
 
