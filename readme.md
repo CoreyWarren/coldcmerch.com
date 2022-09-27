@@ -6,14 +6,11 @@
 
 > 09/26/2022 - APIs are fun and interesting. I really can't wait to get out of this backend jungle and start working more on the UI so that Cold Cut can really see what I've been working on. What I do have future concerns of are API backend security measures, and launching specifically the React frontend for the server during production. I'm not sure how nginx handles all of that stuff. Another concern is the cost-effectiveness of using a DigitalOcean server for a website that may be accessed by possibly hundreds of users in a day. How badly will this affect server costs? Will I need to take a larger cut of profits in order to pay to run the server? To be determined.
 
-## Bonus Features after Launch to be Implemented (maybe?):
--Product Search Bar Function<br/>
--Email Campaigns for regular users<br/>
--Coupon Codes<br/>
--Sync with Instagram store (either manually or automatically)<br/>
-<br/>
--Coldcut Portfolio/Music/Band Page - Links, Photos, Branding, Shout-outs, Fan tributes, etc...<br/>
-<br/>
+### What are you working on at THIS MOMENT?
+
+Check out my project page at https://github.com/users/CoreyWarren/projects/5 .
+
+There, you will see a list of issues that I have (mostly) resolved and am "Done" with. And, you will also see several tiers of issues that I will work on soon, and those I will work on later. It should also give you a good idea of where I'm at: setup, launch, or maintenance.
 
 ## Website Navigation Preview:
 ![](readme_img/cc-preview-git.gif)
