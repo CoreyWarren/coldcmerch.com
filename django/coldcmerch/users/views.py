@@ -28,10 +28,13 @@ class RegisterView(APIView):
 
 
 
-
+# used for login, but simply accessing this API endpoint alone
+# will not grant you an authentication token.
+# You must go thru the frontend to get an auth token.
 class RetrieveUserView(APIView):
     # post an authorization header
     permission_classes = [permissions.IsAuthenticated]
+
 
     def get(self, request):
         user = request.user

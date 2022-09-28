@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import RetrieveProductView, RetrieveOrderView, RetrieveCartView, RetrieveCartItemView, CreateOrderView, CreateCartView, CreateCartItemView
+from .views import RetrieveAllProductView, RetrieveSingleProductView, RetrieveOrderView, RetrieveCartView, RetrieveCartItemView, CreateOrderView, CreateCartView, CreateCartItemView
 
 # shop/urls.py
 
@@ -7,7 +7,10 @@ urlpatterns = [
 
     # PRODUCTS:
     # api/shop/product
-    path('product', RetrieveProductView.as_view()),
+    path('product', RetrieveSingleProductView.as_view()),
+
+    # api/shop/product/all
+    path('product/all', RetrieveAllProductView.as_view()),
 
     # ORDERS:
     # api/shop/order

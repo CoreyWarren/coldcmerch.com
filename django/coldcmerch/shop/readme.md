@@ -71,3 +71,23 @@ https://docs.djangoproject.com/en/4.1/topics/db/queries/
 (tags: json.loads, json parser, parse json, request.data)
 
 https://www.w3schools.com/python/python_json.asp
+
+## Django Permissions (Django Rest Framework):
+
+(tags: apiview, views, permissions, only correct user can access their own data, get, @api_view, @permission_classes, rest_framework)
+
+https://www.django-rest-framework.org/api-guide/permissions/
+
+## Accessing your "RetrieveCartView" and such in API using Postman/etc as an Authenticated User:
+
+> In Headers, your key should be "Authorization"
+
+> In Value, your value should be "Bearer X", where X is your session/refresh token. Yes, you need the space there.
+
+## Updating a model object (a 'record') with a single queryset in Django:
+
+https://stackoverflow.com/questions/2712682/how-to-select-a-record-and-update-it-with-a-single-queryset-in-django
+
+```py
+MyModel.objects.filter(pk=some_value).update(field1='some value')
+```

@@ -53,10 +53,11 @@ class ProductColor(models.Model):
 class CartManager(models.Manager):
     # Orders are basically checked-out carts that are ready
     # to be shipped by us. That's why it has all this info.
-    def create_cart(self, checked_out, my_user):
+    def create_cart(self, checked_out, cart_item, my_user):
 
         cart = self.model(
             checked_out     = checked_out,
+            cart_item       = cart_item,
             my_user         = my_user,
         )
         cart.save(using=self._db)
@@ -107,6 +108,7 @@ class CartItem(models.Model):
     color               = models.CharField(max_length = 50, null = False, blank = False, default = "None specified.")
     size                = models.CharField(max_length = 50, null = False, blank = False, default = "None specified.")
     quantity            = models.IntegerField(default = 1, null = False, blank = False)
+    my_user             = models.ForeignKey('users.UserAccount', on_delete=models.CASCADE, null = False, blank = False, default=1)
 
     objects = CartItemManager()
 
@@ -116,6 +118,7 @@ class CartItem(models.Model):
         + ', Color: ' + str(self.color) \
         + ', Size: ' + str(self.size) \
         + ', for ' + str(self.adjusted_total) + ' USD.'
+        + ', for ' + str(self.my_user) + '.'
 
 
 
