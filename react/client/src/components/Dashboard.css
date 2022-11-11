@@ -1,0 +1,61 @@
+@font-face{
+    src: local('Pilar Display Typeface'), url(../fonts/Pilar.ttf) format('opentype');
+    font-family: 'Pilar';
+}
+
+p{
+    padding: 10px 20px;
+}
+
+h1{
+    font-size: 8vw;
+    color:aliceblue;
+}
+
+.home_panel{
+    padding: 10px 20px;
+    font-weight:400;
+    font-size: 1.5vw;
+    width:60vw;
+    text-align:left;
+}
+
+
+
+body{
+    background-color:rgb(28, 28, 28);
+}
+
+.navbar{
+    background-color:rgb(15, 15, 15)!important;
+}
+
+.navbar li{
+    padding:20px;
+}
+
+.navbar-brand{
+    font-size:2vw;
+    padding:1vw;
+}
+
+.navbar-toggler{
+    background-color: white;
+}
+
+p, a, h1, h2, h3{
+    color:white!important;
+    font-family: 'Pilar';
+}
+
+.home_panel p{
+    font-family: Courier New;
+}
+
+.list_item{
+    font-family: Courier New;
+    font-size: 1.5vw;
+    display:inline-block;
+    width: 20vw;
+    color:white;
+}

@@ -44,8 +44,8 @@ const RegisterPage = () => {
     if (registered) return <Navigate to='/login' />;
 
     return (
-        <Layout title = 'Auth Site | Register Page' content = 'Register page'>
-            <h1>Register for an Account</h1>
+        <Layout title = 'Coldcut Merch | Register Page' content = 'Register page'>
+            <h2>Register for an Account</h2>
 
             <form className='mt-5' onSubmit={onSubmit}>
                 <div className='form-group'>
