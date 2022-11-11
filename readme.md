@@ -14,7 +14,7 @@
 <br/>
 
 ## Website Navigation Preview:
-![](readme_img/cc-preview-git.gif)
+![](readme_img/preview.png)
 
 
 #
