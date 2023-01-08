@@ -1,7 +1,19 @@
+/* 
+========================
+    FONTS
+========================
+*/
+
 @font-face{
     src: local('Pilar Display Typeface'), url(../fonts/Pilar.ttf) format('opentype');
     font-family: 'Pilar';
 }
+
+/* 
+========================
+    BASIC CSS
+========================
+*/
 
 p{
     padding: 10px 20px;
@@ -13,14 +25,27 @@ h1{
 }
 
 .home_panel{
-    padding: 10px 20px;
+    padding: 0;
+    margin: auto;
     font-weight:400;
     font-size: 1.5vw;
-    width:60vw;
+    width: auto;
     text-align:left;
+    align-self: center;
+    align-items: center;
 }
 
+.home_panel p{
+    font-family: Courier New;
+}
 
+.dashboard_panel {
+    position: relative;
+    display: block;
+    align-self: center;
+    align-items: center;
+    min-height: 80vh;
+}
 
 body{
     background-color:rgb(28, 28, 28);
@@ -31,11 +56,20 @@ body{
 }
 
 .navbar li{
-    padding:20px;
+    padding: 0vw 1vw;
+    font-size: 1.8rem;
 }
 
+.navbar li a:hover{
+    color:rgb(155, 155, 155)!important;
+}
+
+.navbar a:hover{
+    color:rgb(155, 155, 155)!important;
+    
+}
 .navbar-brand{
-    font-size:2vw;
+    font-size:3rem;
     padding:1vw;
 }
 
@@ -48,14 +82,175 @@ p, a, h1, h2, h3{
     font-family: 'Pilar';
 }
 
-.home_panel p{
-    font-family: Courier New;
+h4 {
+
 }
 
-.list_item{
+.form-label{
+    color: white;
+}
+
+.user_data_item{
     font-family: Courier New;
     font-size: 1.5vw;
-    display:inline-block;
-    width: 20vw;
+    display:block;
     color:white;
+    padding: 1rem;
+    background-color: rgba(0, 0, 0, 0.534);
+    margin: 1rem;
+    border-radius: 1rem;
 }
+
+
+.shop_item{
+    font-family: Courier New;
+    font-size: 1rem;
+    display:inline-block;
+    color:white;
+    padding: 1rem;
+    background-color: rgba(0, 0, 0, 0.534);
+    margin: 2% 1%;
+    border-radius: 1rem;
+    min-height: 50vh;
+    width: 30%;
+    vertical-align: top;
+    position: relative;
+}
+
+.shop_item p {
+    font-size: 1rem;
+    padding: 0;
+    margin: 0;
+}
+
+.shop_item button {
+    font-size: 1.5rem;
+    padding: 0;
+    margin: 0 1rem 1rem 0;
+    border-radius: 0.2rem;
+    width: 80%;
+    bottom: 0;
+    vertical-align: bottom;
+    position: absolute;
+}
+
+.shop_item img{
+    width:100%;
+    border-radius: 0.5rem;
+}
+
+.shop_item .price{
+    margin-bottom: 100px;
+    font-size: 2rem;
+}
+
+
+
+
+/* 
+========================
+      BUTTON ONE
+========================
+*/
+
+.btn {
+    line-height: 80px;
+    text-align: center;
+    cursor: pointer;
+  }
+
+.btn-one {
+    color: #FFF;
+    transition: all 0.3s;
+    position: relative;
+  }
+  .btn-one span {
+    transition: all 0.3s;
+  }
+  .btn-one::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    opacity: 0;
+    transition: all 0.3s;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-top-style: solid;
+    border-bottom-style: solid;
+    border-top-color: rgba(255,255,255,0.5);
+    border-bottom-color: rgba(255,255,255,0.5);
+    transform: scale(0.1, 1);
+  }
+  .btn-one:hover span {
+    letter-spacing: 2px;
+  }
+  .btn-one:hover::before {
+    opacity: 1; 
+    transform: scale(1, 1); 
+  }
+  .btn-one::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    transition: all 0.3s;
+    background-color: rgba(255,255,255,0.1);
+  }
+  .btn-one:hover::after {
+    opacity: 0; 
+    transform: scale(0.1, 1);
+  }
+
+
+/* 
+========================
+    RESPONSIVE DESIGN
+========================
+*/
+
+
+@media (max-width: 991px){
+    h1, h2{
+        text-align: center;
+    }
+
+    .shop_item{
+        min-height:50vh;
+        width: 80vw;
+    }
+
+    .dashboard_panel{
+        width: 95vw;
+        margin: auto;
+        padding: 0;
+    }
+
+    .home_panel{
+        width: 95vw;
+        margin: auto;
+        padding: 0;
+    }
+
+    .container.mt-5{
+        width: 100vw;
+        margin: auto;
+        padding: 0;
+
+    }
+
+    .nav-link{
+        font-size: 4vh;
+    }
+
+
+}
+
+
+

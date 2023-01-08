@@ -65,6 +65,7 @@ const getUser = createAsyncThunk('users/me', async (_, thunkAPI) => {
 
       if (res.status === 200) {
         // success - return data as a payload
+        console.log("returning user data from features/user.js");
         return data; 
       } else {
         // failure - reject with rejected data.
@@ -151,6 +152,7 @@ export const checkAuth = createAsyncThunk('users/verify', async(_, thunkAPI) => 
 
       // use our getUser() function
       dispatch(getUser());
+      
 
       return data;
     } else {
