@@ -49,7 +49,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
                 {'password': serializer_errors['non_field_errors']}
             )
 
-        # validation data needs to be returned:
+        # validation data needs to be returned (this is for REGISTRATION):
         return data
 
             
@@ -58,10 +58,10 @@ class UserCreateSerializer(serializers.ModelSerializer):
     # after it is created and saved.
     def create(self, validated_data):
         user = User.objects.create_user(
-            first_name = validated_data['first_name'],
-            last_name = validated_data['last_name'],
-            email = validated_data['email'],
-            password = validated_data['password'],
+            first_name  = validated_data['first_name'],
+            last_name   = validated_data['last_name'],
+            email       = validated_data['email'],
+            password    = validated_data['password'],
         )
         
 

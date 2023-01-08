@@ -15,7 +15,7 @@ Check out my project page at https://github.com/users/CoreyWarren/projects/5 .
 There, you will see a list of issues that I have (mostly) resolved and am "Done" with. And, you will also see several tiers of issues that I will work on soon, and those I will work on later. It should also give you a good idea of where I'm at: setup, launch, or maintenance.
 
 ## Website Navigation Preview:
-![](readme_img/cc-preview-git.gif)
+![](readme_img/preview.png)
 
 
 #

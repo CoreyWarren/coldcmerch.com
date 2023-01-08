@@ -31,29 +31,33 @@ admin.site.register(Product, ProductAdmin)
 class CartItemInline(admin.StackedInline):
     model = CartItem
     extra = 0
-    readonly_fields = ['cart', 'product', 'adjusted_total', 'color', 'size', 'quantity']
+    # commented for development use only (delete comments in production):
+    # readonly_fields = ['cart', 'product', 'adjusted_total', 'color', 'size', 'quantity']
 
 class CartItemAdmin(admin.ModelAdmin):
-    readonly_fields = ['cart', 'product', 'adjusted_total', 'color', 'size', 'quantity']
+    # commented for development use only (delete comments in production):
+    # readonly_fields = ['cart', 'product', 'adjusted_total', 'color', 'size', 'quantity']
+    pass
 
 
 # We don't need to edit Cart Items, or even to necessarily view them outside of placed Orders.
-# admin.site.register(CartItem, CartItemAdmin)
+admin.site.register(CartItem, CartItemAdmin)
 
 
 class CartAdmin(admin.ModelAdmin):
     fieldsets = [
-        (None,               {'fields': ['final_total', 'checked_out']}),
+        (None,               {'fields': ['checked_out', 'my_user']}),
     ]
     
     inlines = [CartItemInline]
-    readonly_fields = ['checked_out', 'final_total']
+    # commented for development use only (delete comments in production):
+    # readonly_fields = ['checked_out']
 
-# admin.site.register(Cart, CartAdmin)
+admin.site.register(Cart, CartAdmin)
 
 
 class OrderAdmin(admin.ModelAdmin):
-    readonly_fields = ['cart', 'user', 'date_placed', 'street_address', 'first_name', 'last_name']
+    readonly_fields = ['cart', 'user', 'date_placed', 'street_address', 'first_name', 'last_name', 'zip_code', 'city', 'state']
 
 admin.site.register(Order, OrderAdmin)
 

@@ -46,8 +46,8 @@ const LoginPage = () => {
         
 
     return (
-        <Layout title = 'Auth Site | Login Page' content = 'Login page'>
-            <h1>Log into your account:</h1>
+        <Layout title = 'Coldcut Merch | Login Page' content = 'Login page'>
+            <h2>Log into your account:</h2>
 
             <form className='mt-5' onSubmit={onSubmit}>
 
