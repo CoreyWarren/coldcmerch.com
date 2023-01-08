@@ -8,6 +8,8 @@
 
 > 11/11/2022 - I have learned a lot. This was supposed to be a 2-month project. Now it's looking like an 8 month project. Todo: implement the store.
 
+> 01/07/2022 - Store implemented on Frontend. That means you can see it. What you can't do yet: Interact with the store, add things to cart, or reset your password. But you can login, log out, register, and browse the store. So basically it would function as a fun little toy shop. But it's not useful yet for e-commerce. Let's keep pushing.
+
 ### What are you working on at THIS MOMENT?
 
 Check out my project page at https://github.com/users/CoreyWarren/projects/5 .
