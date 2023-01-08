@@ -145,7 +145,7 @@ SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
 }
 
-# Cannot be change (after migrations) without destroying your entire project:
+# Cannot be changed (after migrations) without destroying your entire project:
 AUTH_USER_MODEL = 'users.UserAccount'
 
 CORS_ALLOWED_ORIGINS = ['*']

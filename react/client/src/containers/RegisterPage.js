@@ -45,7 +45,7 @@ const RegisterPage = () => {
 
     return (
         <Layout title = 'Coldcut Merch | Register Page' content = 'Register page'>
-            <h2>Register for an Account</h2>
+            <h2>Register for an Account:</h2>
 
             <form className='mt-5' onSubmit={onSubmit}>
                 <div className='form-group'>

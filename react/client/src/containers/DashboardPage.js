@@ -22,12 +22,12 @@ const DashboardPage = () => {
                     </div>
                 ) : (
                     <>
-                    <div class="dashboard_panel">
+                    <div className="dashboard_panel">
                         <h1 className='mb-5'>User Dashboard</h1>
                             <div className="mb-4"></div>
-                            <div class="list_item">First Name: <br></br>{user.first_name}</div>
-                            <div class="list_item">Last Name:  <br></br>{user.last_name}</div>
-                            <div class="list_item">Email:  <br></br>{user.email}</div>
+                            <div className="user_data_item">First Name: <br></br>{user.first_name}</div>
+                            <div className="user_data_item">Last Name:  <br></br>{user.last_name}</div>
+                            <div className="user_data_item">Email:  <br></br>{user.email}</div>
                     </div>
                     </>
                 )

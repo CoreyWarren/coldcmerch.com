@@ -53,7 +53,7 @@ const LoginPage = () => {
 
                 <div className='form-group'>
                     <label className='form-label' htmlFor='email'>
-                        Email
+                        Email:
                     </label>
                     <input 
                         className='form-control'
@@ -67,7 +67,7 @@ const LoginPage = () => {
 
                 <div className='form-group mt-3'>
                     <label className='form-label' htmlFor='password'>
-                        Password
+                        Password:
                     </label>
                     <input 
                         className='form-control'

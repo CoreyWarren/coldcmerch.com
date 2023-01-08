@@ -16,6 +16,8 @@ const meRoute = require('./routes/auth/me');
 const logoutRoute = require('./routes/auth/logout');
 // verify.js route
 const verifyRoute = require('./routes/auth/verify');
+// product.js route
+const productRoute = require('./routes/auth/shop/product');
 
 const app = express();
 
@@ -29,6 +31,7 @@ app.use(loginRoute);
 app.use(meRoute);
 app.use(logoutRoute);
 app.use(verifyRoute);
+app.use(productRoute);
 
 app.use(express.static('client/build'));
 app.get('*', (req, res) => {
