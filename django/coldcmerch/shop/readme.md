@@ -78,13 +78,13 @@ https://www.w3schools.com/python/python_json.asp
 
 https://www.django-rest-framework.org/api-guide/permissions/
 
-## Accessing your "RetrieveCartView" and such in API using Postman/etc as an Authenticated User:
+## Accessing your "RetrieveCartView" and such in API using Postman/etc as an Authenticated User
 
 > In Headers, your key should be "Authorization"
 
 > In Value, your value should be "Bearer X", where X is your session/refresh token. Yes, you need the space there.
 
-## Updating a model object (a 'record') with a single queryset in Django:
+## Updating a model object (a 'record') with a single queryset in Django
 
 https://stackoverflow.com/questions/2712682/how-to-select-a-record-and-update-it-with-a-single-queryset-in-django
 
@@ -92,6 +92,13 @@ https://stackoverflow.com/questions/2712682/how-to-select-a-record-and-update-it
 MyModel.objects.filter(pk=some_value).update(field1='some value')
 ```
 
-# Referencing another database object's ID in models.py:
+# Referencing another database object's ID in models.py
 
 https://stackoverflow.com/questions/61018027/django-how-to-get-foreign-key-id
+
+# Admin
+
+## Minimum/maximum number of inline items to show in stackedInLine admin function UI
+
+https://docs.djangoproject.com/en/3.1/ref/contrib/admin/
+https://docs.djangoproject.com/en/3.1/ref/contrib/admin/#django.contrib.admin.InlineModelAdmin.min_num

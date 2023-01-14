@@ -38,7 +38,7 @@ class ProductSize(models.Model):
     added_cost      = models.FloatField(default = 0)
 
     def __str__(self):
-        return str(self.id) + ', ' + str(self.product_id) + ' --- ' + str(self.size)
+        return str(self.size) + ' for product #' + str(self.product_id)
 
 class ProductColor(models.Model):
     product         = models.ForeignKey('Product', on_delete=models.CASCADE, null = True)

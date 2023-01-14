@@ -4,17 +4,21 @@ from .models import Product, Order, ProductColor, ProductImage, ProductSize, Car
 # Register your models here.
 
 
+
 # For displaying Products:
 class SizeInLine(admin.StackedInline):
     model = ProductSize
+    min_num = 1
     extra = 0
 
 class ColorInLine(admin.StackedInline):
     model = ProductColor
+    min_num = 1
     extra = 0
 
 class ImageInLine(admin.StackedInline):
     model = ProductImage
+    min_num = 1
     extra = 0
 
 class ProductAdmin(admin.ModelAdmin):

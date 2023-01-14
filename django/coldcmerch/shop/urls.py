@@ -1,6 +1,5 @@
 from django.urls import path
-from .views import RetrieveAllProductView, RetrieveSingleProductView, RetrieveOrderView, RetrieveCartView, RetrieveCartItemView, CreateOrderView, CreateCartView, CreateCartItemView, RetrieveProductSizeView
-
+from .views import *
 # shop/urls.py
 
 urlpatterns = [

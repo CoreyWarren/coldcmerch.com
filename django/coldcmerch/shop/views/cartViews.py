@@ -1,11 +1,8 @@
 from django.shortcuts import render
-from .models import Product
-from shop.serializers import OrderCreateSerializer, \
-                OrderSerializer, ProductSerializer, \
-                CartSerializer, CartItemSerializer, \
+from shop.models import Product
+from shop.serializers import CartSerializer, CartItemSerializer, \
                 CreateCartItemSerializer, \
-                CreateCartSerializer, \
-                ProductSizeSerializer
+                CreateCartSerializer
 from shop.models import Cart, CartItem, ProductSize
 from rest_framework.views import APIView
 from rest_framework import permissions, status
@@ -14,95 +11,18 @@ from rest_framework.permissions import IsAuthenticated
 import json
 
 
-# Create your views here.
 
-# Views are in charge of 
-
-
-# ORDER
-
-class RetrieveOrderView(APIView):
-
-    def get(self,request):
-        order = request.order
-        order = OrderSerializer(order)
-        return Response(order.data, status=status.HTTP_200_OK)
-
-class CreateOrderView(APIView):
-
-    # Taking in JSON from React front-end,
-    # which comes in the form of a POST request,
-    # and turning it into an object in our Django models database.
-    def post(self, request):
-        # data retrieved from our cart checkout function
-        data = request.data
-
-        serializer = OrderCreateSerializer(data = data)
-
-        if not serializer.is_valid():
-            return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
-
-        order = serializer.create(serializer.validated_data)
-        order = OrderSerializer(order)
-
-        print("Order created in models - coldcmerch/shop/views.py")
-
-        return Response(order.data, status=status.HTTP_201_CREATED)
-
-# PRODUCT
-# (does not need a create view--use '/admin')
-
-
-# request product by its id (1, 2, 3...) (GET)
-class RetrieveSingleProductView(APIView):
-    # GET (request) data from Django backend
-    def get(self,request):
-        # Request a single product
-        product = request.product
-        # Serialize that single product's data into JSON
-        product = ProductSerializer(product)
-        # Return that JSON 
-        return Response(product.data, status=status.HTTP_200_OK)
-
-# request a list of all products (GET)
-class RetrieveAllProductView(APIView):
-
-    permission_classes = []
-    # GET (request) data from Django backend
-    def get(self,request):
-        # Filter all products according to their availibility being True only.
-        product =  Product.objects.filter(available = True)
-        # product = Product.objects.filter(available = True)
-        # Serialize that data into JSON
-        # product.sizes = Object.FindAll(productsizes whos product=this)
-        product = ProductSerializer(product, many = True)
-        # Return that JSON
-        return Response(product.data, status=status.HTTP_200_OK)
-
-
-# SIZES
-class RetrieveProductSizeView(APIView):
-    permission_classes = []
-
-    def get(self, request):
-        data = json.loads(request.body)
-        requested_product_id = data['product_id']
-        # requested_product_id = requested_product_id.object_id
-        #Get just the size objects for the requested object id
-        sizes = ProductSize.objects.filter(product_id = requested_product_id)
-        # print("sizes =", sizes)
-        sizes = ProductSizeSerializer(sizes, many = True)
-        return Response(sizes.data, status=status.HTTP_200_OK)
-
+#
 # CART
-
-
+#
 # EXPECTED JSON INPUT:
 # {
 # "checked_out" : "True/False",
 # "my_user" : "#"
 # }
 
+
+# Grab our CART
 class RetrieveCartView(APIView):
     # GET (request) data from Django backend
     permission_classes = [IsAuthenticated]
@@ -134,7 +54,9 @@ class RetrieveCartView(APIView):
         # cart items, final total.
         return Response(cart.data, status=status.HTTP_200_OK)
 
-
+#
+# CREATE CART
+#
 # EXPECTED JSON INPUT:
 # {
 # "checked_out" : "True/False",
