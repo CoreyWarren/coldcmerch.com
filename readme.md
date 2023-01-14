@@ -2,13 +2,19 @@
 
 Welcome to ColdCut's upcoming E-Commerce website. We intend to sell shirts and other merchandise here, utilizing Stripe to handle payments securely. This is also my portfolio's centerpiece. Albeit unfinished, this is a complex and multi-month Full-Stack Web Development project that I take great pride in working on!
 
-
+```mermaid
+flowchart TD
+    A[Django] -- API --> B[React];
+    B -- CSS/HTML -->C[Website];
+```
 
 # &#x1F4C8; What's happening with this project?
 
 Check out my project page at https://github.com/users/CoreyWarren/projects/5 for all my todo-lists and closed (completed) issues.
 
 <br>
+
+
 
 # &#x1F4F1; UI Preview
 
