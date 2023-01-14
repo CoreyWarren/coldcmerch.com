@@ -1,7 +1,12 @@
 from django.shortcuts import render
 from .models import Product
-from shop.serializers import OrderCreateSerializer, OrderSerializer, ProductSerializer, CartSerializer, CartItemSerializer, CreateCartItemSerializer, CreateCartSerializer
-from shop.models import Cart, CartItem
+from shop.serializers import OrderCreateSerializer, \
+                OrderSerializer, ProductSerializer, \
+                CartSerializer, CartItemSerializer, \
+                CreateCartItemSerializer, \
+                CreateCartSerializer, \
+                ProductSizeSerializer
+from shop.models import Cart, CartItem, ProductSize
 from rest_framework.views import APIView
 from rest_framework import permissions, status
 from rest_framework.response import Response
@@ -66,12 +71,28 @@ class RetrieveAllProductView(APIView):
     # GET (request) data from Django backend
     def get(self,request):
         # Filter all products according to their availibility being True only.
-        product = Product.objects.filter(available = True)
+        product =  Product.objects.filter(available = True)
+        # product = Product.objects.filter(available = True)
         # Serialize that data into JSON
+        # product.sizes = Object.FindAll(productsizes whos product=this)
         product = ProductSerializer(product, many = True)
         # Return that JSON
         return Response(product.data, status=status.HTTP_200_OK)
 
+
+# SIZES
+class RetrieveProductSizeView(APIView):
+    permission_classes = []
+
+    def get(self, request):
+        data = json.loads(request.body)
+        requested_product_id = data['product_id']
+        # requested_product_id = requested_product_id.object_id
+        #Get just the size objects for the requested object id
+        sizes = ProductSize.objects.filter(product_id = requested_product_id)
+        # print("sizes =", sizes)
+        sizes = ProductSizeSerializer(sizes, many = True)
+        return Response(sizes.data, status=status.HTTP_200_OK)
 
 # CART
 

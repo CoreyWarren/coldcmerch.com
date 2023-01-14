@@ -14,16 +14,24 @@ const Navbar = () => {
                 </NavLink>
             </li>
 
-            <li className='nav-item'>
-                <a className='nav-link' href='#!' onClick={() => dispatch( logout() )}>
-                    Logout
-                </a>
-            </li>
+            
 
             <li className="nav-item">
             <NavLink className='nav-link' to='/store'>
                 Store
             </NavLink>
+            </li>
+
+            <li className="nav-item">
+            <NavLink className='nav-link' to='/cart'>
+                Cart
+            </NavLink>
+            </li>
+
+            <li className='nav-item'>
+                <a className='nav-link' href='#!' onClick={() => dispatch( logout() )}>
+                    Logout
+                </a>
             </li>
         </>
     );
@@ -47,6 +55,12 @@ const Navbar = () => {
                 Store
             </NavLink>
         </li>
+
+        <li className="nav-item">
+            <NavLink className='nav-link' to='/cart'>
+                Cart
+            </NavLink>
+            </li>
         </>
     );
 

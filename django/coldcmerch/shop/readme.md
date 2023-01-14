@@ -91,3 +91,7 @@ https://stackoverflow.com/questions/2712682/how-to-select-a-record-and-update-it
 ```py
 MyModel.objects.filter(pk=some_value).update(field1='some value')
 ```
+
+# Referencing another database object's ID in models.py:
+
+https://stackoverflow.com/questions/61018027/django-how-to-get-foreign-key-id

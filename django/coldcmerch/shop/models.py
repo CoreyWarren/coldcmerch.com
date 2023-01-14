@@ -7,6 +7,7 @@ from django.utils.translation import gettext_lazy as _
 #
 
 class Product(models.Model):
+    #id             = models.BigAutoField(primary_key=True)
     title           = models.CharField(max_length = 50, null = False, blank = False)
     description     = models.TextField(max_length = 1000, null = False, blank = False)
     image_preview   = models.ImageField(upload_to='images/products/', null = False, blank = False)
@@ -14,12 +15,12 @@ class Product(models.Model):
     base_cost       = models.FloatField(default = 25, null = False, blank = False)
     available       = models.BooleanField(default = True)
     
-    images          = models.ForeignKey('ProductImage', related_name="product_images", null = True, blank = True, on_delete=models.CASCADE)
-    sizes           = models.ForeignKey('ProductSize', related_name="product_sizes", null = True, blank = True, on_delete=models.CASCADE)
-    colors          = models.ForeignKey('ProductColor', related_name="product_colors", null = True, blank = True, on_delete=models.CASCADE)
+    # image          = models.ForeignKey('ProductImage', related_name="product_images", null = True, blank = True, on_delete=models.CASCADE)
+    # size           = models.ForeignKey('ProductSize', related_name="product_sizes", null = True, blank = True, on_delete=models.CASCADE)
+    # color          = models.ForeignKey('ProductColor', related_name="product_colors", null = True, blank = True, on_delete=models.CASCADE)
 
     def __str__(self):
-        return str(self.title) + ' --- ' + str(self.date_added)
+        return str(self.id) + ' ' + str(self.title) + ' --- ' + str(self.date_added)
 
 
 class ProductImage(models.Model):
@@ -31,12 +32,13 @@ class ProductImage(models.Model):
 
 
 class ProductSize(models.Model):
-    product         = models.ForeignKey('Product', on_delete=models.CASCADE, null = True)
+    # "cascade" here allows us to make changes to the Product model and keep this column in sync with that foreign key.
+    product_id      = models.ForeignKey('Product', on_delete=models.CASCADE, null = True)
     size            = models.CharField(max_length = 50, null = False, blank = False, default = 'M')
     added_cost      = models.FloatField(default = 0)
 
     def __str__(self):
-        return str(self.id) + ', ' + str(self.product) + ' --- ' + str(self.size)
+        return str(self.id) + ', ' + str(self.product_id) + ' --- ' + str(self.size)
 
 class ProductColor(models.Model):
     product         = models.ForeignKey('Product', on_delete=models.CASCADE, null = True)

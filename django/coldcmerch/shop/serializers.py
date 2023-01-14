@@ -7,7 +7,7 @@
 # > Grab Cart Data...''
 
 from itertools import product
-from shop.models import Order, Product, Cart, CartItem
+from shop.models import Order, Product, Cart, CartItem, ProductSize
 from users.serializers import User
 from rest_framework import serializers
 
@@ -46,9 +46,22 @@ class OrderSerializer(serializers.ModelSerializer):
 # Products
 
 class ProductSerializer(serializers.ModelSerializer):
+    #sizes = ProductSize.objects.filter(product = product)
     class Meta:
         model = Product
-        fields = ('title', 'description', 'image_preview', 'date_added', 'base_cost', 'available', 'images', 'sizes', 'colors')
+        fields = ('title', 'description', 'image_preview', 'date_added', 'base_cost', 'available')
+
+class ProductSizeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductSize
+        fields = ('product_id', 'size', 'added_cost')
+
+
+#class ProductSize(models.Model):
+#    product         = models.ForeignKey('Product', on_delete=models.CASCADE, null = True)
+#    size            = models.CharField(max_length = 50, null = False, blank = False, default = 'M')
+#    added_cost      = models.FloatField(default = 0)
+
 
 # Cart
 

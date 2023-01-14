@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { getProducts } from '../features/product';
 import { useEffect } from 'react';
 import { render } from '@testing-library/react';
+import {motion, useSpring} from 'framer-motion';
 
 const StorePage = () => {
 
@@ -49,7 +50,22 @@ const StorePage = () => {
                     <div className="shop_item" key={i}>
                         <h2>{products_array[i].title}</h2>
                         <p>{products_array[i].description}</p><br></br>
-                        <img src={image_sauce}></img>
+                        
+                        <motion.div
+                            whileHover={{
+                                scale: 1.03, 
+                                transition: {
+                                    duration: 0.5, 
+                                    type: 'spring',
+                                    bounce: 0.6,
+                                },
+                                
+                            
+                            }}
+                        >
+                            <img src={image_sauce}></img>
+                        </motion.div>
+
                         <p className="price">{products_array[i].base_cost} USD</p>
                         <button className="btn btn-one">Add to Cart</button>
                     </div>
@@ -62,7 +78,7 @@ const StorePage = () => {
     return (
         <Layout title = 'Coldcut Merch | Store' content = 'Store page'>
             <div className="dashboard_panel">
-                <h2 className='mb-5'>Store:</h2>
+                <h1 className='mb-5'>Store</h1>
                 <div className="mb-4"></div>
                 <div className="home_panel">
                     {display_products()}

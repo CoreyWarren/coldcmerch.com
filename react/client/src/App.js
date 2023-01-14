@@ -8,6 +8,7 @@ import DashboardPage from 'containers/DashboardPage';
 import LoginPage from 'containers/LoginPage';
 import RegisterPage from 'containers/RegisterPage';
 import StorePage from 'containers/StorePage';
+import CartPage from 'containers/CartPage';
 
 
 
@@ -28,6 +29,7 @@ const App = () => {
         <Route path='/login' element={<LoginPage/>} />
         <Route path='/register' element={<RegisterPage/>} />
         <Route path='/store' element={<StorePage/>} />
+        <Route path='/cart' element={<CartPage/>} />
       </Routes>
     </Router>
   )
