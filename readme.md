@@ -10,7 +10,7 @@ flowchart TD
 
 # &#x1F4C8; What's happening with this project?
 
-Check out my project page at https://github.com/users/CoreyWarren/projects/5 for all my todo-lists and closed (completed) issues.
+Check out my project page at [Coldcut Github Project Planner](https://github.com/users/CoreyWarren/projects/5) for all my todo-lists and closed (completed) issues.
 
 <br>
 
