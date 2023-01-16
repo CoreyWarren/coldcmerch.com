@@ -26,6 +26,10 @@ class ProductAdmin(admin.ModelAdmin):
         (None,               {'fields': ['title', 'description', 'image_preview', 'base_cost', 'available']}),
     ]
     inlines = [SizeInLine, ColorInLine, ImageInLine]
+    # /\
+    # Staff controlling the site can add sizes to products.
+    # However, these size properties are their own objects which refer back to the object.
+    # Sizes, Colors, and Images are not properties of a product--they are objects which specify their parent product themselves.
 
 admin.site.register(Product, ProductAdmin)
 

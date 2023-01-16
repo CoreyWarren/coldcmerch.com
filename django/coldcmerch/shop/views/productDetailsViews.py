@@ -1,12 +1,12 @@
-from django.shortcuts import render
-from shop.models import Product
 from shop.serializers import ProductSizeSerializer
-from shop.models import Cart, CartItem, ProductSize
+from shop.models import ProductSize
 from rest_framework.views import APIView
-from rest_framework import permissions, status
+from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
 import json
+
+# PRODUCT DETAIL VIEWS
+
 
 #
 # SIZES
@@ -14,7 +14,7 @@ import json
 class RetrieveProductSizeView(APIView):
     permission_classes = []
 
-    def get(self, request):
+    def post(self, request):
         # Load the data so that it's an object rather than JSON
         data = json.loads(request.body)
         # Extract the ID from that object.

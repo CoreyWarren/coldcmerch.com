@@ -8,8 +8,8 @@ urlpatterns = [
     # api/shop/product
     path('product', RetrieveSingleProductView.as_view()),
 
-    # api/shop/product/sizes
-    path('product/sizes', RetrieveProductSizeView.as_view()),
+    # api/shop/product/size
+    path('product/size', RetrieveProductSizeView.as_view()),
 
     # api/shop/product/all
     path('product/all', RetrieveAllProductView.as_view()),

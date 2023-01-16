@@ -1,15 +1,15 @@
-from django.shortcuts import render
 from shop.models import Product
 from shop.serializers import ProductSerializer
-from shop.models import Cart, CartItem, ProductSize
 from rest_framework.views import APIView
-from rest_framework import permissions, status
+from rest_framework import  status
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
 import json
 
 
-# PRODUCT
+# PRODUCT VIEWS
+
+
+
 # (does not need a create view--use '/admin')
 #
 # request product by its id (1, 2, 3...) (GET)

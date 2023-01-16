@@ -1,26 +1,24 @@
-from django.shortcuts import render
-from shop.models import Product
 from shop.serializers import CartSerializer, CartItemSerializer, \
                 CreateCartItemSerializer, \
                 CreateCartSerializer
-from shop.models import Cart, CartItem, ProductSize
+from shop.models import Cart, CartItem
 from rest_framework.views import APIView
-from rest_framework import permissions, status
+from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 import json
 
 
+#
+# CART VIEWS
+#
 
-#
-# CART
-#
+
 # EXPECTED JSON INPUT:
 # {
 # "checked_out" : "True/False",
 # "my_user" : "#"
 # }
-
 
 # Grab our CART
 class RetrieveCartView(APIView):

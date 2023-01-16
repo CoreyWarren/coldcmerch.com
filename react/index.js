@@ -18,6 +18,8 @@ const logoutRoute = require('./routes/auth/logout');
 const verifyRoute = require('./routes/auth/verify');
 // product.js route
 const productRoute = require('./routes/auth/shop/product');
+// productSizes.js route
+const productSizeRoute = require('./routes/auth/shop/productSize');
 
 const app = express();
 
@@ -32,6 +34,7 @@ app.use(meRoute);
 app.use(logoutRoute);
 app.use(verifyRoute);
 app.use(productRoute);
+app.use(productSizeRoute);
 
 app.use(express.static('client/build'));
 app.get('*', (req, res) => {

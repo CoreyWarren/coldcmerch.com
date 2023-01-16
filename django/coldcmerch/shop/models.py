@@ -14,10 +14,6 @@ class Product(models.Model):
     date_added      = models.DateTimeField(auto_now_add=True, blank = True)
     base_cost       = models.FloatField(default = 25, null = False, blank = False)
     available       = models.BooleanField(default = True)
-    
-    # image          = models.ForeignKey('ProductImage', related_name="product_images", null = True, blank = True, on_delete=models.CASCADE)
-    # size           = models.ForeignKey('ProductSize', related_name="product_sizes", null = True, blank = True, on_delete=models.CASCADE)
-    # color          = models.ForeignKey('ProductColor', related_name="product_colors", null = True, blank = True, on_delete=models.CASCADE)
 
     def __str__(self):
         return str(self.id) + ' ' + str(self.title) + ' --- ' + str(self.date_added)

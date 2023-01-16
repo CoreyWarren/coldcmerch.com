@@ -3,8 +3,7 @@ import Layout from 'components/Layout';
 import { useDispatch } from 'react-redux';
 import { getProducts } from '../features/product';
 import { useEffect } from 'react';
-import { render } from '@testing-library/react';
-import {motion, useSpring} from 'framer-motion';
+import {motion} from 'framer-motion';
 
 const StorePage = () => {
 
@@ -18,7 +17,7 @@ const StorePage = () => {
     const {products, loading} = useSelector(state => state.products);
 
 
-    if(products == null) {
+    if(products == null || loading)  {
         return (
             <Layout title = 'Coldcut Merch | Store' content = 'Store page'>
                 <div className="dashboard_panel">
@@ -41,6 +40,7 @@ const StorePage = () => {
 
         const display_products = () => {
             let result = [];
+
         
 
             for (let i = 0; i < products_array.length; i += 1) {
@@ -67,6 +67,17 @@ const StorePage = () => {
                         </motion.div>
 
                         <p className="price">{products_array[i].base_cost} USD</p>
+
+                        <div className="dropdown storebutton">
+                            <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Size
+                            </button>
+                            <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a className="dropdown-item" href="#">Action</a>
+                                <a className="dropdown-item" href="#">Another action</a>
+                                <a className="dropdown-item" href="#">Something else here</a>
+                            </div>
+                        </div>
                         <button className="btn btn-one">Add to Cart</button>
                     </div>
                 )
