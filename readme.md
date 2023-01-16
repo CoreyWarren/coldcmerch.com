@@ -45,7 +45,7 @@ To be added:
 - React (Front-End Web Development, Fetching)
 - Github (Project Management and Organization)
 - Redux (Store/State Management and Organization)
-- AJAX (Front-End's connection to the Backend API)
+- Express (Router: Cookies and Async Requests)
 - Python (Django)
 - JavaScript (React)
 - VSCode (Coding Environment)
