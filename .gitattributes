@@ -4,5 +4,4 @@
 *.css linguist-language=css
 
 
-*/venv/* linguist-documentation
-*/django/* linguist-documentation
+venv/** linguist-documentation
