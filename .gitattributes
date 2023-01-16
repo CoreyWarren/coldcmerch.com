@@ -4,4 +4,4 @@
 *.css linguist-language=css
 
 
-venv/** linguist-documentation
+*/venv/** linguist-documentation
