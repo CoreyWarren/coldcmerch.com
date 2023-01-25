@@ -91,6 +91,13 @@ To be added:
 > - Secure API endpoints against attacks
 > - Deploy Django and React together to serve as a single website - ColdCMerch.com!
 
+> 01/24/2023:
+
+> I just did a HUGE change that made me look over how React works, including its Hooks and why the Rules of Hooks are what they are. Instead of trying to force Redux to work with both the Rules of Hooks and my insane 'logic' as to how I wanted to interpret size data for each product with its own separate API call, I opted to just re-write some sections in around 4 JS files around the project, as well as the API for Sizes in Django. Some CSS doodling around, importing react-bootstrap and such here and there, and BAM! We've got a nice looking storefront, with (visually) working dropdown buttons for sizes! 
+> This is particularly a huge step because when I learned how to bring product details into the fray, I learned how to import API data into a page. Now, it's slightly different. I learned to obey the Rules of Hooks, and call MULTIPLE APIs at once in a page. I learned how to keep rendering separate from logic. I learned how to make React and Redux work together despite how difficult Redux can be, and how few resources there are for Redux when compared to React. 
+> It has truly been a great week, despite the 6 or so other days of pure pain.
+> I also just wanted to note that most of the solution for this fix came to me last night after days of dwelling on it. 95% of the working code pushed today was written... today. Aside from learning React, Redux, and Django REST, I'm also learning about myself and my work cycles.
+
 <br>
 
 # &#x1F528; Maintenance Notes
