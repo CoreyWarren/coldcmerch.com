@@ -101,6 +101,12 @@ To be added:
 > It has truly been a great week, despite the 6 or so other days of pure pain.
 > 
 > I also just wanted to note that most of the solution for this fix came to me last night after days of dwelling on it. 95% of the working code pushed today was written... today. Aside from learning React, Redux, and Django REST, I'm also learning about myself and my work cycles.
+>
+> What's next?
+> - Add functionality to 'Add to Cart' buttons (need to POST to our Django Back-End)
+> - Add functionality to 'Sizes' buttons (this is the next huge step)
+> - Add the product COLORS dropdown menu (Set-up API, Routes, Slice, and Reducer...)
+> - 
 
 <br>
 
