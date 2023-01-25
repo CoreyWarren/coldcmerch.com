@@ -7,26 +7,16 @@ const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch
 
 const router = express.Router();
 
-router.post('/api/shop/product/size', async (req, res) => {
-
-    // Input our desired Product ID
-    const { product_id } = req.body;
-
-    // JSON stringify them
-    const body = JSON.stringify({
-        product_id
-    });
-
+router.get('/api/shop/product/size', async (req, res) => {
 
     try {
         //retrieve data from Django Backend
         const apiResponse = await fetch(`${process.env.API_URL}/api/shop/product/size`, {
-            method: 'POST',
+            method: 'GET',
                 headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
                 },
-                body,
         });
 
         // wait for that response (we are async so it works as such.)

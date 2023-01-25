@@ -8,7 +8,7 @@ const rootReducer = combineReducers({
     user: userReducer,
     products: productsReducer,
     product_size: productSizeReducer
-})
+});
 
 export const store = configureStore({
     reducer: rootReducer,

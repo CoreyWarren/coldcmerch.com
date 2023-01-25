@@ -28,7 +28,7 @@ h1{
     padding: 0;
     margin: auto;
     font-weight:400;
-    font-size: 1.5vw;
+    font-size: 1.5rem;
     width: auto;
     text-align:left;
     align-self: center;
@@ -87,9 +87,19 @@ p, a, h1, h2, h3{
 DROPDOWN
 */
 
+.dropdown.storebutton{
+    position: absolute;
+    width: 100%;
+    margin: auto;
+    padding: auto;
+    top: 84%;
+    left: 2%;
+}
+
 .dropdown.storebutton button{
     display:inline-block;
     margin:8%;
+    position: absolute;
 }
 
 div.dropdown-menu.show{
@@ -123,7 +133,7 @@ div.dropdown-menu.show{
     background-color: rgba(0, 0, 0, 0.534);
     margin: 2% 1%;
     border-radius: 1rem;
-    min-height: 75vh;
+    min-height: 60vh;
     width: 30%;
     vertical-align: top;
     position: relative;
@@ -156,12 +166,18 @@ div.dropdown-menu.show{
     position: relative;
 }
 
-
+#dropdown-basic{
+    background-color:rgb(15, 15, 15);
+    border-color: white;
+}
 
 .shop_item img{
     width:100%;
+    max-height: 260px;
     border-radius: 0.5rem;
     display:block;
+    object-fit: contain;
+
 }
 
 .shop_item .price{
@@ -169,7 +185,8 @@ div.dropdown-menu.show{
     margin-top: 30px;
     font-size: 2rem;
     vertical-align: bottom;
-    bottom: 0;
+    top: 76%;
+    left: 32%;
     position: absolute;
 }
 
@@ -271,6 +288,7 @@ div.dropdown-menu.show{
         width: 95vw;
         margin: auto;
         padding: 0;
+        font-size: 5vw;
     }
 
     .container.mt-5{
@@ -282,6 +300,10 @@ div.dropdown-menu.show{
 
     .nav-link{
         font-size: 4vh;
+    }
+
+    button.navbar-toggler{
+        background-color: white;
     }
 
 

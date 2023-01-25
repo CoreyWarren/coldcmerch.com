@@ -49,7 +49,7 @@ class ProductSerializer(serializers.ModelSerializer):
     #sizes = ProductSize.objects.filter(product = product)
     class Meta:
         model = Product
-        fields = ('title', 'description', 'image_preview', 'date_added', 'base_cost', 'available')
+        fields = ('id', 'title', 'description', 'image_preview', 'date_added', 'base_cost', 'available')
 
 class ProductSizeSerializer(serializers.ModelSerializer):
     class Meta:

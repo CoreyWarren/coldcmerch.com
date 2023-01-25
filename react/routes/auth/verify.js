@@ -31,6 +31,7 @@ router.get('/api/users/verify', async (req, res) => {
         return res.status(apiResponse.status).json(data);
     } catch (err) {
         // catch error
+        
         return res.status(500).json({
             error: 'Something went wrong when trying to verify login status.',
         });

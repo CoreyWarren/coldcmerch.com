@@ -157,10 +157,12 @@ export const checkAuth = createAsyncThunk('users/verify', async(_, thunkAPI) => 
       return data;
     } else {
       // failure:
+      console.log("User verification checkAuth failed (did you log in?).");
       return thunkAPI.rejectWithValue(data);
     }
   } catch(err) {
     // in situation where we don't have the actual data:
+    console.log("User is not currently logged in.");
     return thunkAPI.rejectWithValue(err.response.data);
   }
 })

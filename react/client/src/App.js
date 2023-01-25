@@ -10,6 +10,7 @@ import RegisterPage from 'containers/RegisterPage';
 import StorePage from 'containers/StorePage';
 import CartPage from 'containers/CartPage';
 
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 const App = () => {

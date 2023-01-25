@@ -7,7 +7,7 @@ from django.utils.translation import gettext_lazy as _
 #
 
 class Product(models.Model):
-    #id             = models.BigAutoField(primary_key=True)
+    #product_id      = models.BigAutoField(primary_key=True, unique=True, default = None)
     title           = models.CharField(max_length = 50, null = False, blank = False)
     description     = models.TextField(max_length = 1000, null = False, blank = False)
     image_preview   = models.ImageField(upload_to='images/products/', null = False, blank = False)

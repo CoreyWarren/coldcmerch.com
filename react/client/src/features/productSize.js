@@ -5,22 +5,17 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 // getProducts
 // '_' means parameter won't have any value, that it won't be passed.
-export const getProductSize = createAsyncThunk('product/size', async ({product_id}, thunkAPI) => {
-    const body = JSON.stringify({
-        product_id
-      });
+export const getProductSize = createAsyncThunk('product/size', async (_, thunkAPI) => {
 
 
     try{
       // cookies will come along the way with this request
       const res = await fetch(
         '/api/shop/product/size', {
-            method: 'POST',
+            method: 'GET',
             headers: {
               Accept: 'application/json',
-              'Content-Type': 'application/json',
-            },
-            body,
+            }
           });
 
       const data = await res.json();
@@ -28,15 +23,28 @@ export const getProductSize = createAsyncThunk('product/size', async ({product_i
       if (res.status === 200) {
         // success - return data as a payload
 
-        
+        // NEW CODE:
+        // before adding new code here, make sure to
+        // change django API so that we get ALL product sizes at once,
+        // and them process them below:
 
-        console.log("returning product size data from features/productSize.js");
-        if(data == null){
-          console.log("data from products size list was null");
-        } else{
-          console.log("data from products size list was NOT null.");
-        }
-        return data; 
+        let product_size_map = [];
+
+        // MAP our products
+
+        product_size_map = data.map(item => {
+            const { product_id, size, added_cost } = item;
+            return {
+                product_id,
+                size,
+                added_cost
+            };
+        });
+
+
+
+        return product_size_map; 
+
       } else {
         // failure - reject with rejected data.
         console.log("Product size api rejected.");
@@ -44,7 +52,7 @@ export const getProductSize = createAsyncThunk('product/size', async ({product_i
       }
     } catch (err) {
       // error - print error data
-      console.log("Product size api ERROR.");
+      console.log("Product size api ERROR. \n err:", err);
       return thunkAPI.rejectWithValue(err.response.data);
     }
 });
@@ -53,8 +61,8 @@ export const getProductSize = createAsyncThunk('product/size', async ({product_i
 // products redux STATE management
 
 const initialState = {
-    productSizeData: null,
-    loading: false,
+    product_size_map: null,
+    loading_product_sizes: false,
   }
   
   
@@ -69,14 +77,14 @@ const initialState = {
     extraReducers: builder => {
       builder
         .addCase( getProductSize.pending, state => {
-          state.loading = true;
+          state.loading_product_sizes = true;
         })
         .addCase( getProductSize.fulfilled, (state, action) => {
-          state.loading = false;
-          state.productSizeData = action.payload; // product state = product data
+          state.loading_product_sizes = false;
+          state.product_size_map = action.payload; // product state = product data
         })
         .addCase( getProductSize.rejected, state => {
-          state.loading = false;
+          state.loading_product_sizes = false;
         })
     },
   });

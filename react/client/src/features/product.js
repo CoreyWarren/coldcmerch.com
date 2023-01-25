@@ -19,17 +19,26 @@ export const getProducts = createAsyncThunk('product/all', async (_, thunkAPI) =
       const data = await res.json();
 
       if (res.status === 200) {
-        // success - return data as a payload
+        // success - return data as a payload, but map it first for easy manipulation:
 
-        
+        let products_map = [];
 
-        console.log("returning product data from features/product.js");
-        if(data == null){
-          console.log("data from products list was null");
-        } else{
-          console.log("data from products list was NOT null.");
-        }
-        return data; 
+        // MAP our products
+
+        products_map = data.map(item => {
+            const { id, title, description, image_preview, base_cost } = item;
+            return {
+                id,
+                title,
+                description,
+                image_preview,
+                base_cost
+            };
+        });
+
+
+
+        return products_map; 
       } else {
         // failure - reject with rejected data.
         console.log("Product api rejected.");
@@ -46,8 +55,8 @@ export const getProducts = createAsyncThunk('product/all', async (_, thunkAPI) =
 // products redux STATE management
 
 const initialState = {
-    products: null,
-    loading: false,
+    products_map: null,
+    loading_products: false,
   }
   
   
@@ -62,14 +71,14 @@ const initialState = {
     extraReducers: builder => {
       builder
         .addCase( getProducts.pending, state => {
-          state.loading = true;
+          state.loading_products = true;
         })
         .addCase( getProducts.fulfilled, (state, action) => {
-          state.loading = false;
-          state.products = action.payload; // product state = product data
+          state.loading_products = false;
+          state.products_map = action.payload; // product state = product data
         })
         .addCase( getProducts.rejected, state => {
-          state.loading = false;
+          state.loading_products = false;
         })
     },
   });
