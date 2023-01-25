@@ -114,6 +114,10 @@ To be added:
 
 > To be added after Deployment...
 
+# &#x1F528; Dependencies
+
+> 
+
 # &#x1F5C1; Folder Structure
 
 > To be added after Deployment...
