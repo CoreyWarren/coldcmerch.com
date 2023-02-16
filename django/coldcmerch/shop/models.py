@@ -7,7 +7,6 @@ from django.utils.translation import gettext_lazy as _
 #
 
 class Product(models.Model):
-    #product_id      = models.BigAutoField(primary_key=True, unique=True, default = None)
     title           = models.CharField(max_length = 50, null = False, blank = False)
     description     = models.TextField(max_length = 1000, null = False, blank = False)
     image_preview   = models.ImageField(upload_to='images/products/', null = False, blank = False)
@@ -61,11 +60,20 @@ class CartManager(models.Manager):
         cart.save(using=self._db)
         return cart
 
+
+# The logic behind the cart model is as follows:
+#   - A user has only one active Cart at a time
+#   - When a cart is purchased by the user, it is dispatched to an Order.
+#   - Every Order object is assigned one Cart.
+#   - When a cart is purchased, it is deactivated, and the user starts a new one.
+
 class Cart(models.Model):
     checked_out         = models.BooleanField(default=False, verbose_name=('checked out'))
     cart_item           = models.ForeignKey('CartItem', related_name="my_item", on_delete=models.CASCADE, null = True, blank = True, default = None)
     my_user             = models.ForeignKey('users.UserAccount', on_delete=models.CASCADE, null = False, blank = False, default=1)
 
+    # Assign a manager for POST operations for the serializer/API/creation
+    #   of new Carts.
     objects = CartManager()
 
     def __str__(self):
@@ -81,7 +89,7 @@ class Cart(models.Model):
 
 
 
-    # Cart Items:
+# Cart Items:
 
 class CartItemManager(models.Manager):
     # Orders are basically checked-out carts that are ready
@@ -103,7 +111,7 @@ class CartItem(models.Model):
     cart                = models.ForeignKey('Cart', related_name="my_cart", on_delete=models.CASCADE, null = True, blank = True, default=None)
     product             = models.ForeignKey('Product', verbose_name=_('product'), on_delete=models.CASCADE)
     adjusted_total      = models.FloatField(default = 30, null = False, blank = False)
-    color               = models.CharField(max_length = 50, null = False, blank = False, default = "None specified.")
+    # color               = models.CharField(max_length = 50, null = False, blank = False, default = "None specified.")
     size                = models.CharField(max_length = 50, null = False, blank = False, default = "None specified.")
     quantity            = models.IntegerField(default = 1, null = False, blank = False)
     my_user             = models.ForeignKey('users.UserAccount', on_delete=models.CASCADE, null = False, blank = False, default=1)
@@ -113,7 +121,6 @@ class CartItem(models.Model):
     def __str__(self):
         return str(self.id) \
         + ', ' + str(self.product.title) \
-        + ', Color: ' + str(self.color) \
         + ', Size: ' + str(self.size) \
         + ', for ' + str(self.adjusted_total) + ' USD.'
         + ', for ' + str(self.my_user) + '.'
@@ -158,7 +165,7 @@ class Order(models.Model):
     objects = OrderManager()
 
     def __str__(self):
-        return 'Order ' + str(self.id) + ' filled: ' + str(self.date_placed)
+        return 'Order #' + str(self.id) + ' filled: ' + str(self.date_placed)
 
     
 

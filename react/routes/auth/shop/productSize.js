@@ -1,5 +1,5 @@
 // similar to me.js,
-// use this to manage and retrieve products
+// use this to manage and retrieve product sizes
 
 const express = require('express');
 
