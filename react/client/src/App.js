@@ -23,6 +23,12 @@ const App = () => {
   }, []);
 
   return (
+    <StripeProvider
+      publishableKey="pk_test_51LjuaCGd7lKiUeBGRFkJwuDYfZYaaorVbFrymMwSPPx5OGsEOfJ1iSOdQjtENj301eYE12TF1BSiOADGLgQicDsG00emnhRMQk"
+      urlScheme="your-url-scheme" // required for 3D Secure and bank redirects
+      merchantIdentifier="merchant.com.{{YOUR_APP_NAME}}" // required for Apple Pay
+    >
+
     <Router>
       <Routes>
         <Route path='/' element={<HomePage/>} />
@@ -33,6 +39,8 @@ const App = () => {
         <Route path='/cart' element={<CartPage/>} />
       </Routes>
     </Router>
+
+    </StripeProvider>
   )
   };
 

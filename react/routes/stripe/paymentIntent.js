@@ -1,0 +1,56 @@
+// make an API call to stripe
+// in order to create a payment intent!
+
+const express = require('express');
+
+const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
+
+const router = express.Router();
+
+// Do NOT set price here
+// set price in python. (so that users can't change the price in the browser.)
+// (Generally, do NOT store any personal or sensitive data in the METADATA or the DESCRIPTION of a Stripe object. )
+// (https://stripe.com/docs/api/payment_intents/create#create_payment_intent)
+
+// After this POST, 
+
+stripe_public_key = process.env.STRIPE_PUBLISHABLE_KEY
+stripe_private_key = process.env.STRIPE_PRIVATE_KEY
+
+
+router.post('/api/stripe/create-payment-intent', async (req, res) => {
+    try {
+        //retrieve data from Django Backend
+        const { products, currency, payment_method } = req.body;
+
+        const body = JSON.stringify({ products, currency, payment_method });
+
+        const apiResponse = await fetch(`${process.env.API_URL}/api/stripe/createPaymentIntent`, {
+            method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body
+        });
+
+        // wait for that response (we are async so it works as such.)
+        const data = await apiResponse.json();
+
+        // print either success OR fail:
+        return res.status(apiResponse.status).json(data);
+
+        return res.status();
+    } catch (err) {
+        
+
+        return res.status(500).json({
+            error: 'Something went wrong when trying to create Stripe Payment Intent.',
+        });
+    }
+
+
+}
+
+
+module.exports = router;
