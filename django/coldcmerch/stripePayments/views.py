@@ -19,25 +19,27 @@ stripe.api_key = "sk_test_51LjuaCGd7lKiUeBG96lJyjaK3IBvHV8NiN5jEedBaEHCckHCPjtM9
 class StripeCreatePaymentIntentView(APIView):
     def post(self, request):
 
-        products_purchasing = request.data.get('product_ids')
+        cart_items = request.data.get('cart_items')
         payment_method = request.data.get('payment_method')
+        currency = request.data.get('currency')
+        metadata = request.data.get('metadata')
+        receipt_email = request.data.get('receipt_email')
 
         price_sum = 0
 
-        for item in products_purchasing:
-            this_product = Product.objects.filter(pk=item['product_id'])
-            some_price = this_product.price
-            # some_price += this_product.related_sizes_n_junk.price
-            price_sum += some_price
+        for single_cart_item in cart_items:
+            single_item_cost = single_cart_item['adjusted_total']
+            item_quantity = single_cart_item['quantity']
+            price_sum += single_item_cost * item_quantity
 
         # price_sum is now calculated.
 
         stripe.PaymentIntent.create(
             amount=price_sum,
             currency='usd',
-            payment_method=payment_method
+            payment_method=payment_method,
+            receipt_email=receipt_email,
         )
-
 
         return Response( {'message': 'Payment intent created'}, status=status.HTTP_200_OK )
         

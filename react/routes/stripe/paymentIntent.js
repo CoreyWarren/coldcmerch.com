@@ -21,11 +21,11 @@ stripe_private_key = process.env.STRIPE_PRIVATE_KEY
 router.post('/api/stripe/create-payment-intent', async (req, res) => {
     try {
         //retrieve data from Django Backend
-        const { products, currency, payment_method } = req.body;
+        const { cart_items, currency, payment_method, receipt_email } = req.body;
 
-        const body = JSON.stringify({ products, currency, payment_method });
+        const body = JSON.stringify({ cart_items, currency, payment_method, receipt_email });
 
-        const apiResponse = await fetch(`${process.env.API_URL}/api/stripe/createPaymentIntent`, {
+        const apiResponse = await fetch(`${process.env.API_URL}/api/stripe/create-payment-intent`, {
             method: 'POST',
                 headers: {
                     Accept: 'application/json',
@@ -51,6 +51,7 @@ router.post('/api/stripe/create-payment-intent', async (req, res) => {
 
 
 }
+)
 
 
 module.exports = router;
