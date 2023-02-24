@@ -117,6 +117,23 @@ class CheckoutCartView(APIView):
 # CART ITEM
 
 class RetrieveCartItemView(APIView):
+
+    # NOTE TO COREY:
+    # This is not secure. (Feb 22, 2023)
+    # If I were a malicious actor, I could:
+    # 1. Pretend to be user X
+    # 2. Put User X's user ID into the body of the request
+    # 3. Put the cart ID of user X into the body of the request
+    # 4. Check out the cart of user X, who they are not.
+
+    # This LOOKS secure, but actually is not.
+    # This only checks to see if the user ID in the request body,
+    # and if the requesting actor is authenticated.
+
+    # If our bad actor is authenticated, then
+    # they can access any user's cart data.
+    # and check out any user's cart. (with this current implementation).
+
     permission_classes = [IsAuthenticated]
     # GET (request) data from Django backend
     def get(self,request):
