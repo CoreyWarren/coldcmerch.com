@@ -14,8 +14,17 @@ from pathlib import Path
 from datetime import timedelta
 import os
 
+# I want to import environment variables from a .env file.
+import environ
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+env = environ.Env()
+environ.Env.read_env()
+
+STRIPE_PRIVATE_KEY = env('STRIPE_PRIVATE_KEY')
+STRIPE_PUBLIC_KEY = env('STRIPE_PUBLIC_KEY')
 
 
 # Quick-start development settings - unsuitable for production

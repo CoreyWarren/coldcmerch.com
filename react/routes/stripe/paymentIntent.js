@@ -53,5 +53,14 @@ router.post('/api/stripe/create-payment-intent', async (req, res) => {
 }
 )
 
+// List of other things I need to fully implement Stripe Payment Intents:
+// 1. Create a payment intent (done, needs testing)
+// 2. Confirm a payment intent
+// 4. Cancel a payment intent
+// 5. List all payment intents (django doesn't automatically handle this :( )
+// 6. Retrieve a payment intent and its status
+// 7. Update a payment intent
+// 8. Create a payment intent with a setup intent
+
 
 module.exports = router;

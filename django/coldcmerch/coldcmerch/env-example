@@ -1,2 +1,4 @@
-STRIPE_PUBLIC_KEY=''
-STRIPE_PRIVATE_KEY=''
+## RENAME THIS TO ".ENV" without the quotation marks! ... And remove this! ## 
+
+STRIPE_PUBLIC_KEY=aaa
+STRIPE_PRIVATE_KEY=aaa
