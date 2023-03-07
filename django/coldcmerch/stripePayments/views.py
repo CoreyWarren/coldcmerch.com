@@ -1,7 +1,10 @@
 from django.shortcuts import render, redirect
 from django.conf import settings
+<<<<<<< HEAD
+=======
 from shop.models import Product
 from shop.serializers import CartItemSerializer
+>>>>>>> 438ed31f0f428d130ca24a7319526d923cf1ae04
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -16,9 +19,9 @@ from django.conf import settings
 
 # Create your views here.
 
-stripe.api_key = settings.STRIPE_SECRET_KEY
+stripe.api_key = "sk_test_51LjuaCGd7lKiUeBG96lJyjaK3IBvHV8NiN5jEedBaEHCckHCPjtM9y4UvL2OJWoJGmUelzIGKIORI5SlxD3u4KLw00LwKsKndb"
 
-
+=======
 # https://stripe.com/docs/api/payment_intents/create
 class StripeCreatePaymentIntentView(APIView):
 
