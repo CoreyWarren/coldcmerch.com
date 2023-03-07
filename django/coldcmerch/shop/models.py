@@ -100,7 +100,6 @@ class CartItemManager(models.Manager):
             cart = cart,
             product = product,
             adjusted_total = adjusted_total,
-            color = color,
             size = size,
             quantity = quantity,
         )

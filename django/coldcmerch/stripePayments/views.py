@@ -1,15 +1,11 @@
 from django.shortcuts import render, redirect
 from django.conf import settings
-<<<<<<< HEAD
-=======
-from shop.models import Product
-from shop.serializers import CartItemSerializer
->>>>>>> 438ed31f0f428d130ca24a7319526d923cf1ae04
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from stripePayments import StripeProductCreateSerializer
+
+from shop.serializers import CartItemSerializer
 
 from django.http import HttpResponseRedirect
 
@@ -19,9 +15,8 @@ from django.conf import settings
 
 # Create your views here.
 
-stripe.api_key = "sk_test_51LjuaCGd7lKiUeBG96lJyjaK3IBvHV8NiN5jEedBaEHCckHCPjtM9y4UvL2OJWoJGmUelzIGKIORI5SlxD3u4KLw00LwKsKndb"
+stripe.api_key = settings.STRIPE_PRIVATE_KEY
 
-=======
 # https://stripe.com/docs/api/payment_intents/create
 class StripeCreatePaymentIntentView(APIView):
 
@@ -93,34 +88,3 @@ class StripeListAllActiveProductsView(APIView):
         all_active_stripe_products = stripe.Product.list(active=True)
         return all_active_stripe_products
 
-
-
-
-class StripeCheckoutView(APIView):
-    def post(self, request):
-        try:
-            checkout_session = stripe.checkout.Session.create(
-                line_items=[
-                    {
-                        'price': '{{PRICE_ID}}',
-                        'quantity': 1,
-                    },
-
-                ],
-                payment_method_types=[
-                    'card',
-                    'acss_debit',
-                ],
-                mode='payment', #payment, subscription, setup 
-                success_url=settings.SITE_URL + '/?success=true&session_id={CHECKOUT_SESSION_ID}',
-                cancel_url=settings.SITE_URL + '/?cancelled=true',
-            )
-
-            
-            return redirect(checkout_session.url)
-
-        except:
-            return Response(
-                {'error': 'Something went wrong when creating stripe checkout session'},
-                status = status.HTTP_500_INTERNAL_SERVER_ERROR
-            )

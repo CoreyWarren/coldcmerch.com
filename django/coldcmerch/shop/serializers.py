@@ -91,7 +91,7 @@ class CreateCartSerializer(serializers.ModelSerializer):
 class CartItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = CartItem
-        fields = ('cart', 'product', 'adjusted_total', 'color', 'size', 'quantity', 'my_user')
+        fields = ('cart', 'product', 'adjusted_total', 'size', 'quantity', 'my_user')
 
 
 class CreateCartItemSerializer(serializers.ModelSerializer):
@@ -104,7 +104,6 @@ class CreateCartItemSerializer(serializers.ModelSerializer):
             cart            = validated_data['cart'],
             product         = validated_data['product'],
             adjusted_total  = validated_data['adjusted_total'],
-            color           = validated_data['color'],
             size            = validated_data['size'],
             quantity        = validated_data['quantity'],
             my_user         = validated_data['my_user']

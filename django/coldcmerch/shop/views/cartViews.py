@@ -134,21 +134,26 @@ class RetrieveCartItemView(APIView):
     # they can access any user's cart data.
     # and check out any user's cart. (with this current implementation).
 
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
+    permission_classes = []
+
+    
     # GET (request) data from Django backend
     def get(self,request):
         data = json.loads(request.body)
 
         # user auth verification/security stuff:
-        requested_user = data['my_user']
+        
+        
+        # requested_user = data['my_user']
 
         # Only allow the correct user to access this API:
-        requesting_user = str(request.user.id)
+        # requesting_user = str(request.user.id)
         
-        if(requested_user != requesting_user):
-            print('requested: ', requested_user)
-            print('requesting: ',requesting_user)
-            return Response({ 'response': "You are attempting to access another user's data."})
+        # if(requested_user != requesting_user):
+        #     print('requested: ', requested_user)
+        #     print('requesting: ',requesting_user)
+        #     return Response({ 'response': "You are attempting to access another user's data."})
 
         requested_cart = data['cart']
         cart_item = CartItem.objects.filter(cart = requested_cart,)

@@ -14,7 +14,7 @@ const router = express.Router();
 
 // After this POST, 
 
-stripe_public_key = process.env.STRIPE_PUBLISHABLE_KEY
+stripe_public_key = process.env.STRIPE_PUBLIC_KEY
 stripe_private_key = process.env.STRIPE_PRIVATE_KEY
 
 
