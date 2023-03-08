@@ -106,7 +106,23 @@ To be added:
 > - Add functionality to 'Add to Cart' buttons (need to POST to our Django Back-End)
 > - Add functionality to 'Sizes' buttons (this is the next huge step)
 > - Add the product COLORS dropdown menu (Set-up API, Routes, Slice, and Reducer...)
-> - 
+
+<br>
+
+> 03/07/2023:
+
+> It's been an uneventful year, it feels like. Just grinding a bit thru Stripe's documentation, only to realize that I need to do Cart Item infrastructure before even being really able to test Stripe out.
+
+> This means that I'll need to make "Add to Cart" actually functional before even thinking too hard about Stripe implementation.
+
+> With all this in mind, so long as deployment doesn't give me a really hard time, I think I am roughly 70% done at this point. What needs to be done:
+
+> - "Add to Cart" button functionality, along with all other sub-components (sizes)
+> - Stripe functionality
+> - User account control functions (change pass, delete account)
+> - User Order History
+
+> I'm praying that I'm consistent enough to finish this by Summer. I'd love to start making just a little drip-feed of client subscription money without the need to work for a big company. I sit here typing this at the library. Hopefully a good omen for the rest of the year. They say a recession is likely coming, and crypto may experience further drops, akin to the DOTCOM crash. Let's get it!
 
 <br>
 
