@@ -110,14 +110,65 @@ To be added:
 
 <br>
 
+# &#x1F528; Running the Code
+
+```bash
+#
+# 1. Start Django.
+#
+
+### (Open a new terminal in the project's parent folder) ###
+# Navigate into the Django folder
+cd django
+
+# Create your environment, then run it with this command in Windows:
+& "./winenv/Scripts/activate"
+
+# Navigate into the Application folder
+cd coldcmerch
+
+# Run Python, which will run Django via manage.py
+python manage.py runserver
+
+
+#
+# 2. Start React
+#
+
+### (Open a new terminal) ### 
+
+# Navigate into React
+cd react
+
+# 2.1 Start Express :
+npm start
+# It will say something like "starting 'node index.js' and 'Server listening'
+
+### (Open a new terminal) ###
+
+# 2.2 Start React itself:
+# Navigate into the main application folder with the React source code:
+cd client
+# Make sure your extensions are installed from package.lockjson:
+npm install
+# Start React:
+npm start
+
+
+```
+
+
+
 # &#x1F528; Maintenance Notes
 
 > To be added after Deployment...
 
 # &#x1F528; Dependencies
 
-> 
+> To be added after Deployment...
 
 # &#x1F5C1; Folder Structure
 
 > To be added after Deployment...
+
+test
