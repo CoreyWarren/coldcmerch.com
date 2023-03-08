@@ -30,6 +30,7 @@ class StripeCreatePaymentIntentView(APIView):
             payment_method      = request.data.get('payment_method')
             currency            = request.data.get('currency')
             # metadata          = request.data.get('metadata')
+            shipping_info       = request.data.get('shipping_info')
             receipt_email       = request.data.get('receipt_email')
         except:
             return Response(
@@ -60,6 +61,7 @@ class StripeCreatePaymentIntentView(APIView):
             currency            = currency,
             payment_method      = payment_method,
             # metadata          = metadata,
+            shipping            = shipping_info,
             receipt_email       = receipt_email,
         )
 
