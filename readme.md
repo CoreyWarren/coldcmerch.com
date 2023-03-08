@@ -170,5 +170,3 @@ npm start
 # &#x1F5C1; Folder Structure
 
 > To be added after Deployment...
-
-test
