@@ -148,6 +148,7 @@ npm start
 
 # 2.2 Start React itself:
 # Navigate into the main application folder with the React source code:
+cd react
 cd client
 # Make sure your extensions are installed from package.lockjson:
 npm install
