@@ -83,6 +83,17 @@ class StripeCreatePaymentIntentView(APIView):
         
 
 
+class StripeConfirmPaymentIntentView(APIView):
+    def post(self, request):
+    
+        stripe.PaymentIntent.confirm (
+        "pi_1Dt1il2eZvKYlo2C6be18kK8",
+        payment_method="pm_card_visa",
+        )
+        
+        return Response( {"s": "a"}, status=status.HTTP_200_OK )
+        
+
 
 
 class StripeListAllActiveProductsView(APIView):
