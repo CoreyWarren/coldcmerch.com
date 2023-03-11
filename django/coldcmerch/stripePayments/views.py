@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from rest_framework import status
 
 from shop.serializers import CartItemSerializer
+from shop.models import Product, ProductSize
 
 from django.http import HttpResponseRedirect
 
@@ -20,6 +21,7 @@ stripe.api_key = settings.STRIPE_PRIVATE_KEY
 # https://stripe.com/docs/api/payment_intents/create
 class StripeCreatePaymentIntentView(APIView):
 
+    permission_classes = []
     # todo:
         # 1. Consider the situation where the user has a payment intent already created.
     def post(self, request):
@@ -49,9 +51,31 @@ class StripeCreatePaymentIntentView(APIView):
 
         # Iterate through each cart item, and add the price to the total.
         # fields = ('cart', 'product', 'adjusted_total', 'color', 'size', 'quantity', 'my_user')
+
+        # NO. DO NOT take the price from the front-end!
+        # The price could be changed on the client side if you accepted a price from the front-end!
+
+        # 1. Get the product.
+        # 2. Retrieve the price from the product.
+        
+        # 3. Get the product's size.
+        # 4. Retrieve the price from the product's size!
+
+        # 5. Add the product size's price to the product's price.
+        # 6. Retrieve the sum.
         for single_cart_item in cart_items:
-            single_item_cost    = single_cart_item['adjusted_total']
+            related_product     = single_cart_item['product']['id']
+            related_size        = single_cart_item['size']['id']
+
+            related_product_cost    = Product.objects.get(id=related_product).price
+            related_size_cost       = ProductSize.objects.get(id=related_size).cost
+
+            # Add the two costs together
+            single_item_cost    = related_product_cost + related_size_cost
+
             item_quantity       = single_cart_item['quantity']
+
+            # Sum = cost of each of this type of item, TIMES the quantity of that item.
             price_sum           += single_item_cost * item_quantity
 
 
