@@ -128,6 +128,9 @@ To be added:
 
 # &#x1F528; Running the Code
 
+You need Node.js installed, as well as Python (the correct version), and all related requirements found in django-requirements.txt.
+
+Open powershell, or your desired IDE with access to a shell.
 ```bash
 #
 # 1. Start Django.
