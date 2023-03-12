@@ -134,31 +134,26 @@ class RetrieveCartItemView(APIView):
     # they can access any user's cart data.
     # and check out any user's cart. (with this current implementation).
 
-    # permission_classes = [IsAuthenticated]
-    permission_classes = []
+    permission_classes = [IsAuthenticated]
 
     
     # GET (request) data from Django backend
     def get(self,request):
-        data = json.loads(request.body)
 
-        # user auth verification/security stuff:
-        
-        
-        # requested_user = data['my_user']
+        # Check if the requester is an authenticated user (i.e.: logged in)
+        if not request.user.is_authenticated:
+            # Let them/our front end know by sending a 401 response and a message.
+            return Response({'response': 'Authentication credentials were not provided.'},
+                            status=status.HTTP_401_UNAUTHORIZED)
 
-        # Only allow the correct user to access this API:
-        # requesting_user = str(request.user.id)
-        
-        # if(requested_user != requesting_user):
-        #     print('requested: ', requested_user)
-        #     print('requesting: ',requesting_user)
-        #     return Response({ 'response': "You are attempting to access another user's data."})
+        # Only give results that belong to the currently requesting User.
+        cart_items = CartItem.objects.filter(cart__user=request.user)
 
-        requested_cart = data['cart']
-        cart_item = CartItem.objects.filter(cart = requested_cart,)
-        cart_item = CartItemSerializer(cart_item, many=True)
-        return Response(cart_item.data, status=status.HTTP_200_OK)
+        # Serialize the items so that they can be sent to the frontend.
+        # This formats the data into JSON. 
+        cart_items = CartItemSerializer(cart_items, many=True)
+
+        return Response(cart_items.data, status=status.HTTP_200_OK)
 
 
 class CreateCartItemView(APIView):
