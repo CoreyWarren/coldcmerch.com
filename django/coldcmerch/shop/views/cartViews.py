@@ -116,7 +116,7 @@ class CheckoutCartView(APIView):
 
 # CART ITEM
 
-class RetrieveCartItemView(APIView):
+class RetrieveCartItemsView(APIView):
 
     # NOTE TO COREY:
     # This is not secure. (Feb 22, 2023)
@@ -147,7 +147,7 @@ class RetrieveCartItemView(APIView):
                             status=status.HTTP_401_UNAUTHORIZED)
 
         # Only give results that belong to the currently requesting User.
-        cart_items = CartItem.objects.filter(cart__user=request.user)
+        cart_items = CartItem.objects.filter(cart__my_user=request.user, cart__checked_out=False)
 
         # Serialize the items so that they can be sent to the frontend.
         # This formats the data into JSON. 
