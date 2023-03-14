@@ -14,11 +14,6 @@ import json
 #
 
 
-# EXPECTED JSON INPUT:
-# {
-# "checked_out" : "True/False",
-# "my_user" : "#"
-# }
 
 # Grab our CART
 class RetrieveCartView(APIView):
@@ -26,31 +21,25 @@ class RetrieveCartView(APIView):
     permission_classes = [IsAuthenticated]
     def get(self,request):
 
-        
-        # grab the request data
-        # so that we can determine which user's cart data we want:
-        
-        data = json.loads(request.body)
-        requested_user = data['my_user']
+        # Check if the requester is an authenticated user (i.e.: logged in)
+        if not request.user.is_authenticated:
+            # Let them/our front end know by sending a 401 response and a message.
+            return Response({'response': 'Authentication credentials were not provided.'},
+                            status=status.HTTP_401_UNAUTHORIZED)
 
-        # Only allow the correct user to access this API:
-        requesting_user = str(request.user.id)
-        
-        if(requested_user != requesting_user):
-            print('requested: ', requested_user)
-            print('requesting: ',requesting_user)
-            return Response({ 'response': "You are attempting to access another user's data."})
+        # Only give results that belong to the currently requesting User.
+        this_cart = Cart.objects.filter(my_user=request.user, checked_out=False).first()
+
+        # Serialize the items so that they can be sent to the frontend.
+        # This formats the data into JSON. 
+        this_cart = CartSerializer(this_cart, many=False)
+
+        print()
+        print(this_cart.data)
+        print()
 
 
-        # Only grab the user's last unchecked-out cart.
-        # (old carts are used for order fulfillment purposes)
-        cart = Cart.objects.filter( checked_out = False, my_user=requested_user ).first()
-        # use our serializer to serialize the JSON
-        cart = CartSerializer(cart)
-        # return it along with a 200_ok response
-        # EXPECTED OUTPUT:
-        # cart items, final total.
-        return Response(cart.data, status=status.HTTP_200_OK)
+        return Response(this_cart.data, status=status.HTTP_200_OK)
 
 #
 # CREATE CART

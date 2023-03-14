@@ -107,7 +107,7 @@ class CartItemManager(models.Manager):
         return cart_item
 
 class CartItem(models.Model):
-    cart                = models.ForeignKey('Cart', related_name="my_cart", on_delete=models.CASCADE, null = True, blank = True, default=None)
+    cart                = models.ForeignKey('Cart', related_name="cart_items", on_delete=models.CASCADE, null = True, blank = True, default=None)
     product             = models.ForeignKey('Product', verbose_name=_('product'), on_delete=models.CASCADE)
     adjusted_total      = models.FloatField(default = 30, null = False, blank = False)
     # color               = models.CharField(max_length = 50, null = False, blank = False, default = "None specified.")
