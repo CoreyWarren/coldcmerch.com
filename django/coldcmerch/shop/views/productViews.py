@@ -3,6 +3,9 @@ from shop.serializers import ProductSerializer
 from rest_framework.views import APIView
 from rest_framework import  status
 from rest_framework.response import Response
+
+from rest_framework.permissions import IsAuthenticated
+
 import json
 
 
@@ -40,5 +43,30 @@ class RetrieveAllProductView(APIView):
         product = ProductSerializer(product, many = True)
         # Return that JSON
         return Response(product.data, status=status.HTTP_200_OK)
+    
+
+class RetrieveProductsUsingIDs(APIView):
+    # Retrieve only objects from a user's cart.
+    # (This is done to avoid having to send the entire product list to the front end.)
+    # (This would be a waste of bandwidth and overall just very costly.)
+
+    permission_classes = []
+
+    def post(self,request):
+
+        # Retrieve our list of IDs.
+        product_ids = request.data.get('product_ids', [])
+
+        # Filter our products by the IDs we received.
+        products_list = Product.objects.filter(id__in=product_ids)
+
+        # Serialize the items so that they can be sent to the frontend.
+        # (This is put outside of our loop to save cost)
+        products_list_data = ProductSerializer(products_list, many=True)
+
+        result = products_list_data.data
+
+        # Return response to our front-end.
+        return Response({'products': result})
 
 

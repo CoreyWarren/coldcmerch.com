@@ -14,6 +14,9 @@ urlpatterns = [
     # api/shop/product/all
     path('product/all', RetrieveAllProductView.as_view()),
 
+    # api/shop/product/by_ids
+    path('product/by_ids', RetrieveProductsUsingIDs.as_view()),
+
     # ORDERS:
     # api/shop/order
     path('order', RetrieveOrderView.as_view()),
