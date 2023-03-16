@@ -46,7 +46,8 @@ class RetrieveAllProductView(APIView):
     
 
 class RetrieveProductsUsingIDs(APIView):
-    # Retrieve only objects from a user's cart.
+    # Retrieve only objects from a list of product IDs. 
+    # (We never have to send the user's number ID this way when retrieving cart-related products!)
     # (This is done to avoid having to send the entire product list to the front end.)
     # (This would be a waste of bandwidth and overall just very costly.)
 
