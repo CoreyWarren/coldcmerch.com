@@ -23,6 +23,7 @@ const App = () => {
   }, []);
 
   return (
+
     <Router>
       <Routes>
         <Route path='/' element={<HomePage/>} />
@@ -33,6 +34,7 @@ const App = () => {
         <Route path='/cart' element={<CartPage/>} />
       </Routes>
     </Router>
+
   )
   };
 

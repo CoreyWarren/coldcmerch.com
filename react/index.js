@@ -17,9 +17,9 @@ const logoutRoute = require('./routes/auth/logout');
 // verify.js route
 const verifyRoute = require('./routes/auth/verify');
 // product.js route
-const productRoute = require('./routes/auth/shop/product');
+const productRoute = require('./routes/shop/product');
 // productSizes.js route
-const productSizeRoute = require('./routes/auth/shop/productSize');
+const productSizeRoute = require('./routes/shop/productSize');
 
 const app = express();
 

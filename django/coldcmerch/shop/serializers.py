@@ -67,9 +67,18 @@ class ProductSizeSerializer(serializers.ModelSerializer):
 
 # Serializer is used for both creation and retrieval of an object such as this.
 class CartSerializer(serializers.ModelSerializer):
+
+    cart_items = serializers.SerializerMethodField()
+
     class Meta:
         model = Cart
-        fields = ('checked_out', 'cart_item', 'my_user')
+        fields = ('checked_out', 'cart_items', 'my_user')
+
+    def get_cart_items(self, obj):
+        cart_items = CartItem.objects.filter(cart=obj)
+        return CartItemSerializer(cart_items, many=True).data
+    
+    
 
 class CreateCartSerializer(serializers.ModelSerializer):
     class Meta:
@@ -91,7 +100,7 @@ class CreateCartSerializer(serializers.ModelSerializer):
 class CartItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = CartItem
-        fields = ('cart', 'product', 'adjusted_total', 'color', 'size', 'quantity', 'my_user')
+        fields = ('cart', 'product', 'adjusted_total', 'size', 'quantity', 'my_user')
 
 
 class CreateCartItemSerializer(serializers.ModelSerializer):
@@ -104,7 +113,6 @@ class CreateCartItemSerializer(serializers.ModelSerializer):
             cart            = validated_data['cart'],
             product         = validated_data['product'],
             adjusted_total  = validated_data['adjusted_total'],
-            color           = validated_data['color'],
             size            = validated_data['size'],
             quantity        = validated_data['quantity'],
             my_user         = validated_data['my_user']

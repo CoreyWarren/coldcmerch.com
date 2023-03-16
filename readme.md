@@ -106,9 +106,80 @@ To be added:
 > - Add functionality to 'Add to Cart' buttons (need to POST to our Django Back-End)
 > - Add functionality to 'Sizes' buttons (this is the next huge step)
 > - Add the product COLORS dropdown menu (Set-up API, Routes, Slice, and Reducer...)
-> - 
 
 <br>
+
+> 03/07/2023:
+
+> It's been an uneventful year, it feels like. Just grinding a bit thru Stripe's documentation, only to realize that I need to do Cart Item infrastructure before even being really able to test Stripe out.
+
+> This means that I'll need to make "Add to Cart" actually functional before even thinking too hard about Stripe implementation.
+
+> With all this in mind, so long as deployment doesn't give me a really hard time, I think I am roughly 70% done at this point. What needs to be done:
+
+> - "Add to Cart" button functionality, along with all other sub-components (sizes)
+> - Stripe functionality
+> - User account control functions (change pass, delete account)
+> - User Order History
+
+> I'm praying that I'm consistent enough to finish this by Summer. I'd love to start making just a little drip-feed of client subscription money without the need to work for a big company. I sit here typing this at the library. Hopefully a good omen for the rest of the year. They say a recession is likely coming, and crypto may experience further drops, akin to the DOTCOM crash. Let's get it!
+
+<br>
+
+# &#x1F528; Running the Code
+
+You need Node.js installed, as well as Python (the correct version), and all related requirements found in django-requirements.txt.
+
+Open powershell, or your desired IDE with access to a shell.
+```bash
+#
+# 1. Start Django.
+#
+
+### (Open a new terminal in the project's parent folder) ###
+# Navigate into the Django folder
+cd django
+
+# Create your environment, then run it with this command in Windows:
+& "./winenv/Scripts/activate"
+
+# Navigate into the Application folder
+cd coldcmerch
+
+# Run Python, which will run Django via manage.py
+python manage.py runserver
+
+
+#
+# 2. Start React
+#
+
+### (Open a new terminal) ### 
+
+# Navigate into React
+cd react
+
+# 2.1 Start Express :
+npm start
+# It will say something like "starting 'node index.js' and 'Server listening'
+
+### (Open a new terminal) ###
+
+# 2.2 Start React itself:
+# Navigate into the main application folder with the React source code:
+cd react
+cd client
+# Make sure your extensions are installed from package.lockjson:
+npm install
+# Start React:
+npm start
+
+
+```
+
+# &#x1F528; Deployment
+
+> To be added after Deployment...
 
 # &#x1F528; Maintenance Notes
 
@@ -116,7 +187,7 @@ To be added:
 
 # &#x1F528; Dependencies
 
-> 
+> To be added after Deployment...
 
 # &#x1F5C1; Folder Structure
 

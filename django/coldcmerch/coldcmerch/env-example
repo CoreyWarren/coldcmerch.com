@@ -1,0 +1,5 @@
+## RENAME THIS TO ".ENV" without the quotation marks! ... And remove this! ## 
+
+STRIPE_PUBLIC_KEY=aaa
+STRIPE_PRIVATE_KEY=aaa
+DJANGO_SECRET_KEY=aaa
