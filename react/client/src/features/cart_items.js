@@ -5,7 +5,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 // getcart_items
 // '_' means parameter won't have any value, that it won't be passed.
-export const getCart_items = createAsyncThunk('cart_items/all', async (_, thunkAPI) => {
+export const getCartItems = createAsyncThunk('cart_items', async (_, thunkAPI) => {
 
     try{
       // cookies will come along the way with this request
@@ -26,15 +26,22 @@ export const getCart_items = createAsyncThunk('cart_items/all', async (_, thunkA
         // MAP our cart_items
 
         cart_items_map = data.map(item => {
-            const { id, title, description, image_preview, base_cost } = item;
+            const { product, adjusted_total, size, quantity } = item;
             return {
-                id,
-                title,
-                description,
-                image_preview,
-                base_cost
+                product,
+                adjusted_total,
+                size,
+                quantity
             };
         });
+
+        // cart item data:
+        //    cart            = validated_data['cart'],
+        //    product         = validated_data['product'],
+        //    adjusted_total  = validated_data['adjusted_total'],
+        //    size            = validated_data['size'],
+        //    quantity        = validated_data['quantity'],
+        //    my_user         = validated_data['my_user']
 
 
 
@@ -61,7 +68,7 @@ const initialState = {
   
   
   // slice/ state manager
-  const cart_itemsSlice = createSlice({
+  const cartItemsSlice = createSlice({
     name: 'cart_items',
     initialState,
     // reducers are used for synchronous dispatches
