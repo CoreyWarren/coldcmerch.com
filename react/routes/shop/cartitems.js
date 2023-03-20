@@ -4,11 +4,13 @@ const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch
 
 const router = express.Router();
 
-router.get('/api/shop/cart', async (req, res) => {
+// Create logic to retrieve cart item data (for use in the front-end)
+
+router.get('/api/shop/cart_items', async (req, res) => {
 
     try {
         //retrieve data from Django Backend
-        const apiResponse = await fetch(`${process.env.API_URL}/api/shop/cart`, {
+        const apiResponse = await fetch(`${process.env.API_URL}/api/shop/cart_items`, {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
@@ -23,7 +25,7 @@ router.get('/api/shop/cart', async (req, res) => {
     } catch (err) {
         // catch error
         return res.status(500).json({
-            error: "Something went wrong when trying to retrieve user's cart.",
+            error: "Something went wrong when trying to retrieve user's cart items.",
         });
     }
 });

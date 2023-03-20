@@ -47,8 +47,8 @@ export const createPaymentIntent = createAsyncThunk('stripe/create-payment-inten
 );
 
 const initialState = {
-  data: null,
-  loading: false,
+  payment_intent_data: null,
+  loading_payment_intent: false,
 }
 
 
@@ -63,14 +63,14 @@ const productsSlice = createSlice({
   extraReducers: builder => {
     builder
       .addCase( createPaymentIntent.pending, state => {
-        state.loading = true;
+        state.loading_payment_intent = true;
       })
       .addCase( createPaymentIntent.fulfilled, (state, action) => {
-        state.loading = false;
-        state.data = action.payload;
+        state.loading_payment_intent = false;
+        state.payment_intent_data = action.payload;
       })
       .addCase( createPaymentIntent.rejected, state => {
-        state.loading = false;
+        state.loading_payment_intent = false;
       })
   },
 });
