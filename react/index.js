@@ -18,8 +18,14 @@ const logoutRoute = require('./routes/auth/logout');
 const verifyRoute = require('./routes/auth/verify');
 // product.js route
 const productRoute = require('./routes/shop/product');
+// productByIDs.js route
+const productRoute = require('./routes/shop/productByIDs');
 // productSizes.js route
 const productSizeRoute = require('./routes/shop/productSize');
+// cart.js route
+const cartRoute = require('./routes/shop/cart');
+// cartItems.js route
+const cartItemsRoute = require('./routes/shop/cartItems');
 
 const app = express();
 

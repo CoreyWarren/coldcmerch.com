@@ -51,6 +51,56 @@ export const getProducts = createAsyncThunk('product/all', async (_, thunkAPI) =
     }
 });
 
+export const getProductsByID = createAsyncThunk('product/by_ids', async({product_ids}, thunkAPI) => {
+  const body = JSON.stringify({
+    product_ids,
+  });
+
+  try{
+    // cookies will come along the way with this request
+    const res = await fetch('api/shop/product/by_ids', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body,
+    });
+
+    const data = await res.json();
+
+    if (res.status === 200) {
+      // success - return data as a payload, but map it first for easy manipulation:
+
+      let products_map = [];
+
+      // MAP our products
+
+      products_map = data.map(item => {
+          const { id, title, description, image_preview, base_cost } = item;
+          return {
+              id,
+              title,
+              description,
+              image_preview,
+              base_cost
+          };
+      });
+
+
+
+      return products_map; 
+    } else {
+      // failure - reject with rejected data.
+      console.log("Product api (by IDs) rejected.");
+      return thunkAPI.rejectWithValue(data);
+    }
+  } catch (err) {
+    // error - print error data
+    console.log("Product api (by IDs) ERROR.");
+    return thunkAPI.rejectWithValue(err.response.data);
+  }
+});
 
 // products redux STATE management
 
@@ -70,6 +120,8 @@ const initialState = {
     },
     extraReducers: builder => {
       builder
+      
+        // get All Products:
         .addCase( getProducts.pending, state => {
           state.loading_products = true;
         })
@@ -80,6 +132,19 @@ const initialState = {
         .addCase( getProducts.rejected, state => {
           state.loading_products = false;
         })
+
+        // getProductsByID:
+        .addCase( getProductsByID.pending, state => {
+          state.loading_products = true;
+        })
+        .addCase( getProductsByID.fulfilled, (state, action) => {
+          state.loading_products = false;
+          state.products_map = action.payload; // product state = product data
+        })
+        .addCase( getProductsByID.rejected, state => {
+          state.loading_products = false;
+        })
+
     },
   });
   

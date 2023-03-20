@@ -8,7 +8,7 @@ import userReducer from 'features/user';
 import productsReducer from 'features/product';
 import productSizeReducer from 'features/productSize';
 import cartReducer from 'features/cart';
-import cartItemsReducer from 'features/cart_items';
+import cartItemsReducer from 'features/cartItems';
 
 // The 'combineReducers' function from the '@reduxjs/toolkit' library is used to combine the individual reducers into one.
 // The resulting combined reducer will manage the entire application state.
