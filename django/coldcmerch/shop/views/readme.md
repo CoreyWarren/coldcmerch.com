@@ -5,3 +5,5 @@ https://simpleisbetterthancomplex.com/tutorial/2016/08/02/how-to-split-views-int
 # importing models in general
 
 https://docs.djangoproject.com/en/3.2/topics/db/models/
+
+

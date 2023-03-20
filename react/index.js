@@ -35,6 +35,8 @@ app.use(logoutRoute);
 app.use(verifyRoute);
 app.use(productRoute);
 app.use(productSizeRoute);
+app.use(cartRoute);
+app.use(cartItemsRoute);
 
 app.use(express.static('client/build'));
 app.get('*', (req, res) => {
