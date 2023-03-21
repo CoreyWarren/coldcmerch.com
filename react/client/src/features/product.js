@@ -51,6 +51,8 @@ export const getProducts = createAsyncThunk('product/all', async (_, thunkAPI) =
     }
 });
 
+
+
 export const getProductsByID = createAsyncThunk('product/by_ids', async({product_ids}, thunkAPI) => {
   const body = JSON.stringify({
     product_ids,
