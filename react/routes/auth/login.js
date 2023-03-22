@@ -29,7 +29,7 @@ router.post('/api/users/login', async (req, res) => {
                 cookie.serialize('access', data.access, {
                     // pass various keys and values here (learn more: google 'npm cookie')
                     httpOnly: true,
-                    maxAge: 60 * 30, // 60 secs * 30 = 30 minutes
+                    maxAge: 60 * 60 * 4, // measured in seconds, django has a similar setting! check it out in settings.py!
                     path: '/api/',
                     sameSite: 'strict',
                     secure: process.env.NODE_ENV === 'production' // if true, become true; false for false.

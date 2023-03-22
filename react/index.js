@@ -19,7 +19,7 @@ const verifyRoute = require('./routes/auth/verify');
 // product.js route
 const productRoute = require('./routes/shop/product');
 // productByIDs.js route
-const productRoute = require('./routes/shop/productByIDs');
+const productsbyIDsRoute = require('./routes/shop/productsByIDs');
 // productSizes.js route
 const productSizeRoute = require('./routes/shop/productSize');
 // cart.js route
@@ -40,6 +40,7 @@ app.use(meRoute);
 app.use(logoutRoute);
 app.use(verifyRoute);
 app.use(productRoute);
+app.use(productsbyIDsRoute);
 app.use(productSizeRoute);
 app.use(cartRoute);
 app.use(cartItemsRoute);

@@ -12,7 +12,7 @@ export const getCart = createAsyncThunk('cart', async (_, thunkAPI) => {
       const res = await fetch('api/shop/cart', {
         method: 'GET',
         headers: {
-          Accept: 'application/json'
+          Accept: 'application/json',
         }
       });
 
@@ -21,13 +21,19 @@ export const getCart = createAsyncThunk('cart', async (_, thunkAPI) => {
       if (res.status === 200) {
         // success - return data as a payload, but map it first for easy manipulation:
 
+        let cart_data = {
+          checked_out: data.checked_out,
+          cart_items: data.cart_items
+        };
+  
+        return cart_data;
 
-        return cart_map; 
       } else {
         // failure - reject with rejected data.
-        console.log("Cart api rejected.");
+        console.log("Cart api rejected with data:", data);
         return thunkAPI.rejectWithValue(data);
       }
+
     } catch (err) {
       // error - print error data
       console.log("Cart api ERROR.");

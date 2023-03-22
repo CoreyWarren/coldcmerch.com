@@ -24,7 +24,8 @@ export const getCartItems = createAsyncThunk('cart_items', async (_, thunkAPI) =
         let cart_items_map = [];
 
         // MAP our cart_items
-
+        // fields = ('product', 'adjusted_total', 'size', 'quantity')
+        
         cart_items_map = data.map(item => {
             const { product, adjusted_total, size, quantity } = item;
             return {
