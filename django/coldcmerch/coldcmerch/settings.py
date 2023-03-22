@@ -92,6 +92,8 @@ WSGI_APPLICATION = 'coldcmerch.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+
+## TODO: CHANGE TO MYSQL DATABASE.
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -154,7 +156,7 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=240),
 }
 
 # Cannot be changed (after migrations) without destroying your entire project:
