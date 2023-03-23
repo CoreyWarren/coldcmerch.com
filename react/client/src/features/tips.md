@@ -1,4 +1,4 @@
-# Tip #1, Variable names: from reducer to webpage.
+# Tip #1, Variable names: from reducer to webpage
 
 ## When dispatching code in your containing page, use the same variable names that you declared in your reducer states!
 

@@ -6,6 +6,12 @@ import { getCart } from 'features/cart';
 import { getCartItems } from 'features/cartItems';
 import { getProductSize } from "features/productSize";
 
+ // On this page, achieve the following things:
+
+    // 1) If the user is NOT logged in, REDIRECT them to the LOGIN page.
+    // 2) If the user is logged in, show them their CART.
+    //  // 2.1) If they HAVE items in their cart, show them a list of their items, and a total price.
+    //  // 2.2) If they have NO items in their cart, show them a message saying so.
 
 
 const CartPage = () => {
@@ -14,7 +20,7 @@ const CartPage = () => {
     // Bring in the 'user' and also 'cart' states.
 
     // We want to load cart items so we can display them. This is the main purpose of this page.
-    const { cart_items_map, loading_cart_items } = useSelector(state => state.cart_items);
+    const { cart_items_map, loading_cart_items, product_indices } = useSelector(state => state.cart_items);
 
     // We want to see if the USER is logged in or not, so we can redirect them to the login page if they are not.
     const { isAuthenticated, user, user_loading } = useSelector(state => state.user);
@@ -23,12 +29,6 @@ const CartPage = () => {
     const { products_map, loading_products} = useSelector(state => state.products);
 
 
-    // On this page, achieve the following things:
-
-    // 1) If the user is NOT logged in, REDIRECT them to the LOGIN page.
-    // 2) If the user is logged in, show them their CART.
-    //  // 2.1) If they HAVE items in their cart, show them a list of their items, and a total price.
-    //  // 2.2) If they have NO items in their cart, show them a message saying so.
 
     const dispatch = useDispatch();
     // useEffect can only be called once. (Redux)
