@@ -43,6 +43,7 @@ To be added:
 
 - Django (Back-end Web Development, API, REST)
 - React (Front-End Web Development, Fetching)
+- NodeJS (React Installation)
 - Github (Project Management and Organization)
 - Redux (Store/State Management and Organization)
 - Express (Router: Cookies and Async Requests)
