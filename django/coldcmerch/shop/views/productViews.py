@@ -58,12 +58,23 @@ class RetrieveProductsUsingIDs(APIView):
         # Retrieve our list of IDs.
         product_ids = request.data.get('product_ids', [])
 
+        products_list_data = []
+
         # Filter our products by the IDs we received.
-        products_list = Product.objects.filter(id__in=product_ids)
+        # products_list = Product.objects.filter(id__in=product_ids)
+        # /\ Old method, does not duplicate the product if it is in the cart twice.
+        # We want this because we're going by INDEX in the frontend.
+
+        # New method, duplicates the product if it is in the cart twice.
+        for identifier_item in product_ids:
+            products_list_data.append(Product.objects.get(id=identifier_item))
+
+        # old method returns: [product[1], product[2]]
+        # new method returns: [product[1], product[2], product[1], product[2]]
 
         # Serialize the items so that they can be sent to the frontend.
         # (This is put outside of our loop to save cost)
-        products_list_data = ProductSerializer(products_list, many=True)
+        products_list_data = ProductSerializer(products_list_data, many=True)
 
         result = products_list_data.data
 

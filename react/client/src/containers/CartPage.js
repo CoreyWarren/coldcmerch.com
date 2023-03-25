@@ -37,14 +37,6 @@ const CartPage = () => {
     // 'useXYZ' functions more than once each. 
     useEffect(() => {
 
-
-        // Dispatch our getProducts action from our Reducer, which will affect our State,
-        // which is persistent and has a history we can access.
-        // -> Grabs all products in the order in which they were created.
-        // -> Interacts with Django API
-        dispatch(getProducts());
-
-
         // Dispatch our getProductSize action from our Reducer, which will affect our State,
         // which is persistent and has a history we can access.
         // -> Grabs all product sizes in the order in which they are created.
@@ -52,7 +44,15 @@ const CartPage = () => {
         dispatch(getProductSize());
 
 
+        // Dispatch our getCart action from our Reducer, which will affect our State,
+        // which is persistent and has a history we can access.
+        // -> Grabs all cart items in the order in which they are created.
+        // -> Interacts with Django API
+        // -> This is the cart of the logged-in user.
         dispatch(getCartItems());
+        // -> NOTE: It also grabs SOME product details, dictated by which
+        // -> cart items are in the cart.
+        
 
         // within the '[]' would go any parameters used in this useEffect function.
 
@@ -91,18 +91,18 @@ const CartPage = () => {
 
         // PRINT THE CART ITEMS, this is a FOR LOOP:
         for (let i = 0; i < cart_items_map.length; i += 1) {
-            // const image_sauce = ('http://localhost:8000' + cart[i].image_preview).toString();
 
+            // const image_sauce = ('http://localhost:8000' + cart[i].image_preview).toString();
             // fields = ('product', 'adjusted_total', 'size', 'quantity')
             result.push(
             <div className="cart_item" key={i}>
                 <p>-----</p>
-                <h2>Product ID: {cart_items_map[i].product}</h2>
-                <p>Base Price: {cart_items_map[i].adjusted_total}</p>
-                <p>Size: {cart_items_map[i].size}</p>
-                <p>Quantity: {cart_items_map[i].quantity}</p>
+                <h2>Product Title: {products_map[i].title}</h2>
+                    <p>Base Price + Size Cost: {cart_items_map[i].adjusted_total}</p>
+                    <p>Size: {cart_items_map[i].size}</p>
+                    <p>Quantity: {cart_items_map[i].quantity}</p>
                 </div>
-            )
+            );
             
             myTotal += cart_items_map[i].adjusted_total;
         }
@@ -110,7 +110,7 @@ const CartPage = () => {
         return result;
     }
 
-if(!loading_cart_items && cart_items_map != null && !user_loading && isAuthenticated) {
+if(!loading_cart_items && cart_items_map != null && !user_loading && isAuthenticated && !loading_products && products_map != null) {
     return(
         <Layout title = 'Coldcut Merch | Cart' content='Cart Page'>
 
