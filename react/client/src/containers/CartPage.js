@@ -5,6 +5,8 @@ import { getProducts } from 'features/product';
 import { getCart } from 'features/cart';
 import { getCartItems } from 'features/cartItems';
 import { getProductSize } from "features/productSize";
+import { motion } from 'framer-motion';
+import Dropdown from 'react-bootstrap/Dropdown';
 
  // On this page, achieve the following things:
 
@@ -65,8 +67,7 @@ const CartPage = () => {
         if (!isAuthenticated) {
             return (
                 <div>
-                    <h1>Cart</h1>
-                    <h2>You are not logged in. Please log in to view your cart.</h2>
+                    <p>You are not logged in. Please log in to view your cart.</p>
                 </div>
             )
         }
@@ -75,8 +76,7 @@ const CartPage = () => {
         else {
             return (
                 <div>
-                    <h1>Cart</h1>
-                    <h2>Logged in as: {user.first_name}</h2>
+                    <p>Logged in as: {user.first_name}</p>
                 </div>
             )
         }
@@ -88,29 +88,74 @@ const CartPage = () => {
 
     const display_cart_items = () => {
         let result = [];
+        
 
         // PRINT THE CART ITEMS, this is a FOR LOOP:
         for (let i = 0; i < cart_items_map.length; i += 1) {
 
-            // const image_sauce = ('http://localhost:8000' + cart[i].image_preview).toString();
+            const image_sauce = ('http://localhost:8000' + products_map[i].image_preview).toString();
+            const cart_item_key = (cart_items_map[i].product + products_map[i].title).toString() + i.toString();
+
             // fields = ('product', 'adjusted_total', 'size', 'quantity')
             result.push(
-            <div className="cart_item" key={i}>
-                <p>-----</p>
-                <h2>Product Title: {products_map[i].title}</h2>
-                    <p>Base Price + Size Cost: {cart_items_map[i].adjusted_total}</p>
-                    <p>Size: {cart_items_map[i].size}</p>
-                    <p>Quantity: {cart_items_map[i].quantity}</p>
+            <div className="cart_item" key={cart_item_key}>
+
+                
+                <h2>{i+1}:  {products_map[i].title}</h2>
+
+                    <motion.div
+                    whileHover={{
+                        scale: 1.03, 
+                        transition: {
+                            duration: 0.5, 
+                            type: 'spring',
+                            bounce: 0.6,
+                        },
+                    }}
+                    >
+                    <img src={image_sauce} ></img>
+                    </motion.div>
+                    
+                    <p style={{margin: 0, padding: 0}}>Subt: <strong>{cart_items_map[i].adjusted_total.toFixed(2)} USD</strong></p>
+                    <p>Size: <strong>{cart_items_map[i].size}</strong></p>
+                    <p>Qty : <strong>{cart_items_map[i].quantity}</strong></p>
+
+
+                    <div className="dropdown cartbutton">
+                    <Dropdown>
+                    <Dropdown.Toggle variant="success" id="dropdown-basic">
+                    &#128393;
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu >
+                        <Dropdown.Item  href="#">Remove from Cart</Dropdown.Item>
+                    </Dropdown.Menu>
+                    </Dropdown>
                 </div>
+
+
+                
+            </div>
             );
             
             myTotal += cart_items_map[i].adjusted_total;
         }
 
+        // Whenever you PUSH into your returned result,
+        // you must also PUSH a KEY, so that React can keep track of the elements.
+        // If you don't, you will get an error.
+        // "Error: Each child in a list should have a unique 'key' prop in JSX!"
+        result.push(
+            <p key="p divider final">-------------------------</p>
+        )
+        
+        myTotal = myTotal.toFixed(2);
         return result;
     }
 
-if(!loading_cart_items && cart_items_map != null && !user_loading && isAuthenticated && !loading_products && products_map != null) {
+if(!loading_cart_items && cart_items_map != null && !user_loading && isAuthenticated && user != null && !loading_products && products_map != null) {
+
+    
+
     return(
         <Layout title = 'Coldcut Merch | Cart' content='Cart Page'>
 
@@ -118,11 +163,14 @@ if(!loading_cart_items && cart_items_map != null && !user_loading && isAuthentic
             <div className="mb-4"></div>
             <div className="home_panel">
                 {cart_intro()}
+                
                 {display_cart_items()}
             </div>
 
-        <p>-----</p>
-        <h3>Total: {myTotal} USD</h3>
+        <div className="total-price">Subtotal: {myTotal} USD</div>
+        <div className="total-price top">(Subtotal: {myTotal} USD)</div>
+
+        <button type="button" className="checkout-button">Checkout</button>
 
 
         </Layout>
