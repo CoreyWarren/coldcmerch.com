@@ -8,12 +8,19 @@ const router = express.Router();
 
 router.get('/api/shop/cart_items', async (req, res) => {
 
+    const { access } = req.cookies;
+    
+    const body = JSON.stringify({
+        token: access
+    });
+    
     try {
         //retrieve data from Django Backend
         const apiResponse = await fetch(`${process.env.API_URL}/api/shop/cart_items`, {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
+                Authorization: `Bearer ${access}`,
             }
         });
 

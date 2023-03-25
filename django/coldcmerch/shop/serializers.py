@@ -72,7 +72,7 @@ class CartSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Cart
-        fields = ('checked_out', 'cart_items', 'my_user')
+        fields = ('checked_out', 'cart_items')
 
     def get_cart_items(self, obj):
         cart_items = CartItem.objects.filter(cart=obj)
@@ -100,7 +100,7 @@ class CreateCartSerializer(serializers.ModelSerializer):
 class CartItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = CartItem
-        fields = ('cart', 'product', 'adjusted_total', 'size', 'quantity', 'my_user')
+        fields = ('product', 'adjusted_total', 'size', 'quantity')
 
 
 class CreateCartItemSerializer(serializers.ModelSerializer):

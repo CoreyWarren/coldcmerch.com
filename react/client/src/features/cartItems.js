@@ -2,9 +2,76 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 // cart_items.js feature in REDUX
 
+export const getProductDetails = createAsyncThunk(
+  "product/by_ids",
+  async (productIds, thunkAPI) => {
+    try {
+      const res = await fetch("api/shop/product/by_ids", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          product_ids: productIds,
+        }),
+      });
+
+      // input: {"product_ids":[1,1,1,1,2]}
+
+      console.log(JSON.stringify({
+        product_ids: productIds,
+      }))
+
+
+      const data = await res.json();
+
+      if (res.status === 200) {
+
+        console.log(data);
+
+        let products_map = [];
+
+        products_map = data.products.map(item => {
+          const { id, title, description, image_preview, base_cost } = item;
+          return {
+              id,
+              title,
+              description,
+              image_preview,
+              base_cost
+          };
+        });
+
+        console.log("products map:" , products_map);
+
+
+        return products_map;
+      } else {
+        console.log("Product details api rejected.");
+        return thunkAPI.rejectWithValue(data ? data : "Product details API rejected.");
+      }
+    } catch (err) {
+      console.log("Product details api ERROR.");
+      return thunkAPI.rejectWithValue(err.response && err.response.data ? err.response.data : "Product details API error.");
+    }
+    
+  }
+);
+
+
+
 
 // getcart_items
 // '_' means parameter won't have any value, that it won't be passed.
+
+  // 1. `getCartItems`: Fetches the cart items from the API,
+  //  maps the response to `cart_items_map`, then extracts the 
+  //  product IDs using `map` and stores them in the `productIds`
+  //  variable. After that, it dispatches the `getProductDetails`
+  //  action by passing the `productIds` as an argument. 
+  //  Finally, it returns the `cart_items_map`.
+
 export const getCartItems = createAsyncThunk('cart_items', async (_, thunkAPI) => {
 
     try{
@@ -24,7 +91,8 @@ export const getCartItems = createAsyncThunk('cart_items', async (_, thunkAPI) =
         let cart_items_map = [];
 
         // MAP our cart_items
-
+        // fields = ('product', 'adjusted_total', 'size', 'quantity')
+        
         cart_items_map = data.map(item => {
             const { product, adjusted_total, size, quantity } = item;
             return {
@@ -35,7 +103,7 @@ export const getCartItems = createAsyncThunk('cart_items', async (_, thunkAPI) =
             };
         });
 
-        // cart item data:
+        // cart item possible data:
         //    cart            = validated_data['cart'],
         //    product         = validated_data['product'],
         //    adjusted_total  = validated_data['adjusted_total'],
@@ -44,6 +112,10 @@ export const getCartItems = createAsyncThunk('cart_items', async (_, thunkAPI) =
         //    my_user         = validated_data['my_user']
 
 
+
+
+        const productIds = cart_items_map.map((item) => item.product);
+        await thunkAPI.dispatch(getProductDetails(productIds));
 
         return cart_items_map; 
       } else {
@@ -64,6 +136,7 @@ export const getCartItems = createAsyncThunk('cart_items', async (_, thunkAPI) =
 const initialState = {
     cart_items_map: null,
     loading_cart_items: false,
+    product_indices: null,
   }
   
   
@@ -77,6 +150,8 @@ const initialState = {
     },
     extraReducers: builder => {
       builder
+
+        // get cart items
         .addCase( getCartItems.pending, state => {
           state.loading_cart_items = true;
         })
@@ -87,6 +162,19 @@ const initialState = {
         .addCase( getCartItems.rejected, state => {
           state.loading_cart_items = false;
         })
+
+        // get product details
+        .addCase(getProductDetails.pending, (state) => {
+          state.loading_cart_items = true;
+        })
+        .addCase(getProductDetails.fulfilled, (state, action) => {
+          state.loading_cart_items = false;
+          state.product_indices = action.payload;
+        })
+        .addCase(getProductDetails.rejected, (state, action) => {
+          state.loading_cart_items = false;
+          state.error = action.error.message;
+        });
     },
   });
   

@@ -69,7 +69,7 @@ const StorePage = () => {
         // PRINT THE PRODUCTS, FOR LOOP:
         for (let i = 0; i < products_map.length; i += 1) {
             const image_sauce = ('http://localhost:8000' + products_map[i].image_preview).toString();
-
+            
             result.push(
             <div className="shop_item" key={i}>
                 <h2>{products_map[i].title}</h2>
