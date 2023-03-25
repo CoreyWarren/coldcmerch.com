@@ -42,12 +42,12 @@ To be added:
 # &#x1F4D9; What technologies are used here?
 
 - Django (Back-end Web Development, API, REST)
-- React (Front-End Web Development, Fetching)
+- React 18 (Front-End Web Development, Fetching)
 - NodeJS (React Installation)
 - Github (Project Management and Organization)
 - Redux (Store/State Management and Organization)
 - Express (Router: Cookies and Async Requests)
-- Python (Django)
+- Python 3.10.4 (Django)
 - JavaScript (React)
 - VSCode (Coding Environment)
 - CSS (Web Styling Language)
