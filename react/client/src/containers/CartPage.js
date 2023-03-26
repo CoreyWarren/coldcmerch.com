@@ -194,6 +194,19 @@ const CartPage = () => {
             </Layout>
         );
         }
+        else if(!user_loading && !isAuthenticated){
+            return(
+                <Layout title = 'Coldcut Merch | Cart' content='Cart Page'>
+
+                <h1 className='mb-5'>Shopping Cart</h1>
+                    <div className="mb-4"></div>
+                    <div className="home_panel">
+                        <p>You are not logged in. Please log in to view your cart.</p>
+                    </div>
+
+                </Layout>
+            );
+        }
         else{
             return(
                 <Layout title = 'Coldcut Merch | Cart' content='Cart Page'>
