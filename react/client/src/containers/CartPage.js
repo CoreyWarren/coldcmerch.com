@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import Layout from 'components/Layout';
-import { getProducts } from 'features/product';
+import { resetProductsMap } from 'features/product';
 import { getCart } from 'features/cart';
-import { getCartItems } from 'features/cartItems';
+import { getCartItems, getProductDetails } from 'features/cartItems';
 import { getProductSize } from "features/productSize";
+
 import { motion } from 'framer-motion';
 import Dropdown from 'react-bootstrap/Dropdown';
 
@@ -17,18 +19,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 
 
 const CartPage = () => {
-
-    let myTotal = 0;
     // Bring in the 'user' and also 'cart' states.
-
-    // We want to load cart items so we can display them. This is the main purpose of this page.
-    const { cart_items_map, loading_cart_items, product_indices } = useSelector(state => state.cart_items);
-
-    // We want to see if the USER is logged in or not, so we can redirect them to the login page if they are not.
-    const { isAuthenticated, user, user_loading } = useSelector(state => state.user);
-
-    // We want to load products so we can display product details alongside the cart items they are a part of.
-    const { products_map, loading_products} = useSelector(state => state.products);
 
 
 
@@ -39,11 +30,10 @@ const CartPage = () => {
     // 'useXYZ' functions more than once each. 
     useEffect(() => {
 
-        // Dispatch our getProductSize action from our Reducer, which will affect our State,
-        // which is persistent and has a history we can access.
-        // -> Grabs all product sizes in the order in which they are created.
-        // -> Interacts with Django API
-        dispatch(getProductSize());
+        // When navigating from StorePage -> CartPage, the products_map has all sorts of values in it.
+        // We want to reset it to an empty object, so that when we navigate back to StorePage, it
+        // doesn't have any values in it.
+        dispatch(resetProductsMap());
 
 
         // Dispatch our getCart action from our Reducer, which will affect our State,
@@ -51,15 +41,30 @@ const CartPage = () => {
         // -> Grabs all cart items in the order in which they are created.
         // -> Interacts with Django API
         // -> This is the cart of the logged-in user.
-        dispatch(getCartItems());
+        dispatch(getCartItems()).catch(error => console.error('Error when grabbing Cart Items:', error));
         // -> NOTE: It also grabs SOME product details, dictated by which
         // -> cart items are in the cart.
-        
+                    
+            
+        // dispatch(getProductsByIDs)
+        // /\ THIS IS DONE BY getCartItems().
+        // -> This is done by getCartItems().
+
 
         // within the '[]' would go any parameters used in this useEffect function.
 
-    }, [dispatch])
+    }, [dispatch]);
 
+    
+
+    // We want to load cart items so we can display them. This is the main purpose of this page.
+    const { cart_items_map, loading_cart_items, product_indices } = useSelector(state => state.cart_items);
+
+    // We want to see if the USER is logged in or not, so we can redirect them to the login page if they are not.
+    const { isAuthenticated, user, user_loading } = useSelector(state => state.user);
+
+    // We want to load products so we can display product details alongside the cart items they are a part of.
+    const { selective_products_map, loading_products} = useSelector(state => state.products);
 
     const cart_intro = () => {
 
@@ -85,6 +90,18 @@ const CartPage = () => {
     };
 
 
+    
+    const calculate_cart_total = () => {
+        let cart_total = 0;
+        for (let i = 0; i < cart_items_map.length; i += 1) {
+            cart_total += cart_items_map[i].adjusted_total;
+        }
+        
+        cart_total = cart_total.toFixed(2);
+        return cart_total;
+    }
+
+
 
     const display_cart_items = () => {
         let result = [];
@@ -93,15 +110,16 @@ const CartPage = () => {
         // PRINT THE CART ITEMS, this is a FOR LOOP:
         for (let i = 0; i < cart_items_map.length; i += 1) {
 
-            const image_sauce = ('http://localhost:8000' + products_map[i].image_preview).toString();
-            const cart_item_key = (cart_items_map[i].product + products_map[i].title).toString() + i.toString();
+            //console.log(i, "...", selective_products_map[i].image_preview);
+            const image_sauce = ('http://localhost:8000' + selective_products_map[i].image_preview).toString();
+            const cart_item_key = (cart_items_map[i].product + selective_products_map[i].title).toString() + i.toString();
 
             // fields = ('product', 'adjusted_total', 'size', 'quantity')
             result.push(
             <div className="cart_item" key={cart_item_key}>
 
                 
-                <h2>{i+1}:  {products_map[i].title}</h2>
+                <h2>{i+1}:  {selective_products_map[i].title}</h2>
 
                     <motion.div
                     whileHover={{
@@ -116,7 +134,7 @@ const CartPage = () => {
                     <img src={image_sauce} ></img>
                     </motion.div>
                     
-                    <p style={{margin: 0, padding: 0}}>Subt: <strong>{cart_items_map[i].adjusted_total.toFixed(2)} USD</strong></p>
+                    <p style={{margin: 0, padding: 0}}>Subt: <strong>{(cart_items_map[i].adjusted_total*cart_items_map[i].quantity).toFixed(2)} USD</strong></p>
                     <p>Size: <strong>{cart_items_map[i].size}</strong></p>
                     <p>Qty : <strong>{cart_items_map[i].quantity}</strong></p>
 
@@ -137,7 +155,6 @@ const CartPage = () => {
             </div>
             );
             
-            myTotal += cart_items_map[i].adjusted_total;
         }
 
         // Whenever you PUSH into your returned result,
@@ -148,48 +165,49 @@ const CartPage = () => {
             <p key="p divider final">-------------------------</p>
         )
         
-        myTotal = myTotal.toFixed(2);
         return result;
     }
 
-if(!loading_cart_items && cart_items_map != null && !user_loading && isAuthenticated && user != null && !loading_products && products_map != null) {
-
-    
-
-    return(
-        <Layout title = 'Coldcut Merch | Cart' content='Cart Page'>
-
-        <h1 className='mb-5'>Shopping Cart</h1>
-            <div className="mb-4"></div>
-            <div className="home_panel">
-                {cart_intro()}
-                
-                {display_cart_items()}
-            </div>
-
-        <div className="total-price">Subtotal: {myTotal} USD</div>
-        <div className="total-price top">(Subtotal: {myTotal} USD)</div>
-
-        <button type="button" className="checkout-button">Checkout</button>
 
 
-        </Layout>
-    );
-    }
-else{
-    return(
-        <Layout title = 'Coldcut Merch | Cart' content='Cart Page'>
+    // Display the page:
 
-        <h1 className='mb-5'>Shopping Cart</h1>
-            <div className="mb-4"></div>
-            <div className="home_panel">
-                <h1>Loading...</h1>
-            </div>
 
-        </Layout>
-    );
+    if(!loading_cart_items && cart_items_map != null && !user_loading && isAuthenticated && user != null && !loading_products) {
+        
+        return(
+            <Layout title = 'Coldcut Merch | Cart' content='Cart Page'>
 
-}
+            <h1 className='mb-5'>Shopping Cart</h1>
+                <div className="mb-4"></div>
+                <div className="home_panel">
+                    {cart_intro()}
+                    <div className="total-price">Subtotal: {calculate_cart_total()} USD</div>
+                    {display_cart_items()}
+                </div>
+
+            <div className="total-price">Subtotal: {calculate_cart_total()} USD</div>
+
+            <button type="button" className="checkout-button">Checkout</button>
+
+
+            </Layout>
+        );
+        }
+        else{
+            return(
+                <Layout title = 'Coldcut Merch | Cart' content='Cart Page'>
+
+                <h1 className='mb-5'>Shopping Cart</h1>
+                    <div className="mb-4"></div>
+                    <div className="home_panel">
+                        <h1>Loading...</h1>
+                    </div>
+
+                </Layout>
+            );
+
+        }
 }
 
 export default CartPage;
