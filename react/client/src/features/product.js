@@ -108,6 +108,7 @@ export const getProductsByID = createAsyncThunk('product/by_ids', async({product
 
 const initialState = {
     products_map: null,
+    selective_products_map: null,
     loading_products: false,
   }
   
@@ -118,6 +119,10 @@ const initialState = {
     initialState,
     // reducers are used for synchronous dispatches
     reducers: {
+
+      resetProductsMap: (state) => {
+        state.products_map = null;
+      }
 
     },
     extraReducers: builder => {
@@ -141,7 +146,7 @@ const initialState = {
         })
         .addCase( getProductsByID.fulfilled, (state, action) => {
           state.loading_products = false;
-          state.products_map = action.payload; // product state = product data
+          state.selective_products_map = action.payload; // product state = product data
         })
         .addCase( getProductsByID.rejected, state => {
           state.loading_products = false;
@@ -150,4 +155,5 @@ const initialState = {
     },
   });
   
+  export const { resetProductsMap } = productsSlice.actions;
   export default productsSlice.reducer;

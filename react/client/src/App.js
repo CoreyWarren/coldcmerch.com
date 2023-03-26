@@ -10,6 +10,8 @@ import RegisterPage from 'containers/RegisterPage';
 import StorePage from 'containers/StorePage';
 import CartPage from 'containers/CartPage';
 
+import RouteWrapper from 'features/RouteWrapper';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -30,8 +32,22 @@ const App = () => {
         <Route path='/dashboard' element={<DashboardPage/>} />
         <Route path='/login' element={<LoginPage/>} />
         <Route path='/register' element={<RegisterPage/>} />
-        <Route path='/store' element={<StorePage/>} />
-        <Route path='/cart' element={<CartPage/>} />
+        <Route
+          path="/store"
+          element={
+            <RouteWrapper>
+              <StorePage />
+            </RouteWrapper>
+          }
+        />
+        <Route
+          path="/cart"
+          element={
+            <RouteWrapper>
+              <CartPage />
+            </RouteWrapper>
+          }
+        />
       </Routes>
     </Router>
 

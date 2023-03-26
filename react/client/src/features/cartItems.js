@@ -137,6 +137,7 @@ const initialState = {
     cart_items_map: null,
     loading_cart_items: false,
     product_indices: null,
+    error: null,
   }
   
   

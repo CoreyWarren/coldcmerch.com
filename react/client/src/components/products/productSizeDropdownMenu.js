@@ -16,8 +16,9 @@ function ProductSizeDropdownMenu(sizeListMap, requested_product_id) {
 
     for (let i = 0; i < relevant_product_sizes.length; i += 1){
         const my_href = "#/action-" + [i];
+        const my_key = relevant_product_sizes[i].size + "-dropdown-item-" + relevant_product_sizes.title;
         htmlSizeList.push(
-            <Dropdown.Item href={my_href}>{relevant_product_sizes[i].size}</Dropdown.Item>
+            <Dropdown.Item href={my_href} key={my_key}>{relevant_product_sizes[i].size}</Dropdown.Item>
             );
     };
 
