@@ -94,7 +94,7 @@ class Cart(models.Model):
 class CartItemManager(models.Manager):
     # Orders are basically checked-out carts that are ready
     # to be shipped by us. That's why it has all this info.
-    def create_cart_item(self, cart, product, adjusted_total, color, size, quantity):
+    def create_cart_item(self, cart, product, adjusted_total, size, quantity, my_user):
 
         cart_item = self.model(
             cart = cart,
@@ -102,6 +102,7 @@ class CartItemManager(models.Manager):
             adjusted_total = adjusted_total,
             size = size,
             quantity = quantity,
+            my_user = my_user,
         )
         cart_item.save(using=self._db)
         return cart_item

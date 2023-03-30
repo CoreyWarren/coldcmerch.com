@@ -128,19 +128,35 @@ class RetrieveCartItemsView(APIView):
         return Response(cart_items.data, status=status.HTTP_200_OK)
 
 
+    
+# ADD TO CART
+# CREATE CART ITEM
+# fields = ('cart', 'product', 'adjusted_total', 'size', 'quantity', 'my_user')
 class CreateCartItemView(APIView):
     permission_classes = [IsAuthenticated]
     def post(self, request):
+        if not request.user.is_authenticated:
+            # Let them/our front end know by sending a 401 response and a message.
+            return Response({'response': 'Authentication credentials were not provided.'},
+                            status=status.HTTP_401_UNAUTHORIZED)
+        
         data = request.data
+
+        print(data)
+
+        data['my_user'] = request.user.id
+        data['cart'] = Cart.objects.filter(my_user=request.user, checked_out=False).first().id
+
+        print(data)
 
         serializer = CreateCartItemSerializer(data = data)
 
         if not serializer.is_valid():
             return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
 
-        cart_item = serializer.create(serializer.validated_data)
-        cart_item = CartItemSerializer(cart_item)
+        serializer.save()
 
         print("Cart Item created in models - coldcmerch/shop/views.py")
 
-        return Response(cart_item.data, status=status.HTTP_201_CREATED)
+        return Response(status=status.HTTP_201_CREATED)
+    

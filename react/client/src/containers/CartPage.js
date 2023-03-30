@@ -58,7 +58,7 @@ const CartPage = () => {
     
 
     // We want to load cart items so we can display them. This is the main purpose of this page.
-    const { cart_items_map, loading_cart_items, product_indices } = useSelector(state => state.cart_items);
+    const { cart_items_map, loading_cart_items } = useSelector(state => state.cart_items);
 
     // We want to see if the USER is logged in or not, so we can redirect them to the login page if they are not.
     const { isAuthenticated, user, user_loading } = useSelector(state => state.user);

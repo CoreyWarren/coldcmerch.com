@@ -2,6 +2,8 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 // cart_items.js feature in REDUX
 
+// GET PRODUCT DETAILS
+// TO DISPLAY INSIDE CART PAGE
 export const getProductDetails = createAsyncThunk(
   "product/by_ids",
   async (productIds, thunkAPI) => {
@@ -72,6 +74,8 @@ export const getProductDetails = createAsyncThunk(
   //  action by passing the `productIds` as an argument. 
   //  Finally, it returns the `cart_items_map`.
 
+// This data is then displayed on the cart page.
+
 export const getCartItems = createAsyncThunk('cart_items', async (_, thunkAPI) => {
 
     try{
@@ -131,11 +135,57 @@ export const getCartItems = createAsyncThunk('cart_items', async (_, thunkAPI) =
 });
 
 
+
+// Add to Cart
+
+// Adds items to cart.
+// This is a POST request.
+
+export const addToCart = createAsyncThunk('cart_items/post', async ({product, adjusted_total, size, quantity}, thunkAPI) => {
+    const body = JSON.stringify({
+      // cart
+      product,
+      adjusted_total,
+      size,
+      quantity,
+      //my_user
+    });
+    
+    // ('cart', 'product', 'adjusted_total', 'size', 'quantity', 'my_user')
+
+    try {
+      const res = await fetch(
+        '/api/shop/cart_items/post', {
+            method: 'POST',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body,
+        });
+
+    } catch (err) {
+      console.log("Add to cart api ERROR.");
+      return thunkAPI.rejectWithValue(err.response.data);
+    }
+
+
+  });
+
+
+
+
+
+
+
+
 // Cart Items redux STATE management
 
 const initialState = {
     cart_items_map: null,
     loading_cart_items: false,
+    processing_add_to_cart: false,
+    add_to_cart_response: null,
     product_indices: null,
     error: null,
   }
@@ -175,8 +225,26 @@ const initialState = {
         .addCase(getProductDetails.rejected, (state, action) => {
           state.loading_cart_items = false;
           state.error = action.error.message;
+        })
+
+        // add to cart
+
+        .addCase(addToCart.pending, (state) => {
+          state.processing_add_to_cart = true;
+        })
+
+        .addCase(addToCart.fulfilled, (state, action) => {
+          state.processing_add_to_cart = false;
+          state.add_to_cart_response = action.payload;
+        })
+
+        .addCase(addToCart.rejected, (state, action) => {
+          state.processing_add_to_cart = false;
+          state.error = action.error.message;
         });
+
     },
   });
+
   
   export default cartItemsSlice.reducer;

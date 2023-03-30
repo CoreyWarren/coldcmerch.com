@@ -15,7 +15,7 @@ import { motion } from 'framer-motion';
 // Redux Slice Imports
 import { getProducts } from '../features/product';
 import { getProductSize } from '../features/productSize';
-
+import { addToCart } from 'features/cartItems';
 // Components Imports
 import Layout from 'components/Layout';
 import ProductSizeDropdownMenu from 'components/products/productSizeDropdownMenu';
@@ -60,6 +60,7 @@ const StorePage = () => {
     // Access our State (Redux)
     const {products_map, loading_products} = useSelector(state => state.products);
     const {product_size_map, loading_product_sizes} = useSelector(state => state.product_size);
+    const {processing_add_to_cart, add_to_cart_response} = useSelector(state => state.cart_items);
 
 
 
@@ -70,6 +71,13 @@ const StorePage = () => {
         for (let i = 0; i < products_map.length; i += 1) {
             const image_sauce = ('http://localhost:8000' + products_map[i].image_preview).toString();
             
+            const product_to_add = {
+                product: products_map[i].id,
+                adjusted_total: products_map[i].base_cost,
+                size: product_size_map[0].size,
+                quantity: 1,
+            }
+
             result.push(
             <div className="shop_item" key={i}>
                 <h2>{products_map[i].title}</h2>
@@ -101,9 +109,10 @@ const StorePage = () => {
                     </Dropdown>
                 </div>
 
-                <button className="btn btn-one">Add to Cart</button>
+                <button onClick={() => dispatch(addToCart(product_to_add))} className="btn btn-one">Add to Cart</button>
                 </div>
             )
+
         }
 
         return result;

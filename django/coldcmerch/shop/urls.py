@@ -36,7 +36,7 @@ urlpatterns = [
     path('cart_items', RetrieveCartItemsView.as_view()), 
 
     # api/shop/cart_item/post
-    path('cart_item/post', CreateCartItemView.as_view()), 
+    path('cart_items/post', CreateCartItemView.as_view()), 
 
 
 ]
