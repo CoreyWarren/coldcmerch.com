@@ -121,9 +121,21 @@ div.dropdown-menu.show{
     border-width: 0.1rem;
 }
 
-.dropdown-item{
+a.dropdown-item{
     font-size: 1.3rem;
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    min-height: 25px;
+    padding: 0;
+}
+
+.dropdown-item button{
+    position: relative!important;
+    z-index: 1;
+    display: inline-block!important;
+    height: 100%!important;
+    width: 100%!important;
+    margin: 0 !important;
+    padding: 0 !important;
 }
 
 

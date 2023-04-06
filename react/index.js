@@ -25,7 +25,9 @@ const productSizeRoute = require('./routes/shop/productSize');
 // cart.js route
 const cartRoute = require('./routes/shop/cart');
 // cartItems.js route
-const cartItemsRoute = require('./routes/shop/cartItems');
+const cartItemsGetRoute = require('./routes/shop/cartitemsGet');
+// cartItemsCreate.js route
+const cartItemsCreateRoute = require('./routes/shop/cartItemsCreate');
 
 const app = express();
 
@@ -43,7 +45,8 @@ app.use(productRoute);
 app.use(productsbyIDsRoute);
 app.use(productSizeRoute);
 app.use(cartRoute);
-app.use(cartItemsRoute);
+app.use(cartItemsGetRoute);
+app.use(cartItemsCreateRoute);
 
 app.use(express.static('client/build'));
 app.get('*', (req, res) => {

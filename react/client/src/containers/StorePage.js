@@ -7,7 +7,7 @@
 // React and Redux Imports
 import { useSelector } from 'react-redux';
 import { useDispatch} from 'react-redux';
-import { useEffect} from 'react';
+import { useEffect, useState} from 'react';
 
 // JavaScript Animation Imports
 import { motion } from 'framer-motion';
@@ -15,7 +15,7 @@ import { motion } from 'framer-motion';
 // Redux Slice Imports
 import { getProducts } from '../features/product';
 import { getProductSize } from '../features/productSize';
-
+import { addToCart } from 'features/cartItems';
 // Components Imports
 import Layout from 'components/Layout';
 import ProductSizeDropdownMenu from 'components/products/productSizeDropdownMenu';
@@ -60,8 +60,15 @@ const StorePage = () => {
     // Access our State (Redux)
     const {products_map, loading_products} = useSelector(state => state.products);
     const {product_size_map, loading_product_sizes} = useSelector(state => state.product_size);
+    // const {processing_add_to_cart, add_to_cart_response} = useSelector(state => state.cart_items);
+
+    const [selected_size, set_selected_size] = useState({});
 
 
+    const handleSizeSelection = (productId, size) => {
+        set_selected_size((prevState) => ({ ...prevState, [productId]: size }));
+        console.log("Selected size:", selected_size);
+    };
 
     const display_products = () => {
         let result = [];
@@ -70,6 +77,13 @@ const StorePage = () => {
         for (let i = 0; i < products_map.length; i += 1) {
             const image_sauce = ('http://localhost:8000' + products_map[i].image_preview).toString();
             
+            let product_to_add = {
+                product: products_map[i].id,
+                adjusted_total: products_map[i].base_cost,
+                size: (selected_size && selected_size[products_map[i].id]),
+                quantity: 1,
+            }
+
             result.push(
             <div className="shop_item" key={i}>
                 <h2>{products_map[i].title}</h2>
@@ -85,25 +99,26 @@ const StorePage = () => {
                     },
                 }}
                 >
-                <img src={image_sauce}></img>
+                <img src={image_sauce} alt={products_map[i].description}></img>
                 </motion.div>
 
                 <p className="price">{products_map[i].base_cost} USD</p>
 
-                <div className="dropdown storebutton">
-                    <Dropdown>
+                <div className="dropdown storebutton collapseOnSelect">
+                    <Dropdown onSelect={(key, e) => handleSizeSelection(e)}>
                     <Dropdown.Toggle variant="success" id="dropdown-basic">
                         Sizes
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
-                        {ProductSizeDropdownMenu(product_size_map, products_map[i].id)}
+                        {ProductSizeDropdownMenu(product_size_map, products_map[i].id, handleSizeSelection)}
                     </Dropdown.Menu>
                     </Dropdown>
                 </div>
 
-                <button className="btn btn-one">Add to Cart</button>
+                <button onClick={() => dispatch(addToCart(product_to_add))} className="btn btn-one">Add to Cart</button>
                 </div>
             )
+
         }
 
         return result;
