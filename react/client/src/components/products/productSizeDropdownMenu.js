@@ -2,20 +2,6 @@ import Dropdown from 'react-bootstrap/Dropdown';
 
 function ProductSizeDropdownMenu(sizeListMap, requested_product_id, handleSizeSelection) {
 
-    const dropdown = document.querySelector('.dropdown-menu');
-
-    if(dropdown){
-        const dropdownItems = dropdown.querySelectorAll('.dropdown-item');
-        dropdownItems.forEach(item => {
-            const button = item.querySelector('.dropdown-item-button');
-            button.removeEventListener('click', button._handleClick);
-            button.addEventListener('click', () => {
-                const eventKey = JSON.parse(button.getAttribute('eventkey'));
-                handleSizeSelection(eventKey.productId, eventKey.size);
-            });
-        });
-    }
-
 
     // sort the sizes according to the product we need here
     const relevant_product_sizes = [];
@@ -39,7 +25,6 @@ function ProductSizeDropdownMenu(sizeListMap, requested_product_id, handleSizeSe
                 <button
                 type="button"
                 className="dropdown-item-button"
-                eventkey={JSON.stringify({ productId: requested_product_id, size: relevant_product_sizes[i].size })}
                 onClick={() => handleSizeSelection(requested_product_id, relevant_product_sizes[i].size)}
                 >
                 {relevant_product_sizes[i].size}
@@ -49,6 +34,8 @@ function ProductSizeDropdownMenu(sizeListMap, requested_product_id, handleSizeSe
             );
 
     };
+
+    
 
     // return all HTML elements as an object (which can be iterated thru)
     return htmlSizeList;
