@@ -65,9 +65,9 @@ graph TD
 
 ```mermaid
 graph TD
-    J -->|Process Payment| M[Stripe Server SDK]
+    J[Express/Node.js API] -->|Process Payment| M[Stripe Server SDK]
     M -->|Update Payment Intent| J
-    J -->|Response| H
+    J -->|Response| H[Client]
 ```
 
 
