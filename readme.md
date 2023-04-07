@@ -19,7 +19,7 @@ graph TD
 ```
 The above chart illustrates the communication flow between the client and server-side components of a web application. The client sends requests to the server-side API to fetch data from the database, which is then returned to the client for rendering the UI. The client also dispatches actions to update the state of the application, which trigger API calls to update the server-side database.
 
-### Figure 1.2: *Stripe Payment Flow (with Intents):*
+### Figure 2.1: *Stripe Payment Flow (with Intents):*
 
 ```mermaid
 graph TD
@@ -38,6 +38,37 @@ graph TD
 ```
 
 This chart illustrates the payment flow for a web application that utilizes Stripe Payment Intents. The client initiates the payment using the Stripe Client SDK, which creates a Payment Intent on the server-side. The Payment Intent ID is then sent back to the client, which confirms the payment using the Stripe Client SDK. During the payment process, Stripe may request authentication from the card issuing bank, which is handled by the Stripe Client SDK. Once the payment is confirmed, a confirmation is sent back to the server-side and the Payment Intent is updated to reflect the payment status. Finally, a response is sent back to the client to complete the payment process.
+
+### Figure 2.2: *Payment Initiation:*
+
+```mermaid
+graph TD
+    H[Client] -->|Initiate Payment| I[Stripe Client SDK]
+    I -->|Create Payment Intent| J[Express/Node.js API]
+    J -->|Retrieve Payment Intent ID| I
+    I -->|Send Payment Intent ID| H
+
+```
+
+### Figure 2.3: *Payment Confirmation:*
+
+```mermaid
+graph TD
+    H[Client] -->|Confirm Payment| K[Stripe Client SDK]
+    K -->|Authenticate Payment| L[Card Issuing Bank]
+    L -->|Send Authentication Result| K
+    K -->|Send Confirmation| J[Express/Node.js API]
+
+```
+
+### Figure 2.4: *Payment Processing:*
+
+```mermaid
+graph TD
+    J -->|Process Payment| M[Stripe Server SDK]
+    M -->|Update Payment Intent| J
+    J -->|Response| H
+```
 
 
 
