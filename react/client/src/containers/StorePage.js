@@ -73,20 +73,34 @@ const StorePage = () => {
 
         // within the '[]' would go any parameters used in this useEffect function.
     }, [selected_size])
-    
-    
+
 
     const handleSizeSelection = (productId, size) => {
         set_selected_size((prevState) => ({ ...prevState, [productId]: size }));
     };
 
+
+
+    // Display certain things in our Size Dropdown Menu's Bar
+    // depending on whether or not a size has been selected.
+    const renderSelectedSize = (productId, i) => {
+        if (selected_size[productId]) {
+          return `Size: ${selected_size[productId]}`;
+        }
+        return 'Select Size:';
+      };
+
+
+
     const display_products = () => {
+
+        
         let result = [];
 
         // PRINT THE PRODUCTS, FOR LOOP:
         for (let i = 0; i < products_map.length; i += 1) {
             const image_sauce = ('http://localhost:8000' + products_map[i].image_preview).toString();
-            
+
             let product_to_add = {
                 product: products_map[i].id,
                 adjusted_total: products_map[i].base_cost,
@@ -115,9 +129,9 @@ const StorePage = () => {
                 <p className="price">{products_map[i].base_cost} USD</p>
 
                 <div className="dropdown storebutton collapseOnSelect">
-                    <Dropdown onSelect={(key, e) => handleSizeSelection(e)}>
+                    <Dropdown>
                     <Dropdown.Toggle variant="success" id="dropdown-basic">
-                        Sizes
+                        {renderSelectedSize(products_map[i].id)}
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
                         {ProductSizeDropdownMenu(product_size_map, products_map[i].id, handleSizeSelection)}
