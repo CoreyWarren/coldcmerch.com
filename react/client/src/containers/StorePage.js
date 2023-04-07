@@ -32,6 +32,13 @@ import Dropdown from 'react-bootstrap/Dropdown';
 
 const StorePage = () => {
 
+    // Access our State (Redux)
+    const {products_map, loading_products} = useSelector(state => state.products);
+    const {product_size_map, loading_product_sizes} = useSelector(state => state.product_size);
+    // const {processing_add_to_cart, add_to_cart_response} = useSelector(state => state.cart_items);
+
+    const [selected_size, set_selected_size] = useState({});
+
     const dispatch = useDispatch();
     // useEffect can only be called once. (Redux)
     // Follows the Rules of Hooks.
@@ -54,20 +61,23 @@ const StorePage = () => {
         dispatch(getProductSize());
 
         // within the '[]' would go any parameters used in this useEffect function.
-
     }, [dispatch])
+
+    useEffect(() => {
+        
+        // Each time the DOM is rendered, this useEffect function will be called.
+        // I want to see what the selected_size is each time the DOM is rendered.
+        if(selected_size){
+            console.log("Selected size:", selected_size);
+        }
+
+        // within the '[]' would go any parameters used in this useEffect function.
+    }, [selected_size])
     
-    // Access our State (Redux)
-    const {products_map, loading_products} = useSelector(state => state.products);
-    const {product_size_map, loading_product_sizes} = useSelector(state => state.product_size);
-    // const {processing_add_to_cart, add_to_cart_response} = useSelector(state => state.cart_items);
-
-    const [selected_size, set_selected_size] = useState({});
-
+    
 
     const handleSizeSelection = (productId, size) => {
         set_selected_size((prevState) => ({ ...prevState, [productId]: size }));
-        console.log("Selected size:", selected_size);
     };
 
     const display_products = () => {
