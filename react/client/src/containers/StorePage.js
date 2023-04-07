@@ -83,7 +83,7 @@ const StorePage = () => {
 
     // Display certain things in our Size Dropdown Menu's Bar
     // depending on whether or not a size has been selected.
-    const renderSelectedSize = (productId, i) => {
+    const renderSelectedSize = (productId) => {
         if (selected_size[productId]) {
           return `Size: ${selected_size[productId]}`;
         }
