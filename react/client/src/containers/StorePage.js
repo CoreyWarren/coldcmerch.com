@@ -60,8 +60,19 @@ const StorePage = () => {
         // -> Interacts with Django API
         dispatch(getProductSize());
 
+
         // within the '[]' would go any parameters used in this useEffect function.
-    }, [dispatch])
+    }, [dispatch]);
+
+
+    // When we get products and products_size, we want to see them.
+    // Display them in the console.
+    useEffect(() => {
+        console.log("Products:", products_map)
+        console.log("Product sizes:", product_size_map);
+        
+    }, [products_map, product_size_map]);
+    
 
     useEffect(() => {
         
@@ -89,6 +100,32 @@ const StorePage = () => {
         }
         return 'Select Size:';
       };
+
+    const renderSelectedSizePrice = (productId, selected_size_to_render) => {
+        // selected_size_to_render = selected_size[productId]
+        // The below code is a filter function that returns the adjusted_total of the product_size_map
+        // that matches the product_id and size of the product_size_map.
+        // This is used to display the price of the product in the dropdown menu.
+        // If the selected_size_to_render is null, then return null.
+        // Otherwise, return the adjusted_total of the product_size_map that matches the product_id and size.
+       
+        if (selected_size_to_render) {
+            const matchingProductSize = product_size_map.find(
+              (product_size) => product_size.product_id === productId && product_size.size === selected_size_to_render
+            );
+            if (matchingProductSize && matchingProductSize.added_cost !== 0) {
+                // Case: Success, user has selected a size that matches a product_size_map.
+                return `+ ${matchingProductSize.added_cost}`;
+            } else {
+                // Case: User has selected a size, but it doesn't match any of the product_size_map.
+                // OR, User has selected a size, but the price difference is 0.
+                return '';
+            }
+        } else {
+            // Case: User hasn't selected a size since refresh.
+            return '';
+        }
+    };
 
 
 
@@ -126,7 +163,7 @@ const StorePage = () => {
                 <img src={image_sauce} alt={products_map[i].description}></img>
                 </motion.div>
 
-                <p className="price">{products_map[i].base_cost} USD</p>
+                <p className="price">{products_map[i].base_cost} {renderSelectedSizePrice(products_map[i].id, selected_size[products_map[i].id])} USD </p>
 
                 <div className="dropdown storebutton collapseOnSelect">
                     <Dropdown>
