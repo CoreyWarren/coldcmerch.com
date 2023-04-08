@@ -6,37 +6,37 @@ urlpatterns = [
 
     # PRODUCTS:
     # api/shop/product
-    path('product', RetrieveSingleProductView.as_view()),
+    path('product', RetrieveSingleProductView.as_view(), name='get_product'),
 
     # api/shop/product/size
-    path('product/size', RetrieveProductSizeView.as_view()),
+    path('product/size', RetrieveProductSizeView.as_view(), name='get_product_size'),
 
     # api/shop/product/all
-    path('product/all', RetrieveAllProductView.as_view()),
+    path('product/all', RetrieveAllProductView.as_view(), name='get_all_products'),
 
     # api/shop/product/by_ids
-    path('product/by_ids', RetrieveProductsUsingIDs.as_view()),
+    path('product/by_ids', RetrieveProductsUsingIDs.as_view(), name='get_products_using_ids'),
 
     # ORDERS:
     # api/shop/order
-    path('order', RetrieveOrderView.as_view()),
+    path('order', RetrieveOrderView.as_view(), name='get_order'),
 
     # api/shop/order/post
-    path('order/post', CreateOrderView.as_view()),
+    path('order/post', CreateOrderView.as_view(), name='create_order'),
 
     # CARTS:
     # api/shop/cart
-    path('cart', RetrieveCartView.as_view()), 
+    path('cart', RetrieveCartView.as_view(), name='get_cart'), 
 
     # api/shop/cart/post
-    path('cart/post', CreateCartView.as_view()), 
+    path('cart/post', CreateCartView.as_view(), name='create_cart'), 
 
     # CART ITEMS:
     # api/shop/cart_item
-    path('cart_items', RetrieveCartItemsView.as_view()), 
+    path('cart_items', RetrieveCartItemsView.as_view(), name='get_cart_items'), 
 
     # api/shop/cart_item/post
-    path('cart_items/post', CreateCartItemView.as_view()), 
+    path('cart_items/post', CreateCartItemView.as_view(), name='create_cart_item'),
 
 
 ]

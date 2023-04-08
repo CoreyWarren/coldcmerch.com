@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # added:
     'rest_framework',
+    'rest_framework.authtoken',
     'users', #custom user authentication django app
     'shop', # e-commerce backend django app
     'stripePayments',
@@ -98,7 +99,11 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    },
+    'test': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'memory',
+    },
 }
 
 
