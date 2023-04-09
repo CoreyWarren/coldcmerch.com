@@ -255,17 +255,33 @@ const StorePage = () => {
     // ============================
     // ============================
 
-    if(products_map == null || loading_products || loading_product_sizes || product_size_map == null)  {
+    if((products_map == null && loading_products) || (loading_product_sizes && product_size_map == null))  {
         return (
             <Layout title = 'Coldcut Merch | Store' content = 'Store page'>
                 <div className="dashboard_panel">
-                    <h2> Loading Store...: </h2>
+                    <h2> Loading Store: </h2>
                     <p> Done Loading Products? <br></br> {String(!loading_products)}</p>
                     <p> Done Loading Product Sizes? <br></br> {String(!loading_product_sizes)}</p>
                 </div>
             </Layout>
         )
-    }else{
+    }else if (products_map==null || product_size_map==null) {
+        return (
+            <Layout title = 'Coldcut Merch | Store' content = 'Store page'>
+                <div className="dashboard_panel">
+                    <h2 style={{fontFamily: 'Arial', fontSize: '3rem'}}>Store Error:</h2>
+                    <p style={{fontFamily: 'Arial', fontSize: '1.2rem'}}> Either products or product sizes were unable to be loaded.</p>
+                    <p style={{fontFamily: 'Arial', fontSize: '1.2rem'}}> If you are not a developer and you are seeing this, then
+                        that means that there are either no available products being sold right now, or there is a technical issue with our database.</p>
+
+                    <p style={{fontFamily: 'Arial', fontSize: '1.2rem'}}> - Corey from the Past</p>
+
+
+                </div>
+            </Layout>
+        )
+    }
+    else{
         return (
             <Layout title = 'Coldcut Merch | Store' content = 'Store page'>
                 <div className="dashboard_panel">
