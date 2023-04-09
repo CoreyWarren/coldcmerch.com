@@ -70,7 +70,7 @@ class StripeCreatePaymentIntentView(APIView):
             related_size        = single_cart_item['size']
 
             related_product_cost    = Product.objects.get(id=related_product).base_cost
-            related_size_cost       = ProductSize.objects.get(size=related_size).added_cost
+            related_size_cost       = ProductSize.objects.get(product=related_product, size=related_size).added_cost
 
             # Add the two costs together
             single_item_cost    = related_product_cost + related_size_cost

@@ -40,6 +40,10 @@ const StorePage = () => {
     const [selected_size, set_selected_size] = useState({});
 
     const dispatch = useDispatch();
+
+
+    // ============================
+    // INITIALIZE OUR DOM:
     // useEffect can only be called once. (Redux)
     // Follows the Rules of Hooks.
     // Can include other functions within it, if needed. But you cannot have any
@@ -60,9 +64,25 @@ const StorePage = () => {
         // -> Interacts with Django API
         dispatch(getProductSize());
 
-        // within the '[]' would go any parameters used in this useEffect function.
-    }, [dispatch])
 
+        // within the '[]' would go any parameters used in this useEffect function.
+    }, [dispatch]);
+
+
+    // ============================
+    // RECEIVING PRODUCTS AND PRODUCTS SIZES, SANITY CHECK:
+    // When we get products and products_size, we want to see them.
+    // Display them in the console.
+    useEffect(() => {
+        console.log("Products:", products_map)
+        console.log("Product sizes:", product_size_map);
+        
+    }, [products_map, product_size_map]);
+    
+
+
+    // ============================
+    // SIZE SELECTION SANITY CHECK:
     useEffect(() => {
         
         // Each time the DOM is rendered, this useEffect function will be called.
@@ -73,20 +93,107 @@ const StorePage = () => {
 
         // within the '[]' would go any parameters used in this useEffect function.
     }, [selected_size])
-    
-    
+
+
+
+
+    // ============================
+    // ============================
+    // HELPER FUNCTIONS:
+    // ============================
+    // ============================
+
+
+        // ============================
+    // TOAST NOTIFICATION:
+
+    const showAddToCartToast = async (product_to_add, item_id) => {
+
+        let success = false;
+
+        // Dispatch our addToCart function
+        // Then, grab the item that was added to the cart.
+        // This allows us to wait until the item is added to the cart
+        //   BEFORE showing the toast.
+        await dispatch(addToCart(product_to_add)).then((action) =>
+            {
+                console.log("action.payload:", action.payload);
+                if (action.payload.success) {
+                    success = true;
+                }
+            });
+
+        // Does this dispatch addtocart, or does it simply wait for it?
+        // Answer: It does this dispatch, and then waits for it to finish.
+
+        // if addedItem is not null, then we know that the item was added to the cart.
+        // So show the toast.
+        if (success) {
+            console.log('attempting to toast for item_id:', item_id);
+            const toast = document.getElementById(`add-to-cart-toast-${item_id}`);
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        };
+        
+    };
+
+
 
     const handleSizeSelection = (productId, size) => {
         set_selected_size((prevState) => ({ ...prevState, [productId]: size }));
     };
 
+
+
+    // Display certain things in our Size Dropdown Menu's Bar
+    // depending on whether or not a size has been selected.
+    const renderSelectedSize = (productId) => {
+        if (selected_size[productId]) {
+          return `Size: ${selected_size[productId]}`;
+        }
+        return 'Select Size:';
+      };
+
+    const renderSelectedSizePrice = (productId, selected_size_to_render) => {
+        // selected_size_to_render = selected_size[productId]
+        // The below code is a filter function that returns the adjusted_total of the product_size_map
+        // that matches the product_id and size of the product_size_map.
+        // This is used to display the price of the product in the dropdown menu.
+        // If the selected_size_to_render is null, then return null.
+        // Otherwise, return the adjusted_total of the product_size_map that matches the product_id and size.
+       
+        if (selected_size_to_render) {
+            const matchingProductSize = product_size_map.find(
+              (product_size) => product_size.product_id === productId && product_size.size === selected_size_to_render
+            );
+            if (matchingProductSize && matchingProductSize.added_cost !== 0) {
+                // Case: Success, user has selected a size that matches a product_size_map.
+                return `+ ${matchingProductSize.added_cost}`;
+            } else {
+                // Case: User has selected a size, but it doesn't match any of the product_size_map.
+                // OR, User has selected a size, but the price difference is 0.
+                return '';
+            }
+        } else {
+            // Case: User hasn't selected a size since refresh.
+            return '';
+        }
+    };
+
+
+
     const display_products = () => {
+
+        
         let result = [];
 
         // PRINT THE PRODUCTS, FOR LOOP:
         for (let i = 0; i < products_map.length; i += 1) {
             const image_sauce = ('http://localhost:8000' + products_map[i].image_preview).toString();
-            
+
             let product_to_add = {
                 product: products_map[i].id,
                 adjusted_total: products_map[i].base_cost,
@@ -112,12 +219,12 @@ const StorePage = () => {
                 <img src={image_sauce} alt={products_map[i].description}></img>
                 </motion.div>
 
-                <p className="price">{products_map[i].base_cost} USD</p>
+                <p className="price">{products_map[i].base_cost} {renderSelectedSizePrice(products_map[i].id, selected_size[products_map[i].id])} USD </p>
 
                 <div className="dropdown storebutton collapseOnSelect">
-                    <Dropdown onSelect={(key, e) => handleSizeSelection(e)}>
+                    <Dropdown>
                     <Dropdown.Toggle variant="success" id="dropdown-basic">
-                        Sizes
+                        {renderSelectedSize(products_map[i].id)}
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
                         {ProductSizeDropdownMenu(product_size_map, products_map[i].id, handleSizeSelection)}
@@ -125,7 +232,10 @@ const StorePage = () => {
                     </Dropdown>
                 </div>
 
-                <button onClick={() => dispatch(addToCart(product_to_add))} className="btn btn-one">Add to Cart</button>
+                <button onClick={() => showAddToCartToast(product_to_add, i)} className="btn btn-one">Add to Cart</button>
+
+                <div className="add-to-cart-toast" id={`add-to-cart-toast-${i}`}>"{products_map[i].title}" was added to your Cart! (size: {selected_size[products_map[i].id]})</div>
+
                 </div>
             )
 
@@ -134,6 +244,16 @@ const StorePage = () => {
         return result;
     }
 
+
+
+
+
+
+    // ============================
+    // ============================
+    // DISPLAY OUR WEBPAGE:
+    // ============================
+    // ============================
 
     if(products_map == null || loading_products || loading_product_sizes || product_size_map == null)  {
         return (

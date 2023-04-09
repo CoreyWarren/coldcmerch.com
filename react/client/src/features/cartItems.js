@@ -164,6 +164,10 @@ export const addToCart = createAsyncThunk('cart_items/post', async ({product, ad
             body,
         });
 
+        const addedItem = await res.json();
+
+        return { item: addedItem, success: true };
+
     } catch (err) {
       console.log("Add to cart api ERROR.");
       return thunkAPI.rejectWithValue(err.response.data);

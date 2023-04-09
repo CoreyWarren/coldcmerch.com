@@ -1,7 +1,7 @@
 from shop.serializers import CartSerializer, CartItemSerializer, \
                 CreateCartItemSerializer, \
                 CreateCartSerializer
-from shop.models import Cart, CartItem
+from shop.models import Cart, CartItem, ProductSize, Product
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.response import Response
@@ -135,28 +135,77 @@ class RetrieveCartItemsView(APIView):
 class CreateCartItemView(APIView):
     permission_classes = [IsAuthenticated]
     def post(self, request):
+
+        # Check if the requester is an authenticated user (i.e.: logged in)
         if not request.user.is_authenticated:
             # Let them/our front end know by sending a 401 response and a message.
             return Response({'response': 'Authentication credentials were not provided.'},
                             status=status.HTTP_401_UNAUTHORIZED)
         
+        # Grab the data from the request
         data = request.data
 
-        print(data)
+        # Sanity check for the data we're receiving
+        print("Add Cart -- Old data, request from Front-End: \n", data)
 
+
+        # Interpret 'my_user' and 'cart' from the request
         data['my_user'] = request.user.id
-        data['cart'] = Cart.objects.filter(my_user=request.user, checked_out=False).first().id
+        data['cart'] = Cart.objects.get(my_user=request.user, checked_out=False).id
 
-        print(data)
 
+        # Grab the product size price from our backend database:
+        # Send a special response if it's not found.
+        try:
+            # perhaps the size may not exist, either due to front end unexpected behaviors, OR user sends custom JSON.
+            product_size_price = ProductSize.objects.get(product_id=data['product'], size=data['size']).added_cost
+        except:
+            return Response({'response': 'Product Size does not exist. Could not retrieve added cost.'},
+                            status=status.HTTP_400_BAD_REQUEST)
+
+
+        # Check PRODUCT to see if it's eligible to be interpreted
+        # Send a special response if it's not found.
+        try:
+            product_base_cost = Product.objects.get(id=data['product']).base_cost
+        except:
+            return Response({'response': 'Product does not exist. Could not retrieve base cost.'},
+                            status=status.HTTP_400_BAD_REQUEST)
+        
+
+
+        # Check QUANTITY to see if it's eligible to be interpreted
+        product_quantity = data['quantity']
+        print("Add to Cart -- Quantity RAW: ", product_quantity)
+        if not isinstance(product_quantity, int):
+            return Response({'response': 'Quantity must be an integer.'},
+                status=status.HTTP_400_BAD_REQUEST)
+        elif (product_quantity < 1 or product_quantity > 10):
+            return Response({'response': 'Quantity must be between 1 and 10.'},
+                status=status.HTTP_400_BAD_REQUEST)
+
+
+        # Calculate the adjusted total and amend it to the data:
+        data['adjusted_total'] = ( product_base_cost + product_size_price )  * product_quantity
+        print("Product's base cost: ", product_base_cost)
+        print("Product's size price: ", product_size_price)
+        print("Add to Cart -- Adjusted Total: ", data['adjusted_total'])
+
+
+        # Print out the data we're sending to the backend
+        print("Add to Cart -- New data, for serialization for database: \n", data)
+
+        # Serialize the data and send it to the database
         serializer = CreateCartItemSerializer(data = data)
 
+        # Our serializer will check if the data is valid one last time.
         if not serializer.is_valid():
             return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
 
+        # Make sure to save the data to the database.
         serializer.save()
 
         print("Cart Item created in models - coldcmerch/shop/views.py")
 
-        return Response(status=status.HTTP_201_CREATED)
+        return Response({'item': serializer.data, 'success': True}, status=status.HTTP_201_CREATED)
     

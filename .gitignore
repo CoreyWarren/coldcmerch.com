@@ -1,3 +1,4 @@
 .env
 winenv/
 *.pyc
+commit_message.txt
