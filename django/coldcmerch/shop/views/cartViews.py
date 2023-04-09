@@ -207,5 +207,5 @@ class CreateCartItemView(APIView):
 
         print("Cart Item created in models - coldcmerch/shop/views.py")
 
-        return Response(status=status.HTTP_201_CREATED)
+        return Response({'item': serializer.data, 'success': True}, status=status.HTTP_201_CREATED)
     

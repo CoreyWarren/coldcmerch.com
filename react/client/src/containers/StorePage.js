@@ -40,6 +40,10 @@ const StorePage = () => {
     const [selected_size, set_selected_size] = useState({});
 
     const dispatch = useDispatch();
+
+
+    // ============================
+    // INITIALIZE OUR DOM:
     // useEffect can only be called once. (Redux)
     // Follows the Rules of Hooks.
     // Can include other functions within it, if needed. But you cannot have any
@@ -65,6 +69,8 @@ const StorePage = () => {
     }, [dispatch]);
 
 
+    // ============================
+    // RECEIVING PRODUCTS AND PRODUCTS SIZES, SANITY CHECK:
     // When we get products and products_size, we want to see them.
     // Display them in the console.
     useEffect(() => {
@@ -74,6 +80,9 @@ const StorePage = () => {
     }, [products_map, product_size_map]);
     
 
+
+    // ============================
+    // SIZE SELECTION SANITY CHECK:
     useEffect(() => {
         
         // Each time the DOM is rendered, this useEffect function will be called.
@@ -84,6 +93,53 @@ const StorePage = () => {
 
         // within the '[]' would go any parameters used in this useEffect function.
     }, [selected_size])
+
+
+
+
+    // ============================
+    // ============================
+    // HELPER FUNCTIONS:
+    // ============================
+    // ============================
+
+
+        // ============================
+    // TOAST NOTIFICATION:
+
+    const showAddToCartToast = async (product_to_add, item_id) => {
+
+        let success = false;
+
+        // Dispatch our addToCart function
+        // Then, grab the item that was added to the cart.
+        // This allows us to wait until the item is added to the cart
+        //   BEFORE showing the toast.
+        await dispatch(addToCart(product_to_add)).then((action) =>
+            {
+                console.log("action.payload:", action.payload);
+                if (action.payload.success) {
+                    success = true;
+                }
+            });
+
+        // Does this dispatch addtocart, or does it simply wait for it?
+        // Answer: It does this dispatch, and then waits for it to finish.
+
+        // if addedItem is not null, then we know that the item was added to the cart.
+        // So show the toast.
+        if (success) {
+            console.log('attempting to toast for item_id:', item_id);
+            const toast = document.getElementById(`add-to-cart-toast-${item_id}`);
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        };
+        
+    };
+
 
 
     const handleSizeSelection = (productId, size) => {
@@ -176,7 +232,10 @@ const StorePage = () => {
                     </Dropdown>
                 </div>
 
-                <button onClick={() => dispatch(addToCart(product_to_add))} className="btn btn-one">Add to Cart</button>
+                <button onClick={() => showAddToCartToast(product_to_add, i)} className="btn btn-one">Add to Cart</button>
+
+                <div className="add-to-cart-toast" id={`add-to-cart-toast-${i}`}>"{products_map[i].title}" was added to your Cart! (size: {selected_size[products_map[i].id]})</div>
+
                 </div>
             )
 
@@ -185,6 +244,16 @@ const StorePage = () => {
         return result;
     }
 
+
+
+
+
+
+    // ============================
+    // ============================
+    // DISPLAY OUR WEBPAGE:
+    // ============================
+    // ============================
 
     if(products_map == null || loading_products || loading_product_sizes || product_size_map == null)  {
         return (
