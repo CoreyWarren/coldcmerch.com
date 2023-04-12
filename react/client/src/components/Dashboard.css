@@ -323,12 +323,12 @@ a.dropdown-item{
 ========================
 */
 
-.add-to-cart-toast {
+.add-to-cart-toast-success {
     visibility: hidden;
     width: 100%;
     max-width: 550px;
-    background: #353535;
-    border: 2px solid #474747;
+    background: #1a1a1a;
+    border: 2px solid #68fa43;
     border-radius: 5px;
     padding: 15px;
     font-weight: bold;
@@ -346,10 +346,39 @@ a.dropdown-item{
 
 }
 
-.add-to-cart-toast.show{
+.add-to-cart-toast-success.show{
     visibility: visible;
     -webkit-animation: fadein 0.5s, fadeout 0.5s 4.5s;
     animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+.add-to-cart-toast-error {
+    visibility: hidden;
+    width: 100%;
+    max-width: 550px;
+    background: #361e1e;
+    border: 2px solid #ff0000;
+    border-radius: 5px;
+    padding: 15px;
+    font-weight: bold;
+    font-size: 1.6rem;
+    text-align: center;
+
+
+    position: fixed!important;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    bottom: 30px;
+    z-index: 9999;
+
+}
+
+.add-to-cart-toast-error.show{
+    visibility: visible;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 4.5s;
+    animation: fadein 0.5s, fadeout 0.5s 3.5s;
 }
 
 @keyframes fadein{

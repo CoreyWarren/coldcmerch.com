@@ -166,7 +166,13 @@ export const addToCart = createAsyncThunk('cart_items/post', async ({product, ad
 
         const addedItem = await res.json();
 
-        return { item: addedItem, success: true };
+        let added_to_cart = false;
+
+        if (res.status === 200 || res.status === 201) {
+          added_to_cart = true;
+        }
+
+        return { item: addedItem, success: added_to_cart };
 
     } catch (err) {
       console.log("Add to cart api ERROR.");
