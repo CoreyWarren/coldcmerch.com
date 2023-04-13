@@ -249,9 +249,9 @@ const StorePage = () => {
 
                 <button onClick={() => showAddToCartToast(product_to_add, i)} className="btn btn-one">Add to Cart</button>
 
-                <div className="add-to-cart-toast-success" id={`add-to-cart-toast-success-${i}`}>"{products_map[i].title}" was added to your Cart! (size: {selected_size[products_map[i].id]})</div>
+                <div className="toast-success" id={`add-to-cart-toast-success-${i}`}>"{products_map[i].title}" was added to your Cart! (size: {selected_size[products_map[i].id]})</div>
 
-                <div className="add-to-cart-toast-error" id={`add-to-cart-toast-error-${i}`}>ERROR: Please login OR Choose a size.</div>
+                <div className="toast-error" id={`add-to-cart-toast-error-${i}`}>ERROR: Please login OR Choose a size.</div>
 
                 </div>
             )

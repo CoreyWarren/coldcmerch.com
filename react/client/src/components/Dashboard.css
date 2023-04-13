@@ -323,7 +323,7 @@ a.dropdown-item{
 ========================
 */
 
-.add-to-cart-toast-success {
+.toast-success {
     visibility: hidden;
     width: 100%;
     max-width: 550px;
@@ -346,13 +346,13 @@ a.dropdown-item{
 
 }
 
-.add-to-cart-toast-success.show{
+.toast-success.show{
     visibility: visible;
     -webkit-animation: fadein 0.5s, fadeout 0.5s 4.5s;
     animation: fadein 0.5s, fadeout 0.5s 2.5s;
 }
 
-.add-to-cart-toast-error {
+.toast-error {
     visibility: hidden;
     width: 100%;
     max-width: 550px;
@@ -362,6 +362,7 @@ a.dropdown-item{
     padding: 15px;
     font-weight: bold;
     font-size: 1.6rem;
+    color: white;
     text-align: center;
 
 
@@ -375,7 +376,7 @@ a.dropdown-item{
 
 }
 
-.add-to-cart-toast-error.show{
+.toast-error.show{
     visibility: visible;
     -webkit-animation: fadein 0.5s, fadeout 0.5s 4.5s;
     animation: fadein 0.5s, fadeout 0.5s 3.5s;
