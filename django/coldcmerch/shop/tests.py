@@ -4,8 +4,6 @@ from shop.models import Cart, Product, ProductSize, CartItem
 from users.models import UserAccount
 from django.urls import reverse
 
-from rest_framework.test import RequestsClient
-
 
 
 class ShopAPITestCase(TestCase):

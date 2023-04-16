@@ -209,3 +209,35 @@ class CreateCartItemView(APIView):
 
         return Response({'item': serializer.data, 'success': True}, status=status.HTTP_201_CREATED)
     
+
+# Remove Cart Item
+
+class RemoveCartItemView(APIView):
+    permission_classes = [IsAuthenticated]
+    def post(self, request):
+
+        # Check if the requester is an authenticated user (i.e.: logged in)
+        if not request.user.is_authenticated:
+            # Let them/our front end know by sending a 401 response and a message.
+            return Response({'response': 'Authentication credentials were not provided.'},
+                            status=status.HTTP_401_UNAUTHORIZED)
+        
+        data = request.data
+
+        # Only allow the correct user to access this API:
+        requesting_user = str(data.user.id)
+        
+        # Attempt to delete the cart item from the database.
+        # If it fails, send an error message.
+        # Otherwise, send a success message.
+        try:
+            CartItem.objects.filter(my_user = requesting_user, id = data['cart_item_id']).delete()
+        except:
+            return Response({'response': 'Could not delete cart item. No such item exists for this user.'},
+                status=status.HTTP_400_BAD_REQUEST)
+
+        return Response({'response': 'Item was deleted.'}, status = status)
+        
+
+    pass
+    
