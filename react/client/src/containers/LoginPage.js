@@ -31,13 +31,45 @@ const LoginPage = () => {
         setFormData({...formData, [e.target.name]: e.target.value });
     }
 
-    // For Register Button to work:
+    // For Login Button to work:
+    /*
     const onSubmit = e => {
         // Prevent default behavior like page getting refreshed when submitting form
         e.preventDefault();
 
         dispatch( login({ email, password }) );
     }
+    */
+
+    const onSubmit = async e => {
+
+        let success = false;
+        e.preventDefault();
+        
+        await dispatch(login({email, password})).then((action) =>
+        {
+            console.log("login action.payload:", action.payload);
+            if (action.payload.success) {
+                success = true;
+            }
+        });
+
+
+
+
+        if ( success == false ) {
+            const toast_error = document.getElementById(`login-toast-error`);
+            toast_error.classList.add('show');
+            
+            setTimeout(() => {
+                toast_error.classList.remove('show');
+            }, 4000);
+        }
+
+    }
+
+
+
 
     // if the 'isAuthenticated' piece of redux state is true,
     // then redirect user to dashboard.
@@ -92,6 +124,11 @@ const LoginPage = () => {
                     </button>
                 )}
             </form>
+
+
+            <div className="toast-error" id={`login-toast-error`}>ERROR : Incorrect password, OR Invalid account. Unable to login.</div>
+
+
         </Layout>
     );
 };

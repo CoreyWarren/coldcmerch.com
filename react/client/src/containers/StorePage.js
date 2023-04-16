@@ -8,6 +8,8 @@
 import { useSelector } from 'react-redux';
 import { useDispatch} from 'react-redux';
 import { useEffect, useState} from 'react';
+import { unwrapResult } from '@reduxjs/toolkit';
+
 
 // JavaScript Animation Imports
 import { motion } from 'framer-motion';
@@ -20,7 +22,10 @@ import { addToCart } from 'features/cartItems';
 import Layout from 'components/Layout';
 import ProductSizeDropdownMenu from 'components/products/productSizeDropdownMenu';
 
+
 import Dropdown from 'react-bootstrap/Dropdown';
+
+
 
 
 //
@@ -115,28 +120,38 @@ const StorePage = () => {
         // Then, grab the item that was added to the cart.
         // This allows us to wait until the item is added to the cart
         //   BEFORE showing the toast.
+        
+        // + ERROR CHECKING FOR TOAST NOTIFICATIONS
         await dispatch(addToCart(product_to_add)).then((action) =>
-            {
-                console.log("action.payload:", action.payload);
-                if (action.payload.success) {
-                    success = true;
-                }
-            });
+        {
+            console.log("action.payload:", action.payload);
+            if (action.payload.success) {
+                success = true;
+            }
+        });
+        
 
         // Does this dispatch addtocart, or does it simply wait for it?
         // Answer: It does this dispatch, and then waits for it to finish.
 
         // if addedItem is not null, then we know that the item was added to the cart.
         // So show the toast.
-        if (success) {
-            console.log('attempting to toast for item_id:', item_id);
-            const toast = document.getElementById(`add-to-cart-toast-${item_id}`);
-            toast.classList.add('show');
+        if (success ==true ) {
+            const toast_success = document.getElementById(`add-to-cart-toast-success-${item_id}`);
+            toast_success.classList.add('show');
             
             setTimeout(() => {
-                toast.classList.remove('show');
+                toast_success.classList.remove('show');
             }, 3000);
-        };
+        }else{
+            const toast_error = document.getElementById(`add-to-cart-toast-error-${item_id}`);
+            toast_error.classList.add('show');
+            
+            setTimeout(() => {
+                toast_error.classList.remove('show');
+            }, 4000);
+        }
+            
         
     };
 
@@ -234,7 +249,9 @@ const StorePage = () => {
 
                 <button onClick={() => showAddToCartToast(product_to_add, i)} className="btn btn-one">Add to Cart</button>
 
-                <div className="add-to-cart-toast" id={`add-to-cart-toast-${i}`}>"{products_map[i].title}" was added to your Cart! (size: {selected_size[products_map[i].id]})</div>
+                <div className="toast-success" id={`add-to-cart-toast-success-${i}`}>"{products_map[i].title}" was added to your Cart! (size: {selected_size[products_map[i].id]})</div>
+
+                <div className="toast-error" id={`add-to-cart-toast-error-${i}`}>ERROR: Please login OR Choose a size.</div>
 
                 </div>
             )
@@ -255,17 +272,35 @@ const StorePage = () => {
     // ============================
     // ============================
 
-    if(products_map == null || loading_products || loading_product_sizes || product_size_map == null)  {
+    if((products_map == null && loading_products) || (loading_product_sizes && product_size_map == null))  {
         return (
             <Layout title = 'Coldcut Merch | Store' content = 'Store page'>
                 <div className="dashboard_panel">
-                    <h2> Loading Store...: </h2>
+                    <h2> Loading Store: </h2>
                     <p> Done Loading Products? <br></br> {String(!loading_products)}</p>
                     <p> Done Loading Product Sizes? <br></br> {String(!loading_product_sizes)}</p>
                 </div>
             </Layout>
         )
-    }else{
+    }else if (products_map==null || product_size_map==null) {
+        return (
+            <Layout title = 'Coldcut Merch | Store' content = 'Store page'>
+                <div className="dashboard_panel">
+                    <h2 style={{fontFamily: 'Arial', fontSize: '3rem'}}>Store Error:</h2>
+                    <p style={{fontFamily: 'Arial', fontSize: '1.2rem'}}> Either products or product sizes were unable to be loaded.</p>
+                    <p style={{fontFamily: 'Arial', fontSize: '1.2rem'}}> If you are not a developer and you are seeing this, then
+                        that means that there are either no available products being sold right now, or there is a technical issue on our backend.</p>
+
+                    <p style={{fontFamily: 'Arial', fontSize: '1.2rem'}}>If you are a developer, you may be seeing this as a result of not starting the API backend server properly. The front-end was unable to reach out to the backend's database and grab Products and Product Sizes.</p>
+
+                    <p style={{fontFamily: 'Arial', fontSize: '1.2rem'}}> - Corey from the Past</p>
+
+
+                </div>
+            </Layout>
+        )
+    }
+    else{
         return (
             <Layout title = 'Coldcut Merch | Store' content = 'Store page'>
                 <div className="dashboard_panel">

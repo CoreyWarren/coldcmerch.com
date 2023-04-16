@@ -1,11 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
-import { useLocation } from 'react-router-dom';
 import Layout from 'components/Layout';
 import { resetProductsMap } from 'features/product';
-import { getCart } from 'features/cart';
-import { getCartItems, getProductDetails } from 'features/cartItems';
-import { getProductSize } from "features/productSize";
+import { getCartItems } from 'features/cartItems';
 
 import { motion } from 'framer-motion';
 import Dropdown from 'react-bootstrap/Dropdown';
@@ -131,7 +128,7 @@ const CartPage = () => {
                         },
                     }}
                     >
-                    <img src={image_sauce} ></img>
+                    <img alt={selective_products_map[i].description} src={image_sauce} ></img>
                     </motion.div>
                     
                     <p style={{margin: 0, padding: 0}}>Subt: <strong>{(cart_items_map[i].adjusted_total*cart_items_map[i].quantity).toFixed(2)} USD</strong></p>

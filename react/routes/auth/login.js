@@ -44,7 +44,7 @@ router.post('/api/users/login', async (req, res) => {
                 }),
             ]);
 
-            return res.status(200).json({ success: 'Logged in successfully' });
+            return res.status(200).json({ success: true }); // Successful login
 
             
         }else{
