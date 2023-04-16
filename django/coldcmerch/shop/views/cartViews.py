@@ -225,7 +225,7 @@ class RemoveCartItemView(APIView):
         data = request.data
 
         # Only allow the correct user to access this API:
-        requesting_user = str(data.user.id)
+        requesting_user = request.user.id
         
         # Attempt to delete the cart item from the database.
         # If it fails, send an error message.
@@ -236,7 +236,7 @@ class RemoveCartItemView(APIView):
             return Response({'response': 'Could not delete cart item. No such item exists for this user.'},
                 status=status.HTTP_400_BAD_REQUEST)
 
-        return Response({'response': 'Item was deleted.'}, status = status)
+        return Response({'response': 'Item was deleted.'}, status = status.HTTP_204_NO_CONTENT)
         
 
     pass

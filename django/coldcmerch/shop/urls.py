@@ -32,11 +32,14 @@ urlpatterns = [
     path('cart/post', CreateCartView.as_view(), name='create_cart'), 
 
     # CART ITEMS:
-    # api/shop/cart_item
+    # api/shop/cart_items
     path('cart_items', RetrieveCartItemsView.as_view(), name='get_cart_items'), 
 
-    # api/shop/cart_item/post
+    # api/shop/cart_items/post
     path('cart_items/post', CreateCartItemView.as_view(), name='create_cart_item'),
+
+    # api/shop/cart_items/remove
+    path('cart_items/remove', RemoveCartItemView.as_view(), name='remove_cart_item'),
 
 
 ]
