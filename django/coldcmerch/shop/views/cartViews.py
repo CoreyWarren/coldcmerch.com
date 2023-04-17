@@ -212,7 +212,7 @@ class CreateCartItemView(APIView):
 
 # Remove Cart Item
 
-class RemoveCartItemView(APIView):
+class DeleteCartItemView(APIView):
     permission_classes = [IsAuthenticated]
     def post(self, request):
 

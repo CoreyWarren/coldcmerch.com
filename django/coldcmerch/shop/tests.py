@@ -125,9 +125,9 @@ class ShopAPITestCase(TestCase):
         print("Success: ", response.data)
 
 
-    def test_remove_cart_item_view(self):
+    def test_delete_cart_item_view(self):
         print("\n\n==================================")
-        print("Removing Cart Item using a view...")
+        print("Deleting Cart Item using a view...")
         print("==================================")
         Cart.objects.create(
             my_user=self.user, checked_out=False
@@ -151,14 +151,14 @@ class ShopAPITestCase(TestCase):
             )
 
         # Create the Cart Item first (This is separated from the other test because
-        # we want to isolate the delete test to only the remove_cart_item view)
+        # we want to isolate the delete test to only the delete_cart_item view)
         print("Data received:", response.data)
         self.assertEqual(response.status_code, 201)
         self.assertTrue(CartItem.objects.filter(cart=Cart.objects.first().id, product=Product.objects.first().id).exists())
         print("Success: ", response.data)
 
         # Then delete it
-        response = self.client.post(reverse('remove_cart_item'), {'cart_item_id': CartItem.objects.first().id}, format='json')
+        response = self.client.post(reverse('delete_cart_item'), {'cart_item_id': CartItem.objects.first().id}, format='json')
         print("Data received:", response.data)
         self.assertFalse(CartItem.objects.exists())
         print("Success: ", response.data)

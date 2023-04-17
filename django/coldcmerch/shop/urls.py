@@ -38,8 +38,8 @@ urlpatterns = [
     # api/shop/cart_items/post
     path('cart_items/post', CreateCartItemView.as_view(), name='create_cart_item'),
 
-    # api/shop/cart_items/remove
-    path('cart_items/remove', RemoveCartItemView.as_view(), name='remove_cart_item'),
+    # api/shop/cart_items/delete
+    path('cart_items/delete', DeleteCartItemView.as_view(), name='delete_cart_item'),
 
 
 ]

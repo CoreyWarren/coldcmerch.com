@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import Layout from 'components/Layout';
 import { resetProductsMap } from 'features/product';
-import { getCartItems } from 'features/cartItems';
+import { getCartItems, deleteCartItem } from 'features/cartItems';
 
 import { motion } from 'framer-motion';
 import Dropdown from 'react-bootstrap/Dropdown';
@@ -52,6 +52,9 @@ const CartPage = () => {
 
     }, [dispatch]);
 
+
+
+
     
 
     // We want to load cart items so we can display them. This is the main purpose of this page.
@@ -62,6 +65,7 @@ const CartPage = () => {
 
     // We want to load products so we can display product details alongside the cart items they are a part of.
     const { selective_products_map, loading_products} = useSelector(state => state.products);
+
 
     const cart_intro = () => {
 
@@ -87,6 +91,35 @@ const CartPage = () => {
     };
 
 
+    const deleteCartItemHelper = async (cart_item_to_delete_id, view_index) => {
+        let success = false;
+        console.log("cart_item_to_delete_id:", cart_item_to_delete_id);
+
+        await dispatch(deleteCartItem(cart_item_to_delete_id)).then((action) =>
+        {
+            console.log("action.payload:", action.payload);
+            if (action.payload.success === true) {
+                success = true;
+            }
+        });
+
+
+        if (success === true ) {
+            const toast_success = document.getElementById(`delete-from-cart-toast-success-${view_index}`);
+            toast_success.classList.add('show');
+            
+            setTimeout(() => {
+                toast_success.classList.remove('show');
+            }, 3000);
+        }else{
+            const toast_error = document.getElementById(`delete-from-cart-toast-error-${view_index}`);
+            toast_error.classList.add('show');
+            
+            setTimeout(() => {
+                toast_error.classList.remove('show');
+            }, 4000);
+        }
+    }
     
     const calculate_cart_total = () => {
         let cart_total = 0;
@@ -108,15 +141,16 @@ const CartPage = () => {
         for (let i = 0; i < cart_items_map.length; i += 1) {
 
             //console.log(i, "...", selective_products_map[i].image_preview);
+            const index_starting_at_one_for_cart_items = i + 1;
             const image_sauce = ('http://localhost:8000' + selective_products_map[i].image_preview).toString();
             const cart_item_key = (cart_items_map[i].product + selective_products_map[i].title).toString() + i.toString();
 
             // fields = ('product', 'adjusted_total', 'size', 'quantity')
             result.push(
-            <div className="cart_item" key={cart_item_key}>
+            <div className="cart_item" key={`cart-item-${cart_item_key}`}>
 
                 
-                <h2>{i+1}:  {selective_products_map[i].title}</h2>
+                <h2>{index_starting_at_one_for_cart_items}:  {selective_products_map[i].title}</h2>
 
                     <motion.div
                     whileHover={{
@@ -142,14 +176,21 @@ const CartPage = () => {
                     &#128393;
                     </Dropdown.Toggle>
                     <Dropdown.Menu >
-                        <Dropdown.Item  href="#">Remove from Cart</Dropdown.Item>
+                        <Dropdown.Item>
+                            <button className="remove-from-cart-button" onClick={() => deleteCartItemHelper(cart_items_map[i].id, i)}>Remove from Cart</button>
+                        </Dropdown.Item>
                     </Dropdown.Menu>
                     </Dropdown>
+
+
                 </div>
 
+                <div className="toast-success" id={`delete-from-cart-toast-success-${i}`}>Item #{index_starting_at_one_for_cart_items} was deleted from your Cart!</div>
 
-                
+                <div className="toast-error" id={`delete-from-cart-toast-error-${i}`}>ERROR: Could not delete item #{index_starting_at_one_for_cart_items}.</div>
+
             </div>
+
             );
             
         }

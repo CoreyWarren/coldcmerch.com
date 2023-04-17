@@ -8,7 +8,6 @@
 import { useSelector } from 'react-redux';
 import { useDispatch} from 'react-redux';
 import { useEffect, useState} from 'react';
-import { unwrapResult } from '@reduxjs/toolkit';
 
 
 // JavaScript Animation Imports
@@ -136,7 +135,7 @@ const StorePage = () => {
 
         // if addedItem is not null, then we know that the item was added to the cart.
         // So show the toast.
-        if (success ==true ) {
+        if (success === true ) {
             const toast_success = document.getElementById(`add-to-cart-toast-success-${item_id}`);
             toast_success.classList.add('show');
             
