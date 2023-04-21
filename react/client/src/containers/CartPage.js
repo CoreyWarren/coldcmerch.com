@@ -58,13 +58,13 @@ const CartPage = () => {
     
 
     // We want to load cart items so we can display them. This is the main purpose of this page.
-    const { cart_items_map, loading_cart_items } = useSelector(state => state.cart_items);
+    let { cart_items_map, loading_cart_items } = useSelector(state => state.cart_items);
 
     // We want to see if the USER is logged in or not, so we can redirect them to the login page if they are not.
-    const { isAuthenticated, user, user_loading } = useSelector(state => state.user);
+    let { isAuthenticated, user, user_loading } = useSelector(state => state.user);
 
     // We want to load products so we can display product details alongside the cart items they are a part of.
-    const { selective_products_map, loading_products} = useSelector(state => state.products);
+    let { selective_products_map, loading_products} = useSelector(state => state.products);
 
 
     const cart_intro = () => {
@@ -119,6 +119,11 @@ const CartPage = () => {
                 toast_error.classList.remove('show');
             }, 4000);
         }
+
+        dispatch(resetProductsMap());
+
+        dispatch(getCartItems()).catch(error => console.error('Error when grabbing Cart Items:', error));
+
     }
     
     const calculate_cart_total = () => {
@@ -133,7 +138,7 @@ const CartPage = () => {
 
 
 
-    const display_cart_items = () => {
+    let display_cart_items = () => {
         let result = [];
         
 
@@ -141,9 +146,23 @@ const CartPage = () => {
         for (let i = 0; i < cart_items_map.length; i += 1) {
 
             //console.log(i, "...", selective_products_map[i].image_preview);
-            const index_starting_at_one_for_cart_items = i + 1;
-            const image_sauce = ('http://localhost:8000' + selective_products_map[i].image_preview).toString();
-            const cart_item_key = (cart_items_map[i].product + selective_products_map[i].title).toString() + i.toString();
+            let index_starting_at_one_for_cart_items = 0;
+            let image_sauce = "";
+            let cart_item_key = "";
+
+            try{
+                index_starting_at_one_for_cart_items = i + 1;
+                image_sauce = ('http://localhost:8000' + selective_products_map[i].image_preview).toString();
+                cart_item_key = (cart_items_map[i].product + selective_products_map[i].title).toString() + i.toString();
+            }catch(error){
+                console.log("Error:", error);
+                return (
+                    <div>
+                        <p>There was an error loading your cart.</p>
+                    </div>
+                )
+            }
+           
 
             // fields = ('product', 'adjusted_total', 'size', 'quantity')
             result.push(
