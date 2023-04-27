@@ -149,9 +149,26 @@ class CreateCartItemView(APIView):
         print("Add Cart -- Old data, request from Front-End: \n", data)
 
 
-        # Interpret 'my_user' and 'cart' from the request
+        # Interpret 'my_user' and 'cart' from the request to fulfill the 
+        # fields = ('cart', 'product', 'adjusted_total', 'size', 'quantity', 'my_user')
         data['my_user'] = request.user.id
         data['cart'] = Cart.objects.get(my_user=request.user, checked_out=False).id
+
+
+        # NEW: We need to check available stock before we add to cart.
+        try:
+            product_size_to_check = ProductSize.objects.get(product_id=data['product'], size=data['size'])
+        except:
+            return Response({'response': 'Error when checking product stock. Product or Product Size does not exist.'},
+                            status=status.HTTP_400_BAD_REQUEST)
+        
+        # Check if the requested quantity is available
+        if(product_size_to_check.available_amount < data['quantity']):
+            return Response({'response': 'Requested too many items. Not enough in stock.'},
+                            status=status.HTTP_400_BAD_REQUEST)
+        
+        # If we're here, then the requested quantity is available.
+
 
 
         # Grab the product size price from our backend database:
