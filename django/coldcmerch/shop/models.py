@@ -15,7 +15,7 @@ class Product(models.Model):
     available       = models.BooleanField(default = True)
 
     def __str__(self):
-        return str(self.id) + ' ' + str(self.title) + ' --- ' + str(self.date_added)
+        return str(self.id) + ' ' + str(self.title) + ' --- ' + str(self.date_added) + ' : ' + str(self.available_amount) + ' left.'
 
 
 class ProductImage(models.Model):
@@ -28,9 +28,10 @@ class ProductImage(models.Model):
 
 class ProductSize(models.Model):
     # "cascade" here allows us to make changes to the Product model and keep this column in sync with that foreign key.
-    product_id      = models.ForeignKey('Product', on_delete=models.CASCADE, null = True)
-    size            = models.CharField(max_length = 50, null = False, blank = False, default = 'M')
-    added_cost      = models.FloatField(default = 0)
+    product_id          = models.ForeignKey('Product', on_delete=models.CASCADE, null = True)
+    size                = models.CharField(max_length = 50, null = False, blank = False, default = 'M')
+    added_cost          = models.FloatField(default = 0)
+    available_amount    = models.IntegerField(default = 1)
 
     def __str__(self):
         return str(self.size) + ' for product #' + str(self.product_id)
