@@ -15,7 +15,7 @@ class Product(models.Model):
     available       = models.BooleanField(default = True)
 
     def __str__(self):
-        return str(self.id) + ' ' + str(self.title) + ' --- ' + str(self.date_added) + ' : ' + str(self.available_amount) + ' left.'
+        return str(self.id) + ' ' + str(self.title) + ' --- ' + str(self.date_added)
 
 
 class ProductImage(models.Model):
@@ -35,14 +35,6 @@ class ProductSize(models.Model):
 
     def __str__(self):
         return str(self.size) + ' for product #' + str(self.product_id)
-
-class ProductColor(models.Model):
-    product         = models.ForeignKey('Product', on_delete=models.CASCADE, null = True)
-    color           = models.CharField(max_length = 50, null = False, blank = False, default = 'Default')
-    added_cost      = models.FloatField(default = 0)
-
-    def __str__(self):
-        return str(self.product) + ' --- ' + str(self.color) + str(self.id)
 
 #
 # Shopping Cart:
