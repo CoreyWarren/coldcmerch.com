@@ -21,7 +21,7 @@ router.get('/api/shop/product/all', async (req, res) => {
         // wait for that response (we are async so it works as such.)
         const data = await apiResponse.json();
 
-        // print either success OR fail:
+        // Mirror back the response to our React client.
         return res.status(apiResponse.status).json(data);
     } catch (err) {
         // catch error

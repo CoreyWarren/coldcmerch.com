@@ -165,15 +165,20 @@ export const addToCart = createAsyncThunk('cart_items/post', async ({product, ad
             body,
         });
 
-        const addedItem = await res.json();
+        const message = await res.json();
 
         let added_to_cart = false;
+        let custom_error = "none"
 
         if (res.status === 200 || res.status === 201) {
           added_to_cart = true;
+        }else if (res.status === 409 && 'error_type' in message) {
+          custom_error = message.error_type;
         }
 
-        return { item: addedItem, success: added_to_cart };
+        console.log("custom error (cartitems.js): ", custom_error)
+
+        return { message: message, success: added_to_cart, custom_error: custom_error};
 
     } catch (err) {
       console.log("Add to cart api ERROR.");

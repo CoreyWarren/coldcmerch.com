@@ -154,6 +154,17 @@ class CreateCartItemView(APIView):
         data['my_user'] = request.user.id
         data['cart'] = Cart.objects.get(my_user=request.user, checked_out=False).id
 
+
+        # Check QUANTITY to see if it's eligible to be interpreted
+        product_quantity = data['quantity']
+        print("Add to Cart -- Quantity RAW: ", product_quantity)
+        if not isinstance(product_quantity, int):
+            return Response({'response': 'Quantity must be an integer.'},
+                status=status.HTTP_400_BAD_REQUEST)
+        elif (product_quantity < 1 or product_quantity > 10):
+            return Response({'response': 'Quantity must be between 1 and 10.'},
+                status=status.HTTP_400_BAD_REQUEST)
+        
         ###
         ###
         # NEW: We need to check available stock before we add to cart.
@@ -163,14 +174,17 @@ class CreateCartItemView(APIView):
             # Check if the requested quantity is available
             related_cart_items = CartItem.objects.filter(cart__my_user=request.user, cart__checked_out=False, product=data['product'], size=data['size'])
 
-            for item in related_cart_items:
-                data['quantity'] += item.quantity
-            
-            print("Add to Cart -- Quantity, Cart Items included: ", data['quantity'])
+            current_quantity_requesting = product_quantity
 
-            if(product_size_to_check.available_amount < data['quantity']):
-                return Response({'response': 'Requested too many items. Not enough in stock.'},
-                            status=status.HTTP_400_BAD_REQUEST)
+
+            for item in related_cart_items:
+                current_quantity_requesting += item.quantity
+            
+            print("Add to Cart -- Quantity, Cart Items included: ", current_quantity_requesting)
+
+            if(product_size_to_check.available_amount < current_quantity_requesting):
+                return Response({'response': 'Requested too many items. Not enough in stock.', 'error_type': 'size stock'},
+                        status=status.HTTP_409_CONFLICT,)
         except:
             return Response({'response': 'Error when checking product stock.'},
                             status=status.HTTP_400_BAD_REQUEST)
@@ -199,15 +213,7 @@ class CreateCartItemView(APIView):
         
 
 
-        # Check QUANTITY to see if it's eligible to be interpreted
-        product_quantity = data['quantity']
-        print("Add to Cart -- Quantity RAW: ", product_quantity)
-        if not isinstance(product_quantity, int):
-            return Response({'response': 'Quantity must be an integer.'},
-                status=status.HTTP_400_BAD_REQUEST)
-        elif (product_quantity < 1 or product_quantity > 10):
-            return Response({'response': 'Quantity must be between 1 and 10.'},
-                status=status.HTTP_400_BAD_REQUEST)
+
 
 
         # Calculate the adjusted total and amend it to the data:

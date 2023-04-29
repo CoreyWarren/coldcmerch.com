@@ -114,6 +114,7 @@ const StorePage = () => {
     const showAddToCartToast = async (product_to_add, item_id) => {
 
         let success = false;
+        let custom_error = "";
 
         // Dispatch our addToCart function
         // Then, grab the item that was added to the cart.
@@ -126,6 +127,10 @@ const StorePage = () => {
             console.log("action.payload:", action.payload);
             if (action.payload.success) {
                 success = true;
+            } else{
+                if (action.payload.custom_error){
+                    custom_error = action.payload.custom_error;
+                }
             }
         });
         
@@ -143,12 +148,29 @@ const StorePage = () => {
                 toast_success.classList.remove('show');
             }, 3000);
         }else{
-            const toast_error = document.getElementById(`add-to-cart-toast-error-${item_id}`);
-            toast_error.classList.add('show');
+            // INSUFFICIENT STOCK ERROR
+            if(custom_error === "size stock"){
+                const toast_error = document.getElementById(`add-to-cart-toast-error-insufficient-stock-size-${item_id}`);
+                toast_error.classList.add('show');
+                
+                setTimeout(() => {
+                    toast_error.classList.remove('show');
+                }, 4000);
+
+
+            }else{
+                console.log(custom_error);
+                // GENERAL ERROR -> LOGIN OR CHOOSE SIZE
+                const toast_error = document.getElementById(`add-to-cart-toast-error-${item_id}`);
+                toast_error.classList.add('show');
+                
+                setTimeout(() => {
+                    toast_error.classList.remove('show');
+                }, 4000);
+            }
+
+
             
-            setTimeout(() => {
-                toast_error.classList.remove('show');
-            }, 4000);
         }
             
         
@@ -251,6 +273,9 @@ const StorePage = () => {
                 <div className="toast-success" id={`add-to-cart-toast-success-${i}`}>"{products_map[i].title}" was added to your Cart! (size: {selected_size[products_map[i].id]})</div>
 
                 <div className="toast-error" id={`add-to-cart-toast-error-${i}`}>ERROR: Please login OR Choose a size.</div>
+
+                <div className="toast-error" id={`add-to-cart-toast-error-insufficient-stock-size-${i}`}>SORRY! Limited Stock of this specific item's SIZE!</div>
+
 
                 </div>
             )
