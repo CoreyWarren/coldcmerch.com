@@ -31,7 +31,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         # puttin '__all__' here would expose everything, including the hashed password
-        fields = ('first_name', 'last_name', 'email', 'password')
+        fields = ('email', 'password')
 
     # Validate validity of the password, such as if it is too common
     # or too short.
@@ -58,8 +58,6 @@ class UserCreateSerializer(serializers.ModelSerializer):
     # after it is created and saved.
     def create(self, validated_data):
         user = User.objects.create_user(
-            first_name  = validated_data['first_name'],
-            last_name   = validated_data['last_name'],
             email       = validated_data['email'],
             password    = validated_data['password'],
         )
@@ -71,4 +69,4 @@ class UserCreateSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'email')
+        fields = ['email']

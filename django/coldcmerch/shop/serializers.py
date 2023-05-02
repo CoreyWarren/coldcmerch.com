@@ -18,7 +18,7 @@ class OrderCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = ('cart', 'date_placed', 'user',  'street_address', 'zip_code', 'city',
-        'state', 'first_name', 'last_name')
+        'state')
 
     def create(self, validated_data):
         order = Order.objects.create_order(
@@ -29,8 +29,6 @@ class OrderCreateSerializer(serializers.ModelSerializer):
             zip_code        = validated_data['zip_code'],
             city            = validated_data['city'],
             state           = validated_data['state'],
-            first_name      = validated_data['first_name'],
-            last_name       = validated_data['last_name'],
         )
 
         return order
@@ -40,7 +38,7 @@ class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('cart', 'date_placed', 'user',  'street_address', 'zip_code', 'city',
-        'state', 'first_name', 'last_name')
+        'state')
 
 
 # Products

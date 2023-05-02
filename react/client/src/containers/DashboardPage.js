@@ -69,8 +69,6 @@ const DashboardPage = () => {
                         <div className="dashboard_panel">
                             <h1 className='mb-5'>User Dashboard</h1>
                                 <div className="mb-4"></div>
-                                <div className="user_data_item">First Name: <br></br>{user.first_name}</div>
-                                <div className="user_data_item">Last Name:  <br></br>{user.last_name}</div>
                                 <div className="user_data_item">Email:  <br></br>{email_display}</div>
                         </div>
                         </>

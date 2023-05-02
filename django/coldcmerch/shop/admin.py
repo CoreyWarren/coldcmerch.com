@@ -61,7 +61,7 @@ admin.site.register(Cart, CartAdmin)
 
 
 class OrderAdmin(admin.ModelAdmin):
-    readonly_fields = ['cart', 'user', 'date_placed', 'street_address', 'first_name', 'last_name', 'zip_code', 'city', 'state']
+    readonly_fields = ['cart', 'user', 'date_placed', 'city', 'state']
 
 admin.site.register(Order, OrderAdmin)
 

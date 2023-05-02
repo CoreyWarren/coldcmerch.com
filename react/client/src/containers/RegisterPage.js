@@ -13,18 +13,16 @@ const RegisterPage = () => {
     // create a state to edit, which will be an object with 4 keys,
     //  whose strings will be, by default, empty, or: ''.
     const [formData, setFormData] = useState({
-        first_name: '',
-        last_name: '',
         email: '',
         password: '',
     });
 
     // Destructure so they can be used directly.
-    const { first_name, last_name, email, password } = formData;
+    const { email, password } = formData;
 
     // Define 'onChange' for our input fields:
     // (This function works such that only the form data of, say,
-    // "first_name" will be changed for each form input field at a time.)
+    // "email" will be changed for each form input field at a time.)
     const onChange = e => {
         setFormData({...formData, [e.target.name]: e.target.value });
     }
@@ -37,7 +35,7 @@ const RegisterPage = () => {
         // We need to dispatch in order to register
         //  so we 'dispatch this action creator'
         // (basically, we can't just say register(), we need dispatch to enclose it)
-        dispatch( register({ first_name, last_name, email, password }) );
+        dispatch( register({ email, password }) );
     }
 
     // After registration, navigate us to the login page.
@@ -48,37 +46,6 @@ const RegisterPage = () => {
             <h2>Register for an Account:</h2>
 
             <form className='mt-5' onSubmit={onSubmit}>
-                <div className='form-group'>
-
-                    <label className='form-label' htmlFor='first_name'>
-                        First Name
-                    </label>
-
-                    <input 
-                        className='form-control'
-                        type='text'
-                        name='first_name'
-                        onChange={onChange}
-                        value={first_name}
-                        required
-                    />
-                </div>
-
-
-                <div className='form-group mt-3'>
-                    <label className='form-label' htmlFor='last_name'>
-                        Last Name
-                    </label>
-
-                    <input 
-                        className='form-control'
-                        type='text'
-                        name='last_name'
-                        onChange={onChange}
-                        value={last_name}
-                        required
-                    />
-                </div>
 
 
                 <div className='form-group mt-3'>

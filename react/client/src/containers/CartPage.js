@@ -67,7 +67,26 @@ const CartPage = () => {
     let { selective_products_map, loading_products} = useSelector(state => state.products);
 
 
-    const cart_intro = () => {
+    const obfuscateEmail = (email) => {
+        // Split the email into username and domain
+        email = email.toString();
+        const [username, domain] = email.split('@');
+
+        // Find the smaller of the two, username length or 3
+        const visibleCharsPreset = 3;
+        const actualVisibleChars = Math.min(visibleCharsPreset, username.length - 1);
+
+        // Slice the username to the smaller of the two, username length or 3
+        const usernamePartial = username.slice(0, actualVisibleChars);
+
+        // Pad the username with asterisks to the length of the original username
+        const obfuscatedUsername = usernamePartial.padEnd(username.length, '*');
+      
+        return `${obfuscatedUsername}@${domain}`;
+    };
+
+
+    const cart_intro = (email_display) => {
 
         // If the user is NOT logged in, REDIRECT them to the LOGIN page.
         if (!isAuthenticated) {
@@ -82,7 +101,7 @@ const CartPage = () => {
         else {
             return (
                 <div>
-                    <p>Logged in as: {user.first_name}</p>
+                    <p>Logged in as: {email_display}</p>
                 </div>
             )
         }
@@ -231,6 +250,8 @@ const CartPage = () => {
 
 
     if(!loading_cart_items && cart_items_map != null && !user_loading && isAuthenticated && user != null && !loading_products) {
+
+        let email_display = obfuscateEmail(user.email);
         
         return(
             <Layout title = 'Coldcut Merch | Cart' content='Cart Page'>
@@ -238,7 +259,7 @@ const CartPage = () => {
             <h1 className='mb-5'>Shopping Cart</h1>
                 <div className="mb-4"></div>
                 <div className="home_panel">
-                    {cart_intro()}
+                    {cart_intro(email_display)}
                     <div className="total-price">Subtotal: {calculate_cart_total()} USD</div>
                     {display_cart_items()}
                 </div>

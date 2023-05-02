@@ -15,8 +15,6 @@ class ShopAPITestCase(TestCase):
 
         # Register Test user and Login
         UserAccount.objects.create_user(
-            first_name="testuser",
-            last_name= "lastname",
             email="minecraft@microsoft.com",
             password="testpassword%86"
         )

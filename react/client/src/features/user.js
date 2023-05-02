@@ -4,10 +4,8 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 // register:
 export const register = createAsyncThunk(
   'users/register', 
-  async({first_name, last_name, email, password}, thunkAPI) => {
+  async({email, password}, thunkAPI) => {
     const body = JSON.stringify({
-      first_name,
-      last_name,
       email,
       password
     });

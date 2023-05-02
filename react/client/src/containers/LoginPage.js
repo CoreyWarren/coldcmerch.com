@@ -19,14 +19,14 @@ const LoginPage = () => {
 
     useEffect(() => {
         if (registered) dispatch(resetRegistered());
-    }, [registered]);
+    }, [dispatch, registered]);
 
     // Destructure so they can be used directly.
     const { email, password } = formData;
 
     // Define 'onChange' for our input fields:
     // (This function works such that only the form data of, say,
-    // "first_name" will be changed for each form input field at a time.)
+    // "email" will be changed for each form input field at a time.)
     const onChange = e => {
         setFormData({...formData, [e.target.name]: e.target.value });
     }
