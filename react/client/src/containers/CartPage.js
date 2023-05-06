@@ -266,7 +266,7 @@ const CartPage = () => {
 
             <div className="total-price">Subtotal: {calculate_cart_total()} USD</div>
 
-            <button type="button" className="checkout-button">Checkout</button>
+            <a href="/checkout"><button type="button" className="checkout-button">Checkout</button></a>
 
 
             </Layout>
