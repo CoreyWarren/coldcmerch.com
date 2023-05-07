@@ -9,6 +9,12 @@ import { createPaymentIntent } from 'features/stripePayments';
 
 import CheckoutForm from "./CheckoutForm";
 
+const stripe_public_key = process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY;
+
+// const stripePromise = loadStripe("pk_test_51LjuaCGd7lKiUeBGcPrv9c5hjjcUZVwpwFIDxZeMPMkSQEcMNs5gtoqmGNAnh7snzlcFaj6253qIEKge0tdqSqPX00Jwjh6sj0");
+const stripePromise = loadStripe(stripe_public_key);
+
+
 
 const CheckoutPage = () => {
 
@@ -47,7 +53,7 @@ const CheckoutPage = () => {
 
     let { isAuthenticated, user, user_loading } = useSelector(state => state.user);
 
-    const stripePromise = process.env.STRIPE_PUBLISHABLE_KEY;
+    // const stripePromise = process.env.STRIPE_PUBLISHABLE_KEY;
 
 
 

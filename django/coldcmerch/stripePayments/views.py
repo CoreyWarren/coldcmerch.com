@@ -72,7 +72,7 @@ class StripeCreatePaymentIntentView(APIView):
             price_sum           += single_item_cost * item_quantity
 
 
-        price_sum = int(price_sum)
+        price_sum = int(price_sum) * 100
 
 
         # Create the payment intent.
