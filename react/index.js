@@ -30,6 +30,8 @@ const cartItemsGetRoute = require('./routes/shop/cartItemsGet');
 const cartItemsCreateRoute = require('./routes/shop/cartItemsCreate');
 // cartItemsDelete.js route
 const cartItemsDeleteRoute = require('./routes/shop/cartItemsDelete');
+// stripe_CreatePaymentIntent.js route
+const stripe_CreatePaymentIntentRoute = require('./routes/stripe/paymentIntent');
 
 
 const app = express();
@@ -51,6 +53,7 @@ app.use(cartRoute);
 app.use(cartItemsGetRoute);
 app.use(cartItemsCreateRoute);
 app.use(cartItemsDeleteRoute);
+app.use(stripe_CreatePaymentIntentRoute);
 
 app.use(express.static('client/build'));
 app.get('*', (req, res) => {
