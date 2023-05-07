@@ -30,7 +30,7 @@ class StripeCreatePaymentIntentView(APIView):
         # Grab the data from the front-end's request.
         try:
             cart_items          = request.data.get('cart_items')
-            payment_method      = request.data.get('payment_method')
+            # payment_method      = request.data.get('payment_method')
             currency            = request.data.get('currency')
             # metadata          = request.data.get('metadata')
             # shipping_info       = request.data.get('shipping_info')
@@ -40,10 +40,19 @@ class StripeCreatePaymentIntentView(APIView):
                 {'error': 'Missing required fields for payment intent creation request.'},
                 status = status.HTTP_400_BAD_REQUEST
             )
+        
+        print("cart_items: ", cart_items)
 
 
         # Serialize each cart item.
-        cart_items = CartItemSerializer(cart_items, many=True)
+        cart_items_serializer = CartItemSerializer(data=cart_items, many=True)
+        if cart_items_serializer.is_valid():
+            cart_items = cart_items_serializer.data
+        else:
+            return Response(
+                {'error': 'Error serializing cart items data.'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
 
         # Start to track the total of the cart items' prices.
@@ -53,17 +62,6 @@ class StripeCreatePaymentIntentView(APIView):
         # Iterate through each cart item, and add the price to the total.
         # fields = ('cart', 'product', 'adjusted_total', 'color', 'size', 'quantity', 'my_user')
 
-        # NO. DO NOT take the price from the front-end!
-        # The price could be changed on the client side if you accepted a price from the front-end!
-
-        # 1. Get the product.
-        # 2. Retrieve the price from the product.
-        
-        # 3. Get the product's size.
-        # 4. Retrieve the price from the product's size!
-
-        # 5. Add the product size's price to the product's price.
-        # 6. Retrieve the sum.
         for single_cart_item in cart_items:
 
             # Grab the adjusted total from each cart item:
@@ -74,18 +72,21 @@ class StripeCreatePaymentIntentView(APIView):
             price_sum           += single_item_cost * item_quantity
 
 
+        price_sum = int(price_sum)
+
+
         # Create the payment intent.
-        stripe.PaymentIntent.create(
+        payment_intent = stripe.PaymentIntent.create(
             amount              = price_sum,
             currency            = currency,
-            payment_method      = payment_method,
+            payment_method_types= ['card'],
             # metadata          = metadata,
             # shipping          = shipping_info,
             receipt_email       = receipt_email,
         )
 
         # Retrieve the client secret from the payment intent
-        clientSecret = stripe.PaymentIntent.client_secret
+        clientSecret = payment_intent.client_secret
         # Handling the client secret properly:
         # 1. Do not log the client secret.
         # 2. Do not embed the client secret in the URL.

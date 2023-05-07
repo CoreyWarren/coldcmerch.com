@@ -19,19 +19,27 @@ stripe_private_key = process.env.STRIPE_PRIVATE_KEY
 
 
 router.post('/api/stripe/create-payment-intent', async (req, res) => {
+
+    
+
     try {
+        const { access } = req.cookies;
+
         //retrieve data from Django Backend
         const { cart_items, currency, payment_method, receipt_email } = req.body;
 
         const body = JSON.stringify({ cart_items, currency, payment_method, receipt_email });
 
+        console.log("stripe payment intent creation body: ", body);
+
         const apiResponse = await fetch(`${process.env.API_URL}/api/stripe/create-payment-intent`, {
             method: 'POST',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${access}`,
+            },
+            body
         });
 
         // wait for that response (we are async so it works as such.)

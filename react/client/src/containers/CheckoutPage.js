@@ -67,25 +67,32 @@ const CheckoutPage = () => {
         console.log("Error when creating Payment Intent: No Cart Items");
         return;
       };
+      console.log("Creating Payment Intent...! All checks passed.");
+      // console.log("User Email:", user.email);
 
       // Assign the cart items to an array, then convert to an object:
       // (Our API expects an object)
-      const itemsArray = Array.from(cart_items_map.entries());
-      const itemsObject = Object.fromEntries(itemsArray);
+
+      console.log("Items Object:", cart_items_map);
       const payment_method = 'card';
       const currency = 'usd';
       
 
-      dispatch(createPaymentIntent(itemsObject, payment_method, currency, user.email)).then((result) => {
+      dispatch(createPaymentIntent({
+        cart_items: cart_items_map,
+        payment_method: payment_method,
+        currency: currency,
+        receipt_email: user.email
+      })).then((result) => {
 
-      if(result.payload) {
-        setClientSecret(result.payload.client_secret);
-      } else {
-        console.log("Error when creating Payment Intent:", result.error);
-      };
+        if(result.payload) {
+          setClientSecret(result.payload.client_secret);
+        } else {
+          console.log("Error when creating Payment Intent:", result.error);
+        };
 
-    });
-        
+      });
+      
       }, [dispatch, user, cart_items_map, isAuthenticated]);
 
 
