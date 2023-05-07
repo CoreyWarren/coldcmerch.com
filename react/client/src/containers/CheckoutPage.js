@@ -1,5 +1,6 @@
 // import Layout from 'components/Layout';
 import { loadStripe } from "@stripe/stripe-js";
+import LayoutStripeCheckout from 'components/LayoutStripeCheckout';
 import { Elements } from "@stripe/react-stripe-js";
 import {  useEffect, useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -11,7 +12,6 @@ import CheckoutForm from "./CheckoutForm";
 
 const stripe_public_key = process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY;
 
-// const stripePromise = loadStripe("pk_test_51LjuaCGd7lKiUeBGcPrv9c5hjjcUZVwpwFIDxZeMPMkSQEcMNs5gtoqmGNAnh7snzlcFaj6253qIEKge0tdqSqPX00Jwjh6sj0");
 const stripePromise = loadStripe(stripe_public_key);
 
 
@@ -53,7 +53,6 @@ const CheckoutPage = () => {
 
     let { isAuthenticated, user, user_loading } = useSelector(state => state.user);
 
-    // const stripePromise = process.env.STRIPE_PUBLISHABLE_KEY;
 
 
 
@@ -79,7 +78,7 @@ const CheckoutPage = () => {
       // Assign the cart items to an array, then convert to an object:
       // (Our API expects an object)
 
-      console.log("Items Object:", cart_items_map);
+      // console.log("Items Object:", cart_items_map);
       const payment_method = 'card';
       const currency = 'usd';
       
@@ -92,7 +91,7 @@ const CheckoutPage = () => {
       })).then((result) => {
 
         if(result.payload) {
-          setClientSecret(result.payload.client_secret);
+          setClientSecret(result.payload);
         } else {
           console.log("Error when creating Payment Intent:", result.error);
         };
@@ -107,20 +106,28 @@ const CheckoutPage = () => {
       theme: 'stripe',
     };
 
-    const options = {
+    let options = {
       clientSecret,
       appearance,
     };
 
+    console.log("Client Secret:", clientSecret)
 
     return (
-      <div className="App">
+      <LayoutStripeCheckout title = 'Coldcut Merch | Dashboard' content = 'Dashboard page'>
+
+        <h2>Checkout</h2>
+
+
         {clientSecret && (
           <Elements options={options} stripe={stripePromise}>
             <CheckoutForm />
           </Elements>
         )}
-      </div>
+
+
+        
+      </LayoutStripeCheckout>
     );
 
 
