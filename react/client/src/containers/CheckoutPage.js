@@ -114,16 +114,19 @@ const CheckoutPage = () => {
     console.log("Client Secret:", clientSecret)
 
     return (
-      <LayoutStripeCheckout title = 'Coldcut Merch | Dashboard' content = 'Dashboard page'>
-
+      <LayoutStripeCheckout title = 'Coldcut Merch | Dashboard' content = 'Dashboard page' >
         <h2>Checkout</h2>
 
-
+        <div id="stripe-checkout-container">
+          
         {clientSecret && (
           <Elements options={options} stripe={stripePromise}>
             <CheckoutForm />
           </Elements>
         )}
+
+        </div>
+
 
 
         

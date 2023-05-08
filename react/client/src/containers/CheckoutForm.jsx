@@ -79,8 +79,35 @@ export default function CheckoutForm() {
   };
 
   const paymentElementOptions = {
-    layout: "tabs"
-  }
+    layout: 'tabs',
+    fields: {
+      billing_details: {
+        name: 'auto',
+        email: 'auto',
+        address: {
+          line1: 'auto',
+          line2: 'auto',
+          city: 'auto',
+          country: 'auto',
+          postal_code: 'auto',
+          state: 'auto',
+        },
+      },
+    },
+    style: {
+      base: {
+        color: 'white',
+        fontWeight: '600',
+      },
+    },
+    options : {
+      defaultValues: {
+        billingDetails: {
+          email: email,
+        }
+      }
+    }
+  };
 
   return (
     <form id="payment-form" onSubmit={handleSubmit}>

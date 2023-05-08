@@ -1,6 +1,5 @@
 import { Helmet } from 'react-helmet';
 import Navbar from 'components/Navbar';
-import './StripeCheckout.css';
 import '../fonts/Pilar.ttf'
 
 const LayoutStripeCheckout = ({ title, content, children}) => (
