@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import Layout from 'components/Layout';
 import { resetProductsMap } from 'features/product';
-import { getCartItems } from 'features/cartItems';
+import { getCartItems, deleteCartItem } from 'features/cartItems';
 
 import { motion } from 'framer-motion';
 import Dropdown from 'react-bootstrap/Dropdown';
@@ -52,18 +52,41 @@ const CartPage = () => {
 
     }, [dispatch]);
 
+
+
+
     
 
     // We want to load cart items so we can display them. This is the main purpose of this page.
-    const { cart_items_map, loading_cart_items } = useSelector(state => state.cart_items);
+    let { cart_items_map, loading_cart_items } = useSelector(state => state.cart_items);
 
     // We want to see if the USER is logged in or not, so we can redirect them to the login page if they are not.
-    const { isAuthenticated, user, user_loading } = useSelector(state => state.user);
+    let { isAuthenticated, user, user_loading } = useSelector(state => state.user);
 
     // We want to load products so we can display product details alongside the cart items they are a part of.
-    const { selective_products_map, loading_products} = useSelector(state => state.products);
+    let { selective_products_map, loading_products} = useSelector(state => state.products);
 
-    const cart_intro = () => {
+
+    const obfuscateEmail = (email) => {
+        // Split the email into username and domain
+        email = email.toString();
+        const [username, domain] = email.split('@');
+
+        // Find the smaller of the two, username length or 3
+        const visibleCharsPreset = 3;
+        const actualVisibleChars = Math.min(visibleCharsPreset, username.length - 1);
+
+        // Slice the username to the smaller of the two, username length or 3
+        const usernamePartial = username.slice(0, actualVisibleChars);
+
+        // Pad the username with asterisks to the length of the original username
+        const obfuscatedUsername = usernamePartial.padEnd(username.length, '*');
+      
+        return `${obfuscatedUsername}@${domain}`;
+    };
+
+
+    const cart_intro = (email_display) => {
 
         // If the user is NOT logged in, REDIRECT them to the LOGIN page.
         if (!isAuthenticated) {
@@ -78,7 +101,7 @@ const CartPage = () => {
         else {
             return (
                 <div>
-                    <p>Logged in as: {user.first_name}</p>
+                    <p>Logged in as: {email_display}</p>
                 </div>
             )
         }
@@ -87,6 +110,40 @@ const CartPage = () => {
     };
 
 
+    const deleteCartItemHelper = async (cart_item_to_delete_id, view_index) => {
+        let success = false;
+        console.log("cart_item_to_delete_id:", cart_item_to_delete_id);
+
+        await dispatch(deleteCartItem(cart_item_to_delete_id)).then((action) =>
+        {
+            console.log("action.payload:", action.payload);
+            if (action.payload.success === true) {
+                success = true;
+            }
+        });
+
+
+        if (success === true ) {
+            const toast_success = document.getElementById(`delete-from-cart-toast-success-${view_index}`);
+            toast_success.classList.add('show');
+            
+            setTimeout(() => {
+                toast_success.classList.remove('show');
+            }, 3000);
+        }else{
+            const toast_error = document.getElementById(`delete-from-cart-toast-error-${view_index}`);
+            toast_error.classList.add('show');
+            
+            setTimeout(() => {
+                toast_error.classList.remove('show');
+            }, 4000);
+        }
+
+        dispatch(resetProductsMap());
+
+        dispatch(getCartItems()).catch(error => console.error('Error when grabbing Cart Items:', error));
+
+    }
     
     const calculate_cart_total = () => {
         let cart_total = 0;
@@ -100,7 +157,7 @@ const CartPage = () => {
 
 
 
-    const display_cart_items = () => {
+    let display_cart_items = () => {
         let result = [];
         
 
@@ -108,15 +165,30 @@ const CartPage = () => {
         for (let i = 0; i < cart_items_map.length; i += 1) {
 
             //console.log(i, "...", selective_products_map[i].image_preview);
-            const image_sauce = ('http://localhost:8000' + selective_products_map[i].image_preview).toString();
-            const cart_item_key = (cart_items_map[i].product + selective_products_map[i].title).toString() + i.toString();
+            let index_starting_at_one_for_cart_items = 0;
+            let image_sauce = "";
+            let cart_item_key = "";
+
+            try{
+                index_starting_at_one_for_cart_items = i + 1;
+                image_sauce = ('http://localhost:8000' + selective_products_map[i].image_preview).toString();
+                cart_item_key = (cart_items_map[i].product + selective_products_map[i].title).toString() + i.toString();
+            }catch(error){
+                console.log("Error:", error);
+                return (
+                    <div>
+                        <p>There was an error loading your cart.</p>
+                    </div>
+                )
+            }
+           
 
             // fields = ('product', 'adjusted_total', 'size', 'quantity')
             result.push(
-            <div className="cart_item" key={cart_item_key}>
+            <div className="cart_item" key={`cart-item-${cart_item_key}`}>
 
                 
-                <h2>{i+1}:  {selective_products_map[i].title}</h2>
+                <h2>{index_starting_at_one_for_cart_items}:  {selective_products_map[i].title}</h2>
 
                     <motion.div
                     whileHover={{
@@ -142,14 +214,21 @@ const CartPage = () => {
                     &#128393;
                     </Dropdown.Toggle>
                     <Dropdown.Menu >
-                        <Dropdown.Item  href="#">Remove from Cart</Dropdown.Item>
+                        <Dropdown.Item>
+                            <button className="remove-from-cart-button" onClick={() => deleteCartItemHelper(cart_items_map[i].id, i)}>Remove from Cart</button>
+                        </Dropdown.Item>
                     </Dropdown.Menu>
                     </Dropdown>
+
+
                 </div>
 
+                <div className="toast-success" id={`delete-from-cart-toast-success-${i}`}>Item #{index_starting_at_one_for_cart_items} was deleted from your Cart!</div>
 
-                
+                <div className="toast-error" id={`delete-from-cart-toast-error-${i}`}>ERROR: Could not delete item #{index_starting_at_one_for_cart_items}.</div>
+
             </div>
+
             );
             
         }
@@ -171,6 +250,8 @@ const CartPage = () => {
 
 
     if(!loading_cart_items && cart_items_map != null && !user_loading && isAuthenticated && user != null && !loading_products) {
+
+        let email_display = obfuscateEmail(user.email);
         
         return(
             <Layout title = 'Coldcut Merch | Cart' content='Cart Page'>
@@ -178,14 +259,14 @@ const CartPage = () => {
             <h1 className='mb-5'>Shopping Cart</h1>
                 <div className="mb-4"></div>
                 <div className="home_panel">
-                    {cart_intro()}
+                    {cart_intro(email_display)}
                     <div className="total-price">Subtotal: {calculate_cart_total()} USD</div>
                     {display_cart_items()}
                 </div>
 
             <div className="total-price">Subtotal: {calculate_cart_total()} USD</div>
 
-            <button type="button" className="checkout-button">Checkout</button>
+            <a href="/checkout"><button type="button" className="checkout-button">Checkout</button></a>
 
 
             </Layout>

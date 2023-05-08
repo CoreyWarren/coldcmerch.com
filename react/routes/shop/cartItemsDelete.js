@@ -6,22 +6,19 @@ const router = express.Router();
 
 // Create logic to retrieve cart item data (for use in the front-end)
 
-router.post('/api/shop/cart_items/post', async (req, res) => {
+router.post('/api/shop/cart_items/delete', async (req, res) => {
 
     const { access } = req.cookies;
 
-    const {product, adjusted_total, size, quantity} = req.body;
+    const {cart_item_id} = req.body;
 
     const body = JSON.stringify({
-        product,
-        adjusted_total,
-        size,
-        quantity,
+        cart_item_id
       });
 
     try {
         //retrieve data from Django Backend
-        const apiResponse = await fetch(`${process.env.API_URL}/api/shop/cart_items/post`, {
+        const apiResponse = await fetch(`${process.env.API_URL}/api/shop/cart_items/delete`, {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -39,7 +36,7 @@ router.post('/api/shop/cart_items/post', async (req, res) => {
     } catch (err) {
         // catch error
         return res.status(500).json({
-            error: "Something went wrong when trying to retrieve user's cart items.",
+            error: "Something went wrong when trying to delete user's cart item.",
         });
     }
 

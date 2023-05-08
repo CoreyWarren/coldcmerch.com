@@ -25,9 +25,14 @@ const productSizeRoute = require('./routes/shop/productSize');
 // cart.js route
 const cartRoute = require('./routes/shop/cart');
 // cartItems.js route
-const cartItemsGetRoute = require('./routes/shop/cartitemsGet');
+const cartItemsGetRoute = require('./routes/shop/cartItemsGet');
 // cartItemsCreate.js route
 const cartItemsCreateRoute = require('./routes/shop/cartItemsCreate');
+// cartItemsDelete.js route
+const cartItemsDeleteRoute = require('./routes/shop/cartItemsDelete');
+// stripe_CreatePaymentIntent.js route
+const stripe_CreatePaymentIntentRoute = require('./routes/stripe/paymentIntent');
+
 
 const app = express();
 
@@ -47,6 +52,8 @@ app.use(productSizeRoute);
 app.use(cartRoute);
 app.use(cartItemsGetRoute);
 app.use(cartItemsCreateRoute);
+app.use(cartItemsDeleteRoute);
+app.use(stripe_CreatePaymentIntentRoute);
 
 app.use(express.static('client/build'));
 app.get('*', (req, res) => {
@@ -56,4 +63,4 @@ app.get('*', (req, res) => {
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => console.log('Server listening on port ', PORT));
+app.listen(PORT, () => console.log('Coco, the Express Server is listening on port:', PORT));

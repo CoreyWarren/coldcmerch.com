@@ -98,8 +98,9 @@ export const getCartItems = createAsyncThunk('cart_items', async (_, thunkAPI) =
         // fields = ('product', 'adjusted_total', 'size', 'quantity')
         
         cart_items_map = data.map(item => {
-            const { product, adjusted_total, size, quantity } = item;
+            const { id, product, adjusted_total, size, quantity } = item;
             return {
+                id,
                 product,
                 adjusted_total,
                 size,
@@ -164,15 +165,20 @@ export const addToCart = createAsyncThunk('cart_items/post', async ({product, ad
             body,
         });
 
-        const addedItem = await res.json();
+        const message = await res.json();
 
         let added_to_cart = false;
+        let custom_error = "none"
 
         if (res.status === 200 || res.status === 201) {
           added_to_cart = true;
+        }else if (res.status === 409 && 'error_type' in message) {
+          custom_error = message.error_type;
         }
 
-        return { item: addedItem, success: added_to_cart };
+        console.log("custom error (cartitems.js): ", custom_error)
+
+        return { message: message, success: added_to_cart, custom_error: custom_error};
 
     } catch (err) {
       console.log("Add to cart api ERROR.");
@@ -184,7 +190,37 @@ export const addToCart = createAsyncThunk('cart_items/post', async ({product, ad
 
 
 
+export const deleteCartItem = createAsyncThunk('cart_items/delete', async (cart_item_id, thunkAPI) => {
 
+    const body = JSON.stringify({
+      cart_item_id
+    });
+
+    try {
+      const res = await fetch(
+        `/api/shop/cart_items/delete`, {
+            method: 'POST',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body,
+        });
+
+        let deleted_from_cart = false;
+
+        if (res.status === 204) {
+          deleted_from_cart = true;
+        }
+
+        return { success: deleted_from_cart };
+
+    } catch (err) {
+      console.log("Delete cart item api ERROR.");
+      return thunkAPI.rejectWithValue(err.response.data);
+    }
+
+});
 
 
 
@@ -194,6 +230,8 @@ export const addToCart = createAsyncThunk('cart_items/post', async ({product, ad
 const initialState = {
     cart_items_map: null,
     loading_cart_items: false,
+    deleting_single_cart_item: false,
+    deleting_single_cart_item_response: null,
     processing_add_to_cart: false,
     add_to_cart_response: null,
     product_indices: null,
@@ -225,6 +263,7 @@ const initialState = {
         })
 
         // get product details
+        
         .addCase(getProductDetails.pending, (state) => {
           state.loading_cart_items = true;
         })
@@ -250,6 +289,22 @@ const initialState = {
 
         .addCase(addToCart.rejected, (state, action) => {
           state.processing_add_to_cart = false;
+          state.error = action.error.message;
+        })
+
+        // delete from cart
+
+        .addCase(deleteCartItem.pending, (state) => {
+          state.deleting_single_cart_item = true;
+        })
+
+        .addCase(deleteCartItem.fulfilled, (state, action) => {
+          state.deleting_single_cart_item = false;
+          state.deleting_single_cart_item_response = action.payload;
+        })
+
+        .addCase(deleteCartItem.rejected, (state, action) => {
+          state.deleting_single_cart_item = false;
           state.error = action.error.message;
         });
 

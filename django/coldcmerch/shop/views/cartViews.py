@@ -149,10 +149,49 @@ class CreateCartItemView(APIView):
         print("Add Cart -- Old data, request from Front-End: \n", data)
 
 
-        # Interpret 'my_user' and 'cart' from the request
+        # Interpret 'my_user' and 'cart' from the request to fulfill the 
+        # fields = ('cart', 'product', 'adjusted_total', 'size', 'quantity', 'my_user')
         data['my_user'] = request.user.id
         data['cart'] = Cart.objects.get(my_user=request.user, checked_out=False).id
 
+
+        # Check QUANTITY to see if it's eligible to be interpreted
+        product_quantity = data['quantity']
+        print("Add to Cart -- Quantity RAW: ", product_quantity)
+        if not isinstance(product_quantity, int):
+            return Response({'response': 'Quantity must be an integer.'},
+                status=status.HTTP_400_BAD_REQUEST)
+        elif (product_quantity < 1 or product_quantity > 10):
+            return Response({'response': 'Quantity must be between 1 and 10.'},
+                status=status.HTTP_400_BAD_REQUEST)
+        
+        ###
+        ###
+        # NEW: We need to check available stock before we add to cart.
+        try:
+            product_size_to_check = ProductSize.objects.get(product_id=data['product'], size=data['size'])
+
+            # Check if the requested quantity is available
+            related_cart_items = CartItem.objects.filter(cart__my_user=request.user, cart__checked_out=False, product=data['product'], size=data['size'])
+
+            current_quantity_requesting = product_quantity
+
+
+            for item in related_cart_items:
+                current_quantity_requesting += item.quantity
+            
+            print("Add to Cart -- Quantity, Cart Items included: ", current_quantity_requesting)
+
+            if(product_size_to_check.available_amount < current_quantity_requesting):
+                return Response({'response': 'Requested too many items. Not enough in stock.', 'error_type': 'size stock'},
+                        status=status.HTTP_409_CONFLICT,)
+        except:
+            return Response({'response': 'Error when checking product stock.'},
+                            status=status.HTTP_400_BAD_REQUEST)
+        ###
+        ###
+        
+        # If we're here, then the requested quantity is available.
 
         # Grab the product size price from our backend database:
         # Send a special response if it's not found.
@@ -174,15 +213,7 @@ class CreateCartItemView(APIView):
         
 
 
-        # Check QUANTITY to see if it's eligible to be interpreted
-        product_quantity = data['quantity']
-        print("Add to Cart -- Quantity RAW: ", product_quantity)
-        if not isinstance(product_quantity, int):
-            return Response({'response': 'Quantity must be an integer.'},
-                status=status.HTTP_400_BAD_REQUEST)
-        elif (product_quantity < 1 or product_quantity > 10):
-            return Response({'response': 'Quantity must be between 1 and 10.'},
-                status=status.HTTP_400_BAD_REQUEST)
+
 
 
         # Calculate the adjusted total and amend it to the data:
@@ -208,4 +239,36 @@ class CreateCartItemView(APIView):
         print("Cart Item created in models - coldcmerch/shop/views.py")
 
         return Response({'item': serializer.data, 'success': True}, status=status.HTTP_201_CREATED)
+    
+
+# Remove Cart Item
+
+class DeleteCartItemView(APIView):
+    permission_classes = [IsAuthenticated]
+    def post(self, request):
+
+        # Check if the requester is an authenticated user (i.e.: logged in)
+        if not request.user.is_authenticated:
+            # Let them/our front end know by sending a 401 response and a message.
+            return Response({'response': 'Authentication credentials were not provided.'},
+                            status=status.HTTP_401_UNAUTHORIZED)
+        
+        data = request.data
+
+        # Only allow the correct user to access this API:
+        requesting_user = request.user.id
+        
+        # Attempt to delete the cart item from the database.
+        # If it fails, send an error message.
+        # Otherwise, send a success message.
+        try:
+            CartItem.objects.filter(my_user = requesting_user, id = data['cart_item_id']).delete()
+        except:
+            return Response({'response': 'Could not delete cart item. No such item exists for this user.'},
+                status=status.HTTP_400_BAD_REQUEST)
+
+        return Response({'response': 'Item was deleted.'}, status = status.HTTP_204_NO_CONTENT)
+        
+
+    pass
     

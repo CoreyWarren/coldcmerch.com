@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.conf import settings
+from rest_framework.permissions import IsAuthenticated
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -21,7 +22,7 @@ stripe.api_key = settings.STRIPE_PRIVATE_KEY
 # https://stripe.com/docs/api/payment_intents/create
 class StripeCreatePaymentIntentView(APIView):
 
-    permission_classes = []
+    permission_classes = [IsAuthenticated]
     # todo:
         # 1. Consider the situation where the user has a payment intent already created.
     def post(self, request):
@@ -29,20 +30,29 @@ class StripeCreatePaymentIntentView(APIView):
         # Grab the data from the front-end's request.
         try:
             cart_items          = request.data.get('cart_items')
-            payment_method      = request.data.get('payment_method')
+            # payment_method      = request.data.get('payment_method')
             currency            = request.data.get('currency')
             # metadata          = request.data.get('metadata')
-            shipping_info       = request.data.get('shipping_info')
+            # shipping_info       = request.data.get('shipping_info')
             receipt_email       = request.data.get('receipt_email')
         except:
             return Response(
-                {'error': 'Missing required fields'},
+                {'error': 'Missing required fields for payment intent creation request.'},
                 status = status.HTTP_400_BAD_REQUEST
             )
+        
+        print("cart_items: ", cart_items)
 
 
         # Serialize each cart item.
-        cart_items = CartItemSerializer(cart_items, many=True)
+        cart_items_serializer = CartItemSerializer(data=cart_items, many=True)
+        if cart_items_serializer.is_valid():
+            cart_items = cart_items_serializer.data
+        else:
+            return Response(
+                {'error': 'Error serializing cart items data.'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
 
         # Start to track the total of the cart items' prices.
@@ -52,47 +62,31 @@ class StripeCreatePaymentIntentView(APIView):
         # Iterate through each cart item, and add the price to the total.
         # fields = ('cart', 'product', 'adjusted_total', 'color', 'size', 'quantity', 'my_user')
 
-        # NO. DO NOT take the price from the front-end!
-        # The price could be changed on the client side if you accepted a price from the front-end!
-
-        # 1. Get the product.
-        # 2. Retrieve the price from the product.
-        
-        # 3. Get the product's size.
-        # 4. Retrieve the price from the product's size!
-
-        # 5. Add the product size's price to the product's price.
-        # 6. Retrieve the sum.
         for single_cart_item in cart_items:
 
-            # Note to self: Create an API view to retrieve Cart Items
-            related_product     = single_cart_item['product']['id']
-            related_size        = single_cart_item['size']
-
-            related_product_cost    = Product.objects.get(id=related_product).base_cost
-            related_size_cost       = ProductSize.objects.get(product=related_product, size=related_size).added_cost
-
-            # Add the two costs together
-            single_item_cost    = related_product_cost + related_size_cost
-
-            item_quantity       = single_cart_item['quantity']
+            # Grab the adjusted total from each cart item:
+            single_item_cost = single_cart_item['adjusted_total']
+            item_quantity = single_cart_item['quantity']
 
             # Sum = cost of each of this type of item, TIMES the quantity of that item.
             price_sum           += single_item_cost * item_quantity
 
 
+        price_sum = int(price_sum) * 100
+
+
         # Create the payment intent.
-        stripe.PaymentIntent.create(
+        payment_intent = stripe.PaymentIntent.create(
             amount              = price_sum,
             currency            = currency,
-            payment_method      = payment_method,
+            payment_method_types= ['card'],
             # metadata          = metadata,
-            shipping            = shipping_info,
+            # shipping          = shipping_info,
             receipt_email       = receipt_email,
         )
 
         # Retrieve the client secret from the payment intent
-        clientSecret = stripe.PaymentIntent.client_secret
+        clientSecret = payment_intent.client_secret
         # Handling the client secret properly:
         # 1. Do not log the client secret.
         # 2. Do not embed the client secret in the URL.
@@ -103,7 +97,7 @@ class StripeCreatePaymentIntentView(APIView):
         # Todo: Consider routing the user to the payment page here.
 
         # return a response with the client secret. 
-        return Response( {'client': clientSecret}, status=status.HTTP_200_OK )
+        return Response( {'client_secret': clientSecret}, status=status.HTTP_200_OK )
         # This is used to confirm the user's intent to make a payment,
         # Get it? Intent? Payment Intent? That's where it comes from!
         

@@ -16,12 +16,10 @@ router.post(`/api/users/register`, async (req, res) => {
     // Make an AJAX request to our Django Backend
     // (Because our Django has the database and the relevant endpoint(s))
     // Receive all these values:
-    const { first_name, last_name, email, password } = req.body;
+    const { email, password } = req.body;
 
     // JSON stringify them
     const body = JSON.stringify({
-        first_name,
-        last_name,
         email,
         password,
     });

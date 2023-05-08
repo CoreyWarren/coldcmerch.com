@@ -9,6 +9,7 @@ import LoginPage from 'containers/LoginPage';
 import RegisterPage from 'containers/RegisterPage';
 import StorePage from 'containers/StorePage';
 import CartPage from 'containers/CartPage';
+import CheckoutPage from 'containers/CheckoutPage';
 
 import RouteWrapper from 'features/RouteWrapper';
 
@@ -48,6 +49,7 @@ const App = () => {
             </RouteWrapper>
           }
         />
+        <Route path='/checkout' element={<CheckoutPage/>} />
       </Routes>
     </Router>
 

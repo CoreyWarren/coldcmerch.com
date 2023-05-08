@@ -28,20 +28,13 @@ class ProductImage(models.Model):
 
 class ProductSize(models.Model):
     # "cascade" here allows us to make changes to the Product model and keep this column in sync with that foreign key.
-    product_id      = models.ForeignKey('Product', on_delete=models.CASCADE, null = True)
-    size            = models.CharField(max_length = 50, null = False, blank = False, default = 'M')
-    added_cost      = models.FloatField(default = 0)
+    product_id          = models.ForeignKey('Product', on_delete=models.CASCADE, null = True)
+    size                = models.CharField(max_length = 50, null = False, blank = False, default = 'M')
+    added_cost          = models.FloatField(default = 0)
+    available_amount    = models.IntegerField(default = 1)
 
     def __str__(self):
         return str(self.size) + ' for product #' + str(self.product_id)
-
-class ProductColor(models.Model):
-    product         = models.ForeignKey('Product', on_delete=models.CASCADE, null = True)
-    color           = models.CharField(max_length = 50, null = False, blank = False, default = 'Default')
-    added_cost      = models.FloatField(default = 0)
-
-    def __str__(self):
-        return str(self.product) + ' --- ' + str(self.color) + str(self.id)
 
 #
 # Shopping Cart:
@@ -110,8 +103,7 @@ class CartItemManager(models.Manager):
 class CartItem(models.Model):
     cart                = models.ForeignKey('Cart', related_name="cart_items", on_delete=models.CASCADE, null = True, blank = True, default=None)
     product             = models.ForeignKey('Product', verbose_name=_('product'), on_delete=models.CASCADE)
-    adjusted_total      = models.FloatField(default = 30, null = False, blank = False)
-    # color               = models.CharField(max_length = 50, null = False, blank = False, default = "None specified.")
+    adjusted_total      = models.FloatField(default = 0, null = False, blank = False)
     size                = models.CharField(max_length = 50, null = False, blank = False, default = "None specified.")
     quantity            = models.IntegerField(default = 1, null = False, blank = False)
     my_user             = models.ForeignKey('users.UserAccount', on_delete=models.CASCADE, null = False, blank = False, default=1)
@@ -135,18 +127,14 @@ class CartItem(models.Model):
 class OrderManager(models.Manager):
     # Orders are basically checked-out carts that are ready
     # to be shipped by us. That's why it has all this info.
-    def create_order(self, cart, date_placed, user, street_address, zip_code, city, state, first_name, last_name):
+    def create_order(self, cart, date_placed, user, city, state):
 
         order = self.model(
             cart = cart,
             date_placed = date_placed,
             user = user,
-            street_address = street_address,
-            zip_code = zip_code,
             city = city,
             state = state,
-            first_name = first_name,
-            last_name = last_name,
         )
         order.save(using=self._db)
         return order
@@ -155,12 +143,8 @@ class Order(models.Model):
     cart            = models.ForeignKey(Cart, null = True, blank = False, on_delete=models.CASCADE)
     date_placed     = models.DateTimeField(auto_now_add=True)
     user            = models.ForeignKey('users.UserAccount', null = True, blank = False, on_delete=models.CASCADE)
-    street_address  = models.CharField(max_length= 300, default="")
-    zip_code        = models.CharField(max_length= 12, default="")
     city            = models.CharField(max_length= 200, default="")
     state           = models.CharField(max_length= 100, default="")
-    first_name      = models.CharField(max_length= 100, default ="")
-    last_name       = models.CharField(max_length= 100, default ="")
 
     objects = OrderManager()
 
