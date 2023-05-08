@@ -159,6 +159,10 @@ const CartPage = () => {
 
     let display_cart_items = () => {
         let result = [];
+
+        result.push(
+            <p key="p divider start">-------------------------</p>
+        )
         
 
         // PRINT THE CART ITEMS, this is a FOR LOOP:
@@ -261,8 +265,11 @@ const CartPage = () => {
                 <div className="home_panel">
                     {cart_intro(email_display)}
                     <div className="total-price">Subtotal: {calculate_cart_total()} USD</div>
+                    <a href="/checkout"><button type="button" className="checkout-button-top">Checkout</button></a>
                     {display_cart_items()}
                 </div>
+
+            
 
             <div className="total-price">Subtotal: {calculate_cart_total()} USD</div>
 

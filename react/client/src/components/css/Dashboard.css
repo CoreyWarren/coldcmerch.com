@@ -143,7 +143,7 @@ a.dropdown-item{
     color: white;
 }
 
-.user_data_item{
+.dashboard_panel .user_data_item{
     font-family: Courier New;
     font-size: 1.5vw;
     display:block;
@@ -152,6 +152,21 @@ a.dropdown-item{
     background-color: rgba(0, 0, 0, 0.534);
     margin: 1rem;
     border-radius: 1rem;
+}
+
+.dashboard_panel .info-item{
+    display:block;
+    color:white;
+    padding: 1rem;
+    background-color: rgba(7, 14, 20, 0.534);
+    margin: 1rem;
+    border-radius: 1rem;
+}
+.dashboard_panel .info-item p{
+    font-family: Courier New;
+    font-size: 0.9vw;
+    margin: 0;
+    line-height: 0.7rem;
 }
 
 
@@ -252,6 +267,18 @@ a.dropdown-item{
 
 .checkout-button{
     margin: 2rem auto 10rem;
+    padding: 2rem auto;
+    width: 50%;
+    height: 4rem;
+    text-align: center;
+    font-size: 1.75rem;
+    color:rgb(255, 255, 255);
+    border-radius: 1rem;
+    background-color: rgb(34, 31, 31);
+}
+
+.checkout-button-top{
+    margin: 2rem auto 1rem;
     padding: 2rem auto;
     width: 50%;
     height: 4rem;

@@ -2,6 +2,8 @@ import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import Layout from 'components/Layout';
 
+import StripePoweredButton from '../components/stripe/StripePoweredButton';
+
 // To-Do: Implement User Order History
 
 const DashboardPage = () => {
@@ -47,6 +49,7 @@ const DashboardPage = () => {
                 <h1 className='mb-5'>User Dashboard</h1>
                     <div className="mb-4"></div>
                     <div className="user_data_item">Email:  <br></br>{email_display}</div>
+
                 </div>
                 </>
             }
@@ -70,6 +73,14 @@ const DashboardPage = () => {
                             <h1 className='mb-5'>User Dashboard</h1>
                                 <div className="mb-4"></div>
                                 <div className="user_data_item">Email:  <br></br>{email_display}</div>
+
+                                <div className="mb-4"></div>
+                                <div className="info-item">
+                                <p>Feel secure! We only store your email and hashed password here.</p>
+                                <p>All personal, shipping, and payment data is handled by Stripe.</p>
+                                <StripePoweredButton />
+                                </div>
+                                
                         </div>
                         </>
                     )
