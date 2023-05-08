@@ -9,6 +9,7 @@ import { getCartItems } from 'features/cartItems';
 import { createPaymentIntent } from 'features/stripePayments';
 
 import CheckoutForm from "./CheckoutForm";
+import AddressForm from './stripe/AddressForm';
 
 const stripe_public_key = process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY;
 
@@ -115,12 +116,15 @@ const CheckoutPage = () => {
 
     return (
       <LayoutStripeCheckout title = 'Coldcut Merch | Dashboard' content = 'Dashboard page' >
-        <h2>Checkout</h2>
+        <h2>Checkout </h2>
+
+        <p style={{fontFamily: 'Verdana'}}>Powered by Stripe</p>
 
         <div id="stripe-checkout-container">
-          
+
         {clientSecret && (
           <Elements options={options} stripe={stripePromise}>
+            <AddressForm />
             <CheckoutForm />
           </Elements>
         )}

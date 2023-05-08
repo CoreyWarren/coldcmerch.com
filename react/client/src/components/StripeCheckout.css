@@ -35,7 +35,7 @@
 
 /* Buttons and links */
 #stripe-checkout-container button {
-  background: #5469d4;
+  background: #5469d4!important;
   font-family: Arial, sans-serif;
   color: #ffffff;
   border-radius: 4px;
