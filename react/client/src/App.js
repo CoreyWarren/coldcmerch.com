@@ -10,6 +10,7 @@ import RegisterPage from 'containers/RegisterPage';
 import StorePage from 'containers/StorePage';
 import CartPage from 'containers/CartPage';
 import CheckoutPage from 'containers/CheckoutPage';
+import OrderSuccessPage from 'containers/OrderSuccessPage';
 
 import RouteWrapper from 'features/RouteWrapper';
 
@@ -50,6 +51,7 @@ const App = () => {
           }
         />
         <Route path='/checkout' element={<CheckoutPage/>} />
+        <Route path='/cart/success' element={<OrderSuccessPage/>} />
       </Routes>
     </Router>
 

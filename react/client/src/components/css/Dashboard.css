@@ -359,7 +359,22 @@ a.dropdown-item{
     position: absolute;
 }
 
+/*
+    Misc
+*/
 
+#dev-help-link{
+    color:rgb(95, 255, 95)!important;
+}
+
+#order-success{
+    color:rgb(95, 255, 95)!important;
+}
+
+#green-highlight{
+    display: inline;
+    color:rgb(95, 255, 95)!important;
+}
 
 
 /*

@@ -258,7 +258,7 @@ const CartPage = () => {
         let email_display = obfuscateEmail(user.email);
         
         return(
-            <Layout title = 'Coldcut Merch | Cart' content='Cart Page'>
+            <Layout title = 'Cold Cut Merch | Cart' content='Cart Page'>
 
             <h1 className='mb-5'>Shopping Cart</h1>
                 <div className="mb-4"></div>
@@ -281,7 +281,7 @@ const CartPage = () => {
         }
         else if(!user_loading && !isAuthenticated){
             return(
-                <Layout title = 'Coldcut Merch | Cart' content='Cart Page'>
+                <Layout title = 'Cold Cut Merch | Cart' content='Cart Page'>
 
                 <h1 className='mb-5'>Shopping Cart</h1>
                     <div className="mb-4"></div>
@@ -294,7 +294,7 @@ const CartPage = () => {
         }
         else{
             return(
-                <Layout title = 'Coldcut Merch | Cart' content='Cart Page'>
+                <Layout title = 'Cold Cut Merch | Cart' content='Cart Page'>
 
                 <h1 className='mb-5'>Shopping Cart</h1>
                     <div className="mb-4"></div>

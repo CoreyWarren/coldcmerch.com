@@ -121,7 +121,7 @@ const CheckoutPage = () => {
     console.log("Client Secret:", clientSecret)
 
     return (
-      <LayoutStripeCheckout title = 'Coldcut Merch | Dashboard' content = 'Dashboard page' >
+      <LayoutStripeCheckout title = 'Cold Cut Merch | Dashboard' content = 'Dashboard page' >
         <h2>Checkout </h2>
 
         

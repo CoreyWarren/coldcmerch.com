@@ -42,7 +42,7 @@ const DashboardPage = () => {
     {
         let email_display = 'No email on file';
 
-        <Layout title = 'Coldcut Merch | Dashboard' content = 'Dashboard page'>
+        <Layout title = 'Cold Cut Merch | Dashboard' content = 'Dashboard page'>
             {
                 <>
                 <div className="dashboard_panel">
@@ -59,7 +59,7 @@ const DashboardPage = () => {
         let email_display = obfuscateEmail(user.email);
 
         return (
-            <Layout title = 'Coldcut Merch | Dashboard' content = 'Dashboard page'>
+            <Layout title = 'Cold Cut Merch | Dashboard' content = 'Dashboard page'>
                 {
                     loading || user === null ? (
                         <div className="spinner-border text-primary" role="status">
