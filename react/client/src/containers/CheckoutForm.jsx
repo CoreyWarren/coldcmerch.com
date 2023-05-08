@@ -6,6 +6,15 @@ import {
   useElements
 } from "@stripe/react-stripe-js";
 
+
+
+// Need help with formatting?
+// https://stripe.com/docs/elements/appearance-api?platform=web#theme
+
+
+
+
+
 export default function CheckoutForm() {
   const stripe = useStripe();
   const elements = useElements();

@@ -5,8 +5,8 @@
 */
 
 @font-face{
-    src: local('Pilar Display Typeface'), url(../fonts/Pilar.ttf) format('opentype');
-    font-family: 'Pilar';
+    src: local('ModernAntiqua-Book Display Typeface'), url(../fonts/ModernAntiqua-Book.ttf) format('opentype');
+    font-family: 'ModernAntiqua-Book';
 }
 
 /* 
@@ -47,17 +47,26 @@ h1{
     min-height: 80vh;
 }
 
-body{
+#root, body, head{
     background-color:rgb(28, 28, 28)!important;
 }
 
+.container-fluid {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    background-color:rgb(22, 22, 22)!important;
+}
+
 .navbar{
-    background-color:rgb(15, 15, 15)!important;
+    padding: 0!important;
+    margin: 0!important;
 }
 
 .navbar li{
     padding: 0vw 1vw;
-    font-size: 1.8rem;
+    font-size: 1.4rem;
 }
 
 .navbar li a:hover{
@@ -77,9 +86,18 @@ body{
     background-color: white;
 }
 
+#logout{
+    position: absolute;
+    right: 0.5%;
+}
+
+#logout a{
+    color: rgb(255, 166, 166)!important;
+}
+
 p, a, h1, h2, h3{
     color:white!important;
-    font-family: 'Pilar';
+    font-family: 'ModernAntiqua-Book';
 }
 
 
@@ -526,6 +544,10 @@ a.dropdown-item{
 @media (max-width: 991px){
     nav.navbar.navbar-expand-lg.bg-dark{
         max-width: 100vw;
+    }
+
+    #logout{
+        position: relative;
     }
 
     h1, h2{

@@ -16,6 +16,9 @@ const stripe_public_key = process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY;
 
 const stripePromise = loadStripe(stripe_public_key);
 
+// Need help with formatting?
+// https://stripe.com/docs/elements/appearance-api?platform=web#theme
+
 
 
 const CheckoutPage = () => {

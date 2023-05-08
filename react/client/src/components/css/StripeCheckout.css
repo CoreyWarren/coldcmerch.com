@@ -1,3 +1,26 @@
+/* StripeCheckout.css */
+
+
+/*
+------------------
+Warning:
+
+Trying to change the styling for the STRIPE CHECKOUT button?
+Use << StripePoweredButton.css >> instead.
+
+Why, you ask?
+
+I have no idea! Stripe's elements are rendered in
+an iframe, but the iframe's content is not accessible???
+But it IS accessible via that other StripePoweredButton.css
+file. 
+
+Is it weird? Yes. But it does work.
+-----------------
+*/
+
+*/
+
 #stripe-checkout-container {
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 16px;

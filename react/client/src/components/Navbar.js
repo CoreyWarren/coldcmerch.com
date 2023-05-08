@@ -28,7 +28,7 @@ const Navbar = () => {
             </NavLink>
             </li>
 
-            <li className='nav-item'>
+            <li className='nav-item' id="logout">
                 <a className='nav-link' href='#!' onClick={() => dispatch( logout() )}>
                     Logout
                 </a>
@@ -63,9 +63,6 @@ const Navbar = () => {
     return(
         <nav className="navbar navbar-expand-lg bg-dark">
             <div className="container-fluid">
-                <Link className='navbar-brand' to='/'>
-                    Coldcut Merch
-                </Link>
 
                 <button 
                 className="navbar-toggler" 
