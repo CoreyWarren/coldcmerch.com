@@ -246,6 +246,9 @@ const initialState = {
     // reducers are used for synchronous dispatches
     reducers: {
 
+      resetCartItemsMap: (state) => {
+        state.cart_items_map = null;
+      }
     },
     extraReducers: builder => {
       builder
@@ -311,5 +314,5 @@ const initialState = {
     },
   });
 
-  
+  export const { resetCartItemsMap } = cartItemsSlice.actions;
   export default cartItemsSlice.reducer;

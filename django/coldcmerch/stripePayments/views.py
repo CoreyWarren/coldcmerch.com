@@ -186,17 +186,22 @@ def order_confirmation_webhook(request):
         # Next, change the stocks of each product size.
 
         # Find each cart item related to that cart again:
-        cart_items = confirmed_cart.cart_item.all()
+
+        cart_items = CartItem.objects.filter(cart=confirmed_cart.id)
+
+        print("cart_items: ", cart_items)
 
         for item in cart_items:
                 
-            item_product = item.product
+            item_product_id = item.product
             item_size = item.size
 
-            product_size = ProductSize.objects.get(product=item_product, size=item_size)
+            product_size = ProductSize.objects.get(product_id=item_product_id, size=item_size)
 
             product_size.available_amount -= item.quantity
             product_size.save()
+
+            print("product, product_size, and available_amount: ", item_product_id, ": ", item_size, ": ", product_size.available_amount)
 
         print('PaymentIntent was successful!')
         print('Cart checked out!')

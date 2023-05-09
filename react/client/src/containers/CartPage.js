@@ -2,7 +2,9 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import Layout from 'components/Layout';
 import { resetProductsMap } from 'features/product';
+import { resetCartItemsMap } from "features/cartItems";
 import { getCartItems, deleteCartItem } from 'features/cartItems';
+import RefreshButton from "components/RefreshButton";
 
 import { motion } from 'framer-motion';
 import Dropdown from 'react-bootstrap/Dropdown';
@@ -31,6 +33,7 @@ const CartPage = () => {
         // We want to reset it to an empty object, so that when we navigate back to StorePage, it
         // doesn't have any values in it.
         dispatch(resetProductsMap());
+        dispatch(resetCartItemsMap());
 
 
         // Dispatch our getCart action from our Reducer, which will affect our State,
@@ -50,7 +53,7 @@ const CartPage = () => {
 
         // within the '[]' would go any parameters used in this useEffect function.
 
-    }, [dispatch]);
+    }, []);
 
 
 
@@ -292,7 +295,7 @@ const CartPage = () => {
                 </Layout>
             );
         }
-        else{
+        else if(loading_cart_items || loading_products){
             return(
                 <Layout title = 'Cold Cut Merch | Cart' content='Cart Page'>
 
@@ -305,6 +308,24 @@ const CartPage = () => {
                 </Layout>
             );
 
+        }
+        else{
+
+
+            return(
+                <Layout title = 'Cold Cut Merch | Cart' content='Cart Page'>
+
+                <h1 className='mb-5'>Shopping Cart</h1>
+                    <div className="mb-4"></div>
+                    <div className="home_panel">
+                        <h1>Something unexpected happened.</h1>
+                        <p>Please try again later.</p>
+                        <p>If nothing changes, it may be an issue on our end.</p>
+                        <p>{RefreshButton()}</p>
+                    </div>
+
+                </Layout>
+            );
         }
 }
 
