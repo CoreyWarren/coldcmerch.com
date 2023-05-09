@@ -84,23 +84,23 @@ Check out my project page at [Coldcut Github Project Planner](https://github.com
 
 As of this update, what works so far:
 
-- User Login
-- User Registration
-- Store Layout
-- Dashboard Layout
+- Login Page
+- Register Page
+- Dashboard Page
+- Store Page
+- Cart Page
 
 ![](readme_img/preview.gif)
 
 To be improved:
-
-- Cart Page
-- Cart Notifications
-- Login/Registration Input Fields and Buttons 
+- Checkout Page
+- Order Confirmation Page
 
 To be added:
-
 - Reset Password
 - Email System
+
+(More details on future improvements in the [PROJECTS](https://github.com/users/CoreyWarren/projects/5) tab!
 
 
 # &#x1F4D9; What technologies are used here?
