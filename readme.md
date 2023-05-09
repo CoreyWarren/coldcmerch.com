@@ -84,23 +84,23 @@ Check out my project page at [Coldcut Github Project Planner](https://github.com
 
 As of this update, what works so far:
 
-- User Login
-- User Registration
-- Store Layout
-- Dashboard Layout
+- Login Page
+- Register Page
+- Dashboard Page
+- Store Page
+- Cart Page
 
 ![](readme_img/preview.gif)
 
 To be improved:
-
-- Cart Page
-- Cart Notifications
-- Login/Registration Input Fields and Buttons 
+- Checkout Page
+- Order Confirmation Page
 
 To be added:
-
 - Reset Password
 - Email System
+
+(More details on future improvements in the [PROJECTS](https://github.com/users/CoreyWarren/projects/5) tab!
 
 
 # &#x1F4D9; What technologies are used here?
@@ -188,6 +188,12 @@ To be added:
 > - User Order History
 
 > I'm praying that I'm consistent enough to finish this by Summer. I'd love to start making just a little drip-feed of client subscription money without the need to work for a big company. I sit here typing this at the library. Hopefully a good omen for the rest of the year. They say a recession is likely coming, and crypto may experience further drops, akin to the DOTCOM crash. Let's get it!
+
+<br>
+
+> 05/08/2023:
+
+> We are reaching the end-game. It feels good. Not in the EXCITING, ENERGETIC way, but rather in a satisfied, content way. Just a few more payment integrations with Stripe, mostly being some Webhook tomfoolery, and then, of course, the largest dragon, talking to ColdCut about whether they're still IN or not! 
 
 <br>
 
