@@ -191,6 +191,12 @@ To be added:
 
 <br>
 
+> 05/08/2023:
+
+> We are reaching the end-game. It feels good. Not in the EXCITING, ENERGETIC way, but rather in a satisfied, content way. Just a few more payment integrations with Stripe, mostly being some Webhook tomfoolery, and then, of course, the largest dragon, talking to ColdCut about whether they're still IN or not! 
+
+<br>
+
 # &#x1F528; Running the Code
 
 You need Node.js installed, as well as Python (the correct version), and all related requirements found in django-requirements.txt.
