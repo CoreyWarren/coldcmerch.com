@@ -188,9 +188,9 @@ a.dropdown-item{
 }
 .dashboard_panel .info-item p{
     font-family: Courier New;
-    font-size: 0.9vw;
+    font-size: 1.3rem;
     margin: 0;
-    line-height: 0.7rem;
+    line-height: 1.3rem;
 }
 
 
@@ -764,13 +764,13 @@ a.dropdown-item{
     }
 
     .dashboard_panel .info-item{
-        font-size: 2rem;
+        font-size: 3rem;
         word-wrap: break-word;
         min-height: 15rem;
     }
 
     .dashboard_panel .info-item p{
-        font-size: 1rem;
+        font-size: 3rem;
         word-wrap: break-word;
         line-height: 2rem;
     }
