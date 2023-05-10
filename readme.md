@@ -245,6 +245,15 @@ npm install
 # Start React:
 npm start
 
+# 3.1 Start the Stripe CLI (Windows):
+# Navigate to wherever you chose to place your stripe.exe (Stripe CLI)
+# Login:
+./stripe login
+# Activate forwarding for the stripe webhook API in the app to handle order confirmation cleanup:
+./stripe listen --forward-to localhost:8000/api/stripe/order_confirmation_webhook
+
+
+
 
 ```
 
