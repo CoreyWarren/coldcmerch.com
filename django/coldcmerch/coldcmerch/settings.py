@@ -23,8 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 env = environ.Env()
 environ.Env.read_env()
 
-STRIPE_PRIVATE_KEY = env('STRIPE_PRIVATE_KEY')
-STRIPE_PUBLIC_KEY = env('STRIPE_PUBLIC_KEY')
+STRIPE_PRIVATE_KEY      = env('STRIPE_PRIVATE_KEY')
+STRIPE_PUBLIC_KEY       = env('STRIPE_PUBLIC_KEY')
+STRIPE_WEBHOOK_SECRET   = env('STRIPE_WEBHOOK_SECRET')
 
 
 # Quick-start development settings - unsuitable for production

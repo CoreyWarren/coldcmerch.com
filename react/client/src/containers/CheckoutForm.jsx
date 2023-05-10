@@ -6,6 +6,15 @@ import {
   useElements
 } from "@stripe/react-stripe-js";
 
+
+
+// Need help with formatting?
+// https://stripe.com/docs/elements/appearance-api?platform=web#theme
+
+
+
+
+
 export default function CheckoutForm() {
   const stripe = useStripe();
   const elements = useElements();
@@ -60,7 +69,7 @@ export default function CheckoutForm() {
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: "http://localhost:3000",
+        return_url: "http://localhost:3000/cart/success",
       },
     });
 
@@ -94,12 +103,6 @@ export default function CheckoutForm() {
         },
       },
     },
-    style: {
-      base: {
-        color: 'white',
-        fontWeight: '600',
-      },
-    },
     options : {
       defaultValues: {
         billingDetails: {
@@ -116,9 +119,10 @@ export default function CheckoutForm() {
         onChange={(e) => setEmail(e.target.value)}
       />
       <PaymentElement id="payment-element" options={paymentElementOptions} />
-      <button disabled={isLoading || !stripe || !elements} id="submit">
+      <br></br>
+      <button disabled={isLoading || !stripe || !elements} id="submit-stripe">
         <span id="button-text">
-          {isLoading ? <div className="spinner" id="spinner"></div> : "Pay now"}
+          {isLoading ? <div className="spinner" id="spinner"></div> : "Send me those Cold Cuts!"}
         </span>
       </button>
       {/* Show any error or success messages */}

@@ -255,7 +255,7 @@ const StorePage = () => {
                 <img src={image_sauce} alt={products_map[i].description}></img>
                 </motion.div>
 
-                <p className="price">{products_map[i].base_cost} {renderSelectedSizePrice(products_map[i].id, selected_size[products_map[i].id])} USD </p>
+                <p className="store-price">{products_map[i].base_cost} {renderSelectedSizePrice(products_map[i].id, selected_size[products_map[i].id])} USD </p>
 
                 <div className="dropdown storebutton collapseOnSelect">
                     <Dropdown>
@@ -298,7 +298,7 @@ const StorePage = () => {
 
     if((products_map == null && loading_products) || (loading_product_sizes && product_size_map == null))  {
         return (
-            <Layout title = 'Coldcut Merch | Store' content = 'Store page'>
+            <Layout title = 'Cold Cut Merch | Store' content = 'Store page'>
                 <div className="dashboard_panel">
                     <h2> Loading Store: </h2>
                     <p> Done Loading Products? <br></br> {String(!loading_products)}</p>
@@ -308,7 +308,7 @@ const StorePage = () => {
         )
     }else if (products_map==null || product_size_map==null) {
         return (
-            <Layout title = 'Coldcut Merch | Store' content = 'Store page'>
+            <Layout title = 'Cold Cut Merch | Store' content = 'Store page'>
                 <div className="dashboard_panel">
                     <h2 style={{fontFamily: 'Arial', fontSize: '3rem'}}>Store Error:</h2>
                     <p style={{fontFamily: 'Arial', fontSize: '1.2rem'}}> Either products or product sizes were unable to be loaded.</p>
@@ -326,7 +326,7 @@ const StorePage = () => {
     }
     else{
         return (
-            <Layout title = 'Coldcut Merch | Store' content = 'Store page'>
+            <Layout title = 'Cold Cut Merch | Store' content = 'Store page'>
                 <div className="dashboard_panel">
                     <h1 className='mb-5'>Store</h1>
                     <div className="mb-4"></div>

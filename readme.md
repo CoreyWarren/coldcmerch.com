@@ -84,23 +84,23 @@ Check out my project page at [Coldcut Github Project Planner](https://github.com
 
 As of this update, what works so far:
 
-- User Login
-- User Registration
-- Store Layout
-- Dashboard Layout
+- Login Page
+- Register Page
+- Dashboard Page
+- Store Page
+- Cart Page
 
 ![](readme_img/preview.gif)
 
 To be improved:
-
-- Cart Page
-- Cart Notifications
-- Login/Registration Input Fields and Buttons 
+- Checkout Page
+- Order Confirmation Page
 
 To be added:
-
 - Reset Password
 - Email System
+
+(More details on future improvements in the [PROJECTS](https://github.com/users/CoreyWarren/projects/5) tab!
 
 
 # &#x1F4D9; What technologies are used here?
@@ -191,6 +191,12 @@ To be added:
 
 <br>
 
+> 05/08/2023:
+
+> We are reaching the end-game. It feels good. Not in the EXCITING, ENERGETIC way, but rather in a satisfied, content way. Just a few more payment integrations with Stripe, mostly being some Webhook tomfoolery, and then, of course, the largest dragon, talking to ColdCut about whether they're still IN or not! 
+
+<br>
+
 # &#x1F528; Running the Code
 
 You need Node.js installed, as well as Python (the correct version), and all related requirements found in django-requirements.txt.
@@ -238,6 +244,15 @@ cd client
 npm install
 # Start React:
 npm start
+
+# 3.1 Start the Stripe CLI (Windows):
+# Navigate to wherever you chose to place your stripe.exe (Stripe CLI)
+# Login:
+./stripe login
+# Activate forwarding for the stripe webhook API in the app to handle order confirmation cleanup:
+./stripe listen --forward-to localhost:8000/api/stripe/order_confirmation_webhook
+
+
 
 
 ```

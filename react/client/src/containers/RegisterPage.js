@@ -42,7 +42,7 @@ const RegisterPage = () => {
     if (registered) return <Navigate to='/login' />;
 
     return (
-        <Layout title = 'Coldcut Merch | Register Page' content = 'Register page'>
+        <Layout title = 'Cold Cut Merch | Register Page' content = 'Register page'> 
             <h2>Register for an Account:</h2>
 
             <form className='mt-5' onSubmit={onSubmit}>
@@ -50,7 +50,7 @@ const RegisterPage = () => {
 
                 <div className='form-group mt-3'>
                     <label className='form-label' htmlFor='email'>
-                        Email
+                        Email:
                     </label>
                     <input 
                         className='form-control'
@@ -64,7 +64,7 @@ const RegisterPage = () => {
 
                 <div className='form-group mt-3'>
                     <label className='form-label' htmlFor='password'>
-                        Password
+                        Password:
                     </label>
                     <input 
                         className='form-control'

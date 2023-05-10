@@ -9,11 +9,15 @@ import { getCartItems } from 'features/cartItems';
 import { createPaymentIntent } from 'features/stripePayments';
 
 import CheckoutForm from "./CheckoutForm";
-import AddressForm from './stripe/AddressForm';
+import AddressForm from '../components/stripe/AddressForm';
+import StripePoweredButton from '../components/stripe/StripePoweredButton';
 
 const stripe_public_key = process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY;
 
 const stripePromise = loadStripe(stripe_public_key);
+
+// Need help with formatting?
+// https://stripe.com/docs/elements/appearance-api?platform=web#theme
 
 
 
@@ -103,9 +107,11 @@ const CheckoutPage = () => {
 
 
   
-    const appearance = {
-      theme: 'stripe',
-    };
+      const appearance = {
+        theme: 'night',
+
+        labels: 'floating'
+      };
 
     let options = {
       clientSecret,
@@ -115,23 +121,31 @@ const CheckoutPage = () => {
     console.log("Client Secret:", clientSecret)
 
     return (
-      <LayoutStripeCheckout title = 'Coldcut Merch | Dashboard' content = 'Dashboard page' >
+      <LayoutStripeCheckout title = 'Cold Cut Merch | Dashboard' content = 'Dashboard page' >
         <h2>Checkout </h2>
 
-        <p style={{fontFamily: 'Verdana'}}>Powered by Stripe</p>
+        
 
         <div id="stripe-checkout-container">
 
         {clientSecret && (
           <Elements options={options} stripe={stripePromise}>
             <AddressForm />
+            <br></br>
             <CheckoutForm />
+            <br></br>
           </Elements>
         )}
 
         </div>
 
 
+
+
+        <div id="stripe-checkout-container">
+        <StripePoweredButton />
+
+        </div>
 
         
       </LayoutStripeCheckout>
