@@ -255,7 +255,7 @@ const StorePage = () => {
                 <img src={image_sauce} alt={products_map[i].description}></img>
                 </motion.div>
 
-                <p className="price">{products_map[i].base_cost} {renderSelectedSizePrice(products_map[i].id, selected_size[products_map[i].id])} USD </p>
+                <p className="store-price">{products_map[i].base_cost} {renderSelectedSizePrice(products_map[i].id, selected_size[products_map[i].id])} USD </p>
 
                 <div className="dropdown storebutton collapseOnSelect">
                     <Dropdown>

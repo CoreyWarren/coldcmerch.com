@@ -264,19 +264,27 @@ const CartPage = () => {
             <Layout title = 'Cold Cut Merch | Cart' content='Cart Page'>
 
             <h1 className='mb-5'>Shopping Cart</h1>
+
                 <div className="mb-4"></div>
+
                 <div className="home_panel">
                     {cart_intro(email_display)}
                     <div className="total-price">Subtotal: {calculate_cart_total()} USD</div>
-                    <a href="/checkout"><button type="button" className="checkout-button-top">Checkout</button></a>
+                    <a href="/checkout" className="checkout-button-top">Checkout</a>
+
+                    
                     {display_cart_items()}
+
+
+                    <div className="total-price">Subtotal: {calculate_cart_total()} USD</div>
+
+                <a href="/checkout"className="checkout-button">Checkout</a>
+
                 </div>
 
             
 
-            <div className="total-price">Subtotal: {calculate_cart_total()} USD</div>
-
-            <a href="/checkout"><button type="button" className="checkout-button">Checkout</button></a>
+            
 
 
             </Layout>

@@ -117,5 +117,6 @@
     #stripe-checkout-container form {
       width: 80vw;
       min-width: initial;
+      margin: 1rem auto ;
     }
   }
