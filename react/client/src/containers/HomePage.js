@@ -7,6 +7,27 @@ const HomePage = () => {
             <div className="home_panel">
 
                 
+            </div>
+            
+
+            <div className="dashboard_panel">
+
+            <div className="info-item">
+            <p>Thanks for supporting us!</p>
+            <p>- Elmar</p>
+            <p>- Lou</p>
+            <p>- Brian</p>
+            </div>
+
+
+            <div className="info-item">
+            <p>Coming soon:</p>
+            <p>- Password Resets</p>
+            <p>- Order History</p>
+
+            </div>
+
+            
 
 
             </div>

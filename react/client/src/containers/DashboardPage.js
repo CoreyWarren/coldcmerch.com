@@ -69,6 +69,10 @@ const DashboardPage = () => {
                         </div>
                     ) : (
                         <>
+
+                        
+
+
                         <div className="dashboard_panel">
                             <h1 className='mb-5'>User Dashboard</h1>
                                 <div className="mb-4"></div>
@@ -80,6 +84,8 @@ const DashboardPage = () => {
                                 <p>All personal, shipping, and payment data is handled by Stripe.</p>
                                 <StripePoweredButton />
                                 </div>
+
+                            
                                 
                         </div>
                         </>
