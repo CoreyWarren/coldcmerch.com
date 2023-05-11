@@ -53,7 +53,7 @@ const CartPage = () => {
 
         // within the '[]' would go any parameters used in this useEffect function.
 
-    }, []);
+    }, [dispatch]);
 
 
 
