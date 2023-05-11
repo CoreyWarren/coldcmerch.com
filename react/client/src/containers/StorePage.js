@@ -190,7 +190,7 @@ const StorePage = () => {
         if (selected_size[productId]) {
           return `Size: ${selected_size[productId]}`;
         }
-        return 'Select Size:';
+        return '---';
       };
 
     const renderSelectedSizePrice = (productId, selected_size_to_render) => {
@@ -268,11 +268,11 @@ const StorePage = () => {
                     </Dropdown>
                 </div>
 
-                <button onClick={() => showAddToCartToast(product_to_add, i)} className="btn btn-one">Add to Cart</button>
+                <button onClick={() => showAddToCartToast(product_to_add, i)} className="btn btn-one">Add to Cart!</button>
 
                 <div className="toast-success" id={`add-to-cart-toast-success-${i}`}>"{products_map[i].title}" was added to your Cart! (size: {selected_size[products_map[i].id]})</div>
 
-                <div className="toast-error" id={`add-to-cart-toast-error-${i}`}>ERROR: Please login OR Choose a size.</div>
+                <div className="toast-error" id={`add-to-cart-toast-error-${i}`}>ERROR: Must be Logged In, and Choose a Size.</div>
 
                 <div className="toast-error" id={`add-to-cart-toast-error-insufficient-stock-size-${i}`}>SORRY! Limited Stock of this specific item's SIZE!</div>
 

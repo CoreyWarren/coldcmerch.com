@@ -217,12 +217,13 @@ const CartPage = () => {
 
                     <div className="dropdown cartbutton">
                     <Dropdown>
-                    <Dropdown.Toggle variant="success" id="dropdown-basic">
+                    <Dropdown.Toggle variant="success" id="dropdown-basic-cart">
                     &#128393;
                     </Dropdown.Toggle>
                     <Dropdown.Menu >
                         <Dropdown.Item>
-                            <button className="remove-from-cart-button" onClick={() => deleteCartItemHelper(cart_items_map[i].id, i)}>Remove from Cart</button>
+                            <button className="remove-from-cart-button" onClick={() => deleteCartItemHelper(cart_items_map[i].id, i)}>Remove From Cart
+                                </button>
                         </Dropdown.Item>
                     </Dropdown.Menu>
                     </Dropdown>
@@ -269,14 +270,14 @@ const CartPage = () => {
 
                 <div className="home_panel">
                     {cart_intro(email_display)}
-                    <div className="total-price">Subtotal: {calculate_cart_total()} USD</div>
+                    <div className="total-price">Total: {calculate_cart_total()} USD</div>
                     <a href="/checkout" className="checkout-button-top">Checkout</a>
 
                     
                     {display_cart_items()}
 
 
-                    <div className="total-price">Subtotal: {calculate_cart_total()} USD</div>
+                    <div className="total-price">Total: {calculate_cart_total()} USD</div>
 
                 <a href="/checkout"className="checkout-button">Checkout</a>
 

@@ -124,6 +124,8 @@ const CheckoutPage = () => {
       <LayoutStripeCheckout title = 'Cold Cut Merch | Dashboard' content = 'Dashboard page' >
         <h2>Checkout </h2>
 
+        <div className="mb-5"></div>
+
         
 
         <div id="stripe-checkout-container">
