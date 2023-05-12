@@ -4,8 +4,8 @@
     display: flex;
     align-items: center;
     color: white;
-    margin: 1rem 0.6rem 1rem auto;
-    height: 3rem;
+    margin: 0 0.6rem 0 0.5rem;
+    min-height: 1rem;
   }
   
   .stripe-powered-button img {

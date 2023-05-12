@@ -233,6 +233,7 @@ div.dropdown-menu.show{
     margin-bottom: 3rem;
     border-radius: 0.5rem;
     box-shadow:rgb(15, 15, 15) 0.5rem 0.5rem 0.5rem;
+    word-wrap: break-word;
 }
 .home_panel .info-item p, .dashboard_panel .info-item p{
     font-family: Courier New;
@@ -496,6 +497,10 @@ div.dropdown-menu.show{
 #green-highlight{
     display: inline;
     color:rgb(95, 255, 95)!important;
+}
+
+.info-item-link{
+    text-decoration: underline;
 }
 
 

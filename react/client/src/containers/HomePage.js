@@ -10,7 +10,7 @@ const HomePage = () => {
 
 
             <div className="info-item">
-            <p>Thanks for supporting us!</p>
+            <h2>Thanks for supporting us!</h2>
             <p>- Elmar</p>
             <p>- Lou</p>
             <p>- Brian</p>
@@ -18,11 +18,22 @@ const HomePage = () => {
 
 
             <div className="info-item">
-            <p>Coming soon:</p>
+            <h2>Coming soon:</h2>
             <p>- Password Resets</p>
             <p>- Order History</p>
 
             </div>
+
+            <div className="info-item">
+            <h2>Source Code:</h2>
+            <div className="info-item-link"> 
+                <p><a href="https://github.com/CoreyWarren/coldcmerch.com">
+                [Github Repo]</a></p>
+            </div>
+
+            </div>
+
+
 
             
             </div>

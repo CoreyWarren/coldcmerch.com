@@ -81,8 +81,21 @@ const DashboardPage = () => {
                                 <div className="mb-4"></div>
                                 <div className="info-item">
                                 <p>Feel secure! We only store your email and hashed password here.</p>
+
+
+                                <div className="info-item-link"> 
+                                    <p><a href="https://github.com/CoreyWarren/coldcmerch.com">
+                                    [Github Repo]</a></p>
+                                </div>
+
+                                <br></br>
+
                                 <p>All personal, shipping, and payment data is handled by Stripe.</p>
+
                                 <StripePoweredButton />
+
+
+
                                 </div>
 
                             
