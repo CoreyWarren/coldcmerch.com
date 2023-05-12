@@ -129,6 +129,7 @@ h1, h2, h3{
 .container.mt-5 h1{
     font-weight: 800;
     font-size: 4rem;
+    word-wrap: break-word;
 }
 
 
@@ -311,14 +312,13 @@ div.dropdown-menu.show{
 
 .email_display{
     background: linear-gradient(160deg, rgb(41, 41, 41), rgba(0, 0, 0, 0.932));
-    border-style: solid;
-    border-width: 0.01rem;
-    border-color:#dfdfdf31;
-    width: 75%;
+    width: 50%;
     display: block;
-    margin: auto;
+    margin: 0;
+    margin-bottom: 0.75rem;
     word-wrap: break-word;
-    border-radius: 0.5rem;
+    border-radius: 0.25rem;
+    text-align: center;
 }
 
 .cart_item {
@@ -440,6 +440,8 @@ div.dropdown-menu.show{
     border-radius: 5px;
     color: #fff;
     font-weight: bold;
+    line-height: 3rem;
+    min-height: 3rem;
     text-decoration: none;
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
     transition: background 0.5s, color 0.5s;
@@ -457,6 +459,8 @@ div.dropdown-menu.show{
     left: 18rem;
     padding: 0;
     margin: 0 2rem 0 0;
+    line-height: 3rem;
+    min-height: 3rem;
     background-color: transparent;
     box-shadow: none;
     text-align: center;
@@ -721,7 +725,7 @@ div.dropdown-menu.show{
     .container.mt-5 h1 {
         text-align: center;
         font-weight: 800;
-        font-size: 3rem;
+        font-size: 2.5rem;
     }
 
     .shop_item {
@@ -836,6 +840,19 @@ div.dropdown-menu.show{
         background-color: #080a2b;
         color: white;
     }
+
+    .email_display{
+        background: linear-gradient(160deg, rgb(41, 41, 41), rgba(0, 0, 0, 0.932));
+
+        width: 75%;
+        display: block;
+        
+        margin: auto;
+        word-wrap: break-word;
+        border-radius: 0.25rem;
+        text-align: center;
+    }
+
 
     .cart_item{
         width: 100%;
