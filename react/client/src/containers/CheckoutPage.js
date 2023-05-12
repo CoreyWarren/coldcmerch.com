@@ -129,16 +129,14 @@ const CheckoutPage = () => {
           <div className="mb-5"></div>
 
             <div id="stripe-checkout-container">
-
-            {clientSecret && (
-              <Elements options={options} stripe={stripePromise}>
-                <AddressForm />
-                <br></br>
-                <CheckoutForm />
-                <br></br>
-              </Elements>
-            )}
-
+              {clientSecret && (
+                <Elements options={options} stripe={stripePromise}>
+                  <AddressForm />
+                  <br></br>
+                  <CheckoutForm />
+                  <br></br>
+                </Elements>
+              )}
             </div>
 
           <div id="stripe-checkout-container">
@@ -148,7 +146,6 @@ const CheckoutPage = () => {
 
         </div>
 
-        
       </LayoutStripeCheckout>
     );
 
