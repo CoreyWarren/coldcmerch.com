@@ -122,32 +122,29 @@ const CheckoutPage = () => {
 
     return (
       <LayoutStripeCheckout title = 'Cold Cut Merch | Dashboard' content = 'Dashboard page' >
-        <h2>Checkout </h2>
 
-        
+        <div className="dashboard_panel">
+        <h1>Checkout </h1>
 
-        <div id="stripe-checkout-container">
+          <div className="mb-5"></div>
 
-        {clientSecret && (
-          <Elements options={options} stripe={stripePromise}>
-            <AddressForm />
-            <br></br>
-            <CheckoutForm />
-            <br></br>
-          </Elements>
-        )}
+            <div id="stripe-checkout-container">
+              {clientSecret && (
+                <Elements options={options} stripe={stripePromise}>
+                  <AddressForm />
+                  <br></br>
+                  <CheckoutForm />
+                  <br></br>
+                </Elements>
+              )}
+            </div>
 
-        </div>
-
-
-
-
-        <div id="stripe-checkout-container">
-        <StripePoweredButton />
+          <div id="stripe-checkout-container">
+            <StripePoweredButton />
+          </div>
 
         </div>
 
-        
       </LayoutStripeCheckout>
     );
 

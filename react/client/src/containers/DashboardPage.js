@@ -30,7 +30,7 @@ const DashboardPage = () => {
             // Pad the username with asterisks to the length of the original username
             const obfuscatedUsername = usernamePartial.padEnd(username.length, '*');
           
-            return `${obfuscatedUsername}@${domain}`;
+            return `${obfuscatedUsername}\n@\n${domain}`;
         };
 
 
@@ -69,6 +69,10 @@ const DashboardPage = () => {
                         </div>
                     ) : (
                         <>
+
+                        
+
+
                         <div className="dashboard_panel">
                             <h1 className='mb-5'>User Dashboard</h1>
                                 <div className="mb-4"></div>
@@ -77,9 +81,24 @@ const DashboardPage = () => {
                                 <div className="mb-4"></div>
                                 <div className="info-item">
                                 <p>Feel secure! We only store your email and hashed password here.</p>
-                                <p>All personal, shipping, and payment data is handled by Stripe.</p>
-                                <StripePoweredButton />
+
+
+                                <div className="info-item-link"> 
+                                    <p><a href="https://github.com/CoreyWarren/coldcmerch.com">
+                                    [Github Repo]</a></p>
                                 </div>
+
+                                <br></br>
+
+                                <p>All personal, shipping, and payment data is handled by Stripe.</p>
+
+                                <StripePoweredButton />
+
+
+
+                                </div>
+
+                            
                                 
                         </div>
                         </>

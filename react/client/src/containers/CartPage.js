@@ -53,7 +53,7 @@ const CartPage = () => {
 
         // within the '[]' would go any parameters used in this useEffect function.
 
-    }, []);
+    }, [dispatch]);
 
 
 
@@ -85,7 +85,7 @@ const CartPage = () => {
         // Pad the username with asterisks to the length of the original username
         const obfuscatedUsername = usernamePartial.padEnd(username.length, '*');
       
-        return `${obfuscatedUsername}@${domain}`;
+        return `${obfuscatedUsername}\n@\n${domain}`;
     };
 
 
@@ -217,12 +217,13 @@ const CartPage = () => {
 
                     <div className="dropdown cartbutton">
                     <Dropdown>
-                    <Dropdown.Toggle variant="success" id="dropdown-basic">
+                    <Dropdown.Toggle variant="success" id="dropdown-basic-cart">
                     &#128393;
                     </Dropdown.Toggle>
                     <Dropdown.Menu >
                         <Dropdown.Item>
-                            <button className="remove-from-cart-button" onClick={() => deleteCartItemHelper(cart_items_map[i].id, i)}>Remove from Cart</button>
+                            <button className="remove-from-cart-button" onClick={() => deleteCartItemHelper(cart_items_map[i].id, i)}>Remove From Cart
+                                </button>
                         </Dropdown.Item>
                     </Dropdown.Menu>
                     </Dropdown>
@@ -263,20 +264,25 @@ const CartPage = () => {
         return(
             <Layout title = 'Cold Cut Merch | Cart' content='Cart Page'>
 
-            <h1 className='mb-5'>Shopping Cart</h1>
+            <div className="home_panel">
+            
+
+                <h1 className='mb-5'>Shopping Cart</h1>
 
                 <div className="mb-4"></div>
 
-                <div className="home_panel">
+                <div className="email_display">
                     {cart_intro(email_display)}
-                    <div className="total-price">Subtotal: {calculate_cart_total()} USD</div>
+                </div>
+
+                    <div className="total-price">Total: {calculate_cart_total()} USD</div>
                     <a href="/checkout" className="checkout-button-top">Checkout</a>
 
                     
                     {display_cart_items()}
 
 
-                    <div className="total-price">Subtotal: {calculate_cart_total()} USD</div>
+                    <div className="total-price">Total: {calculate_cart_total()} USD</div>
 
                 <a href="/checkout"className="checkout-button">Checkout</a>
 

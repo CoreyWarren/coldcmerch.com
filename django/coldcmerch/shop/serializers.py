@@ -7,38 +7,9 @@
 # > Grab Cart Data...''
 
 from itertools import product
-from shop.models import Order, Product, Cart, CartItem, ProductSize
+from shop.models import Product, Cart, CartItem, ProductSize
 from users.serializers import User
 from rest_framework import serializers
-
-
-# Orders
-
-class OrderCreateSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Order
-        fields = ('cart', 'date_placed', 'user',  'street_address', 'zip_code', 'city',
-        'state')
-
-    def create(self, validated_data):
-        order = Order.objects.create_order(
-            cart            = validated_data['cart'],
-            date_placed     = validated_data['date_placed'],
-            user            = validated_data['user'],
-            street_address  = validated_data['street_address'],
-            zip_code        = validated_data['zip_code'],
-            city            = validated_data['city'],
-            state           = validated_data['state'],
-        )
-
-        return order
-
-
-class OrderSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ('cart', 'date_placed', 'user',  'street_address', 'zip_code', 'city',
-        'state')
 
 
 # Products

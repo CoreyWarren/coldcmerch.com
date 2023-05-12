@@ -190,7 +190,7 @@ const StorePage = () => {
         if (selected_size[productId]) {
           return `Size: ${selected_size[productId]}`;
         }
-        return 'Select Size:';
+        return '---';
       };
 
     const renderSelectedSizePrice = (productId, selected_size_to_render) => {
@@ -268,11 +268,11 @@ const StorePage = () => {
                     </Dropdown>
                 </div>
 
-                <button onClick={() => showAddToCartToast(product_to_add, i)} className="btn btn-one">Add to Cart</button>
+                <button onClick={() => showAddToCartToast(product_to_add, i)} className="btn btn-one">Add to Cart!</button>
 
                 <div className="toast-success" id={`add-to-cart-toast-success-${i}`}>"{products_map[i].title}" was added to your Cart! (size: {selected_size[products_map[i].id]})</div>
 
-                <div className="toast-error" id={`add-to-cart-toast-error-${i}`}>ERROR: Please login OR Choose a size.</div>
+                <div className="toast-error" id={`add-to-cart-toast-error-${i}`}>ERROR: Must be Logged In, and Choose a Size.</div>
 
                 <div className="toast-error" id={`add-to-cart-toast-error-insufficient-stock-size-${i}`}>SORRY! Limited Stock of this specific item's SIZE!</div>
 
@@ -300,7 +300,8 @@ const StorePage = () => {
         return (
             <Layout title = 'Cold Cut Merch | Store' content = 'Store page'>
                 <div className="dashboard_panel">
-                    <h2> Loading Store: </h2>
+                    <h1> Loading Store: </h1>
+                    <div className="mb-4"></div>
                     <p> Done Loading Products? <br></br> {String(!loading_products)}</p>
                     <p> Done Loading Product Sizes? <br></br> {String(!loading_product_sizes)}</p>
                 </div>
@@ -310,7 +311,9 @@ const StorePage = () => {
         return (
             <Layout title = 'Cold Cut Merch | Store' content = 'Store page'>
                 <div className="dashboard_panel">
-                    <h2 style={{fontFamily: 'Arial', fontSize: '3rem'}}>Store Error:</h2>
+                    <h1 style={{fontFamily: 'Arial', fontSize: '3rem'}}>Store Error:</h1>
+                    <div className="info-item">
+
                     <p style={{fontFamily: 'Arial', fontSize: '1.2rem'}}> Either products or product sizes were unable to be loaded.</p>
                     <p style={{fontFamily: 'Arial', fontSize: '1.2rem'}}> If you are not a developer and you are seeing this, then
                         that means that there are either no available products being sold right now, or there is a technical issue on our backend.</p>
@@ -318,6 +321,9 @@ const StorePage = () => {
                     <p style={{fontFamily: 'Arial', fontSize: '1.2rem'}}>If you are a developer, you may be seeing this as a result of not starting the API backend server properly. The front-end was unable to reach out to the backend's database and grab Products and Product Sizes.</p>
 
                     <p style={{fontFamily: 'Arial', fontSize: '1.2rem'}}> - Corey from the Past</p>
+                    
+                        
+                    </div>
 
 
                 </div>

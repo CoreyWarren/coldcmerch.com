@@ -124,32 +124,4 @@ class CartItem(models.Model):
 # Orders: 
 #
 
-class OrderManager(models.Manager):
-    # Orders are basically checked-out carts that are ready
-    # to be shipped by us. That's why it has all this info.
-    def create_order(self, cart, date_placed, user, city, state):
-
-        order = self.model(
-            cart = cart,
-            date_placed = date_placed,
-            user = user,
-            city = city,
-            state = state,
-        )
-        order.save(using=self._db)
-        return order
-    
-class Order(models.Model):
-    cart            = models.ForeignKey(Cart, null = True, blank = False, on_delete=models.CASCADE)
-    date_placed     = models.DateTimeField(auto_now_add=True)
-    user            = models.ForeignKey('users.UserAccount', null = True, blank = False, on_delete=models.CASCADE)
-    city            = models.CharField(max_length= 200, default="")
-    state           = models.CharField(max_length= 100, default="")
-
-    objects = OrderManager()
-
-    def __str__(self):
-        return 'Order #' + str(self.id) + ' filled: ' + str(self.date_placed)
-
-    
 

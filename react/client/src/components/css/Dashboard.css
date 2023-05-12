@@ -15,6 +15,16 @@
 ========================
 */
 
+#root
+{
+    background-image:url('../../assets/collage.png');
+    background-repeat: repeat;
+    background-size: 110%;
+    background-position: center top;
+    min-height: 100vh;
+}
+
+
 p{
     padding: 10px 20px;
 }
@@ -25,7 +35,7 @@ h1{
 }
 
 .home_panel{
-    padding: 0;
+    padding: 1rem;
     margin: auto;
     font-weight:400;
     font-size: 1.5rem;
@@ -33,6 +43,7 @@ h1{
     text-align:left;
     align-self: center;
     align-items: center;
+    border-radius: 1rem;
 }
 
 .home_panel p{
@@ -45,6 +56,8 @@ h1{
     align-self: center;
     align-items: center;
     min-height: 80vh;
+    padding: 1rem;
+    border-radius: 1rem;
 }
 
 #root, body, head{
@@ -56,7 +69,11 @@ h1{
     margin: 0;
     width: 100%;
     height: 100%;
-    background-color:rgb(22, 22, 22)!important;
+    background-color:rgba(22, 22, 22, 0.733)!important;
+}
+
+nav{
+    background: linear-gradient(160deg, rgb(0, 0, 0), rgb(95, 95, 95));
 }
 
 .navbar{
@@ -105,10 +122,37 @@ p, a, h1, h2, h3{
     font-family: Courier New;
 }
 
+h1, h2, h3{
+    text-shadow: 0.2rem 0.2rem 0.1rem #000000;
+}
+
+.container.mt-5 h1{
+    font-weight: 800;
+    font-size: 4rem;
+    word-wrap: break-word;
+}
+
 
 /*
 DROPDOWN
 */
+
+a.dropdown-item{
+    font-size: 1.3rem;
+    font-family: Courier New;
+    min-height: 2.4rem;
+    padding: 0;
+    width: 13vw;
+}
+
+.dropdown-item button{
+    position: relative!important;
+    display: inline-block!important;
+    height: 100%!important;
+    width: 100%!important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
 
 .dropdown.storebutton{
     position: absolute;
@@ -136,6 +180,7 @@ div.dropdown-menu.show{
     padding: 0 auto;
 }
 
+/* the little pen button in the Cart Page */
 .dropdown.cartbutton button{
     display:inline-block;
     margin: 1rem 0;
@@ -144,23 +189,21 @@ div.dropdown-menu.show{
     border-width: 0.1rem;
 }
 
-a.dropdown-item{
-    font-size: 1.3rem;
-    font-family: Courier New;
-    min-height: 2.4rem;
-    padding: 0;
-    width: 16rem;
+/* 
+========================
+      BUTTON - REMOVE FROM CART
+========================
+*/
+
+
+.remove-from-cart-button {
+    line-height: 2.5rem;
+    text-align: center;
+    cursor: pointer;
+    color: #FFF;
+    background-color:rgb(15, 15, 15);
 }
 
-.dropdown-item button{
-    position: relative!important;
-    z-index: 1;
-    display: inline-block!important;
-    height: 100%!important;
-    width: 100%!important;
-    margin: 0 !important;
-    padding: 0 !important;
-}
 
 
 .form-label{
@@ -172,41 +215,51 @@ a.dropdown-item{
     font-size: 1.5vw;
     display:block;
     color:white;
-    padding: 1rem;
-    background-color: rgba(0, 0, 0, 0.534);
+    padding: 2rem;
+    background: linear-gradient(160deg, rgba(0, 0, 0, 0.822), rgba(51, 51, 51, 0.747));
+    backdrop-filter: blur(10px);
     margin: 1rem;
-    border-radius: 1rem;
+    border-radius: 0.5rem;
+    box-shadow:rgb(15, 15, 15) 0.5rem 0.5rem 0.5rem;
 }
 
-.dashboard_panel .info-item{
+.home_panel .info-item, .dashboard_panel .info-item{
     display:block;
     color:white;
-    padding: 1rem;
-    background-color: rgba(7, 14, 20, 0.534);
+    padding: 2rem;
+    background: linear-gradient(160deg, rgba(0, 0, 0, 0.822), rgba(51, 51, 51, 0.747));
+    backdrop-filter: blur(10px);
     margin: 1rem;
-    border-radius: 1rem;
+    margin-bottom: 3rem;
+    border-radius: 0.5rem;
+    box-shadow:rgb(15, 15, 15) 0.5rem 0.5rem 0.5rem;
+    word-wrap: break-word;
 }
-.dashboard_panel .info-item p{
+.home_panel .info-item p, .dashboard_panel .info-item p{
     font-family: Courier New;
-    font-size: 0.9vw;
+    font-size: 1.3rem;
     margin: 0;
-    line-height: 0.7rem;
+    line-height: 1.3rem;
 }
 
 
-.shop_item{
+.shop_item {
     font-family: Courier New;
     font-size: 1rem;
-    display:inline-block;
-    color:white;
+    display: inline-block;
+    color: white;
     padding: 1rem;
-    background-color: rgba(0, 0, 0, 0.534);
+    background: linear-gradient(160deg, rgba(0, 0, 0, 0.932), rgba(41, 41, 41, 0.979));
+    /* backdrop-filter: blur(10px); */
+    /* REMOVED because blur causes dropdown menus to not appear in front of other
+    elements!!! */
     margin: 2% 1%;
-    border-radius: 1rem;
+    border-radius: 0.5rem;
     min-height: 60vh;
     width: 30%;
     vertical-align: top;
     position: relative;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
 }
 
 .shop_item p {
@@ -217,6 +270,7 @@ a.dropdown-item{
 
 .shop_item h2{
     font-family: Courier New;
+    font-weight: 600;
 }
 
 /* Add to Cart Button in Shop */
@@ -251,21 +305,31 @@ a.dropdown-item{
     border-radius: 0.5rem;
     display:block;
     object-fit: contain;
-
 }
 
 
 
 /* CART ITEMS */
 
+.email_display{
+    background: linear-gradient(160deg, rgb(41, 41, 41), rgba(0, 0, 0, 0.932));
+    width: 50%;
+    display: block;
+    margin: 0;
+    margin-bottom: 0.75rem;
+    word-wrap: break-word;
+    border-radius: 0.25rem;
+    text-align: center;
+}
+
 .cart_item {
     width: 50%;
     border:rgb(255, 255, 255);
     border-radius: 1rem;
-    background-color: rgb(34, 31, 31);
+    background: linear-gradient(160deg, rgba(0, 0, 0, 0.932), rgba(41, 41, 41, 0.849));
     padding: 1.5rem 1rem;
     margin: 1rem;
-    box-shadow: 0.1rem 0.1rem 0.5rem rgb(0, 0, 0);
+    box-shadow:rgb(15, 15, 15) 0.5rem 0.5rem 0.5rem;
     display: block;
     position: relative;
 }
@@ -293,6 +357,10 @@ a.dropdown-item{
     padding: 0;
 }
 
+#dropdown-basic-cart{
+    border:rgb(15, 15, 15);
+}
+
 .checkout-button{
     display: inline-block;
     width: 50%;
@@ -308,10 +376,9 @@ a.dropdown-item{
     color: #fff;
     font-weight: bold;
     text-decoration: none;
-    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
-    transition: background-position 1s, color 0.75s;
+    transition: background-position 0.5s, color 0.25s;
     position: relative;
-    overflow: hidden;
+    box-shadow:rgb(15, 15, 15) 0.5rem 0.5rem 0.5rem;
 }
 
 .checkout-button-top{
@@ -330,9 +397,10 @@ a.dropdown-item{
     font-weight: bold;
     text-decoration: none;
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
-    transition: background-position 1s, color 0.75s;
+    transition: background-position 0.5s, color 0.25s;
     position: relative;
     overflow: hidden;
+    box-shadow:rgb(15, 15, 15) 0.5rem 0.5rem 0.5rem;
 }
 
 .checkout-button-top:before, .checkout-button:before {
@@ -345,7 +413,6 @@ a.dropdown-item{
     background: linear-gradient(45deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.5));
     background-size: 200% 200%;
     transition: background-position 1s;
-    z-index: 2;
     overflow: hidden;
 }
 
@@ -360,28 +427,26 @@ a.dropdown-item{
     background-position: 100% 100%;
 }
 
-
+/* bottom */
 .total-price {
     display: block;
     font-family: Courier New;
     text-align: center;
     padding: 10px 20px;
     width: 50%;
-    background: #444;
-    border: 2px solid #444;
+    background: linear-gradient(160deg, rgba(0, 0, 0, 0.932), rgba(41, 41, 41, 0.849));
+    /* backdrop-filter: blur(10px); */
+    /* REMOVED because blur causes dropdown menus to not appear in front of other
+    elements!!! */
     border-radius: 5px;
     color: #fff;
     font-weight: bold;
+    line-height: 3rem;
+    min-height: 3rem;
     text-decoration: none;
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
-    transition: background 1s, color 1s;
-}
-
-.total-price:hover {
-    background: linear-gradient(45deg, #444, #666, #444);
-    background-size: 200% 200%;
-    animation: gradient 2s ease infinite;
-    color: #000;
+    transition: background 0.5s, color 0.5s;
+    box-shadow:rgb(15, 15, 15) 0.5rem 0.5rem 0.5rem;
 }
 
 @keyframes gradient {
@@ -395,6 +460,8 @@ a.dropdown-item{
     left: 18rem;
     padding: 0;
     margin: 0 2rem 0 0;
+    line-height: 3rem;
+    min-height: 3rem;
     background-color: transparent;
     box-shadow: none;
     text-align: center;
@@ -415,8 +482,10 @@ a.dropdown-item{
     position: absolute;
 }
 
-/*
+/* 
+========================
     Misc
+========================
 */
 
 #dev-help-link{
@@ -432,6 +501,22 @@ a.dropdown-item{
     color:rgb(95, 255, 95)!important;
 }
 
+.info-item-link{
+    text-decoration: underline;
+}
+
+form{
+    max-width: 70vw;
+    margin: auto;
+}
+
+label.form-label{
+    font-size: 1.5rem;
+    font-family: Courier New;
+    font-weight: bold;
+    margin: 1rem 0;
+    display: block;
+}
 
 /*
 ========================
@@ -467,6 +552,7 @@ a.dropdown-item{
     visibility: visible;
     -webkit-animation: fadein 0.5s, fadeout 0.5s 4.5s;
     animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    position: fixed!important;
 }
 
 .toast-error {
@@ -537,13 +623,17 @@ a.dropdown-item{
   }
 
 .btn-one {
-    color: #FFF;
+    color: white;
     transition: all 0.3s;
     position: relative;
+    
   }
   .btn-one span {
     transition: all 0.3s;
+    
   }
+
+  /* before hovering */
   .btn-one::before {
     content: '';
     position: absolute;
@@ -551,7 +641,6 @@ a.dropdown-item{
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 1;
     opacity: 0;
     transition: all 0.3s;
     border-top-width: 1px;
@@ -560,8 +649,22 @@ a.dropdown-item{
     border-bottom-style: solid;
     border-top-color: rgba(255,255,255,0.5);
     border-bottom-color: rgba(255,255,255,0.5);
+    color: white;
     transform: scale(0.1, 1);
+    z-index: 1;
   }
+
+  .btn-one-text {
+    z-index: 2; /* This places the button text above the overlay text */
+    position: absolute;
+    color: white;
+    opacity: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    }
+
   .btn-one:hover span {
     letter-spacing: 2px;
   }
@@ -570,15 +673,16 @@ a.dropdown-item{
     transform: scale(1, 1); 
   }
   .btn-one::after {
-    content: '';
+    content: 'Add To Cart';
     position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 1;
     transition: all 0.3s;
-    background-color: rgba(255,255,255,0.1);
+    background-color: rgba(131, 131, 131, 0.308);
+    color: #ffffff;
+    border-radius: 0.5rem;
   }
   .btn-one:hover::after {
     opacity: 0; 
@@ -586,19 +690,8 @@ a.dropdown-item{
   }
 
 
-/* 
-========================
-      BUTTON - REMOVE FROM CART
-========================
-*/
 
-.remove-from-cart-button {
-    line-height: 80px;
-    text-align: center;
-    cursor: pointer;
-    color: #FFF;
-    background-color:rgb(15, 15, 15);
-}
+
 
 
 
@@ -613,6 +706,18 @@ a.dropdown-item{
 
 
 @media (max-width: 991px){
+
+    #root
+    {
+    background-image:url('../../assets/collage.png');
+    background-repeat: repeat;
+    background-size: 200%;
+    background-position: center top;
+    min-height: 100vh;
+    }
+
+
+
     nav.navbar.navbar-expand-lg.bg-dark{
         max-width: 100vw;
     }
@@ -636,20 +741,25 @@ a.dropdown-item{
         position: relative;
     }
 
-    h1, h2{
+    .container.mt-5 h1 {
         text-align: center;
+        font-weight: 800;
+        font-size: 2.5rem;
     }
 
-    .shop_item{
-        min-height:70vh;
-        width: 90vw;
+    .shop_item {
+        min-height:35rem;
+        width: 90%;
         display: block;
         margin: 1rem auto 1rem auto;
     }
 
-    .shop_item img{
-        width: 100%;
-        max-height: 16rem;
+    .shop_item img {
+        max-width: 100%;
+        height: 10rem;
+        display: block;
+        top: 30%;
+        left: 0%;
     }
 
     .shop_item #dropdown-basic{
@@ -685,9 +795,10 @@ a.dropdown-item{
     }
 
     .dashboard_panel{
-        max-width: 100vw;
+        max-width: 98vw;
         margin: 0;
-        padding: 0;
+        padding: 1rem;
+        border-radius: 1rem;
     }
 
     .home_panel{
@@ -712,18 +823,22 @@ a.dropdown-item{
         background-color: rgba(255, 255, 255, 0);
     }
 
+    a.dropdown-item{
+        width: 68vw;
+    }
+
     /* SHOPPING CART */
 
     .total-price{
         display:block;
-        width: 50%;
+        width: 75%;
         margin: 1rem auto;
         min-height: 4rem;
     }
 
     .checkout-button-top{
         display: block;
-        width: 50%;
+        width: 75%;
         /* Additional styles to make it look like a button */
         padding: 10px;
         background-color: #171d68;
@@ -735,7 +850,7 @@ a.dropdown-item{
 
     .checkout-button{
         display: block;
-        width: 50%;
+        width: 75%;
         /* Additional styles to make it look like a button */
         padding: 10px;
         background-color: #171d68;
@@ -752,25 +867,40 @@ a.dropdown-item{
         color: white;
     }
 
+    .email_display{
+        background: linear-gradient(160deg, rgb(41, 41, 41), rgba(0, 0, 0, 0.932));
+
+        width: 75%;
+        display: block;
+        
+        margin: auto;
+        word-wrap: break-word;
+        border-radius: 0.25rem;
+        text-align: center;
+    }
+
+
     .cart_item{
         width: 100%;
         margin: 1rem auto;
-        padding: 0.2rem;
+        padding: 0.5rem 1rem;
+        padding-bottom: 2rem;
+
     }
 
     .dashboard_panel .user_data_item{
-        font-size: 1rem;
+        font-size: 1.5rem;
         word-wrap: break-word;
     }
 
     .dashboard_panel .info-item{
-        font-size: 2rem;
+        font-size: 1.5rem;
         word-wrap: break-word;
         min-height: 15rem;
     }
 
     .dashboard_panel .info-item p{
-        font-size: 1rem;
+        font-size: 1.5rem;
         word-wrap: break-word;
         line-height: 2rem;
     }
@@ -784,7 +914,7 @@ a.dropdown-item{
 
 /* 
 ========================
-    STRIPE PAYMENTS CSS
+    END
 ========================
 */
 
