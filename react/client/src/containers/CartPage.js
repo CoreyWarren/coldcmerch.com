@@ -85,7 +85,7 @@ const CartPage = () => {
         // Pad the username with asterisks to the length of the original username
         const obfuscatedUsername = usernamePartial.padEnd(username.length, '*');
       
-        return `${obfuscatedUsername}@${domain}`;
+        return `${obfuscatedUsername}\n@\n${domain}`;
     };
 
 
@@ -265,12 +265,16 @@ const CartPage = () => {
             <Layout title = 'Cold Cut Merch | Cart' content='Cart Page'>
 
             <div className="home_panel">
-            <h1 className='mb-5'>Shopping Cart</h1>
+            
+
+                <h1 className='mb-5'>Shopping Cart</h1>
 
                 <div className="mb-4"></div>
 
-                
+                <div className="email_display">
                     {cart_intro(email_display)}
+                </div>
+
                     <div className="total-price">Total: {calculate_cart_total()} USD</div>
                     <a href="/checkout" className="checkout-button-top">Checkout</a>
 

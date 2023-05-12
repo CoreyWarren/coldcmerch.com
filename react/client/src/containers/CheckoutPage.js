@@ -140,8 +140,7 @@ const CheckoutPage = () => {
             </div>
 
           <div id="stripe-checkout-container">
-          <StripePoweredButton />
-
+            <StripePoweredButton />
           </div>
 
         </div>

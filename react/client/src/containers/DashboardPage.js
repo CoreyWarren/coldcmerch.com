@@ -30,7 +30,7 @@ const DashboardPage = () => {
             // Pad the username with asterisks to the length of the original username
             const obfuscatedUsername = usernamePartial.padEnd(username.length, '*');
           
-            return `${obfuscatedUsername}@${domain}`;
+            return `${obfuscatedUsername}\n@\n${domain}`;
         };
 
 

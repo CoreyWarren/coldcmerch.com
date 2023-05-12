@@ -309,6 +309,18 @@ div.dropdown-menu.show{
 
 /* CART ITEMS */
 
+.email_display{
+    background: linear-gradient(160deg, rgb(41, 41, 41), rgba(0, 0, 0, 0.932));
+    border-style: solid;
+    border-width: 0.01rem;
+    border-color:#dfdfdf31;
+    width: 75%;
+    display: block;
+    margin: auto;
+    word-wrap: break-word;
+    border-radius: 0.5rem;
+}
+
 .cart_item {
     width: 50%;
     border:rgb(255, 255, 255);
@@ -706,18 +718,20 @@ div.dropdown-menu.show{
         position: relative;
     }
 
-    h1, h2{
+    .container.mt-5 h1 {
         text-align: center;
+        font-weight: 800;
+        font-size: 3rem;
     }
 
-    .shop_item{
+    .shop_item {
         min-height:70vh;
         width: 90vw;
         display: block;
         margin: 1rem auto 1rem auto;
     }
 
-    .shop_item img{
+    .shop_item img {
         width: 100%;
         max-height: 16rem;
     }
@@ -787,14 +801,14 @@ div.dropdown-menu.show{
 
     .total-price{
         display:block;
-        width: 50%;
+        width: 75%;
         margin: 1rem auto;
         min-height: 4rem;
     }
 
     .checkout-button-top{
         display: block;
-        width: 50%;
+        width: 75%;
         /* Additional styles to make it look like a button */
         padding: 10px;
         background-color: #171d68;
@@ -806,7 +820,7 @@ div.dropdown-menu.show{
 
     .checkout-button{
         display: block;
-        width: 50%;
+        width: 75%;
         /* Additional styles to make it look like a button */
         padding: 10px;
         background-color: #171d68;
@@ -826,12 +840,13 @@ div.dropdown-menu.show{
     .cart_item{
         width: 100%;
         margin: 1rem auto;
-        padding: 0.2rem;
-        
+        padding: 0.5rem 1rem;
+        padding-bottom: 2rem;
+
     }
 
     .dashboard_panel .user_data_item{
-        font-size: 1rem;
+        font-size: 1.5rem;
         word-wrap: break-word;
     }
 
