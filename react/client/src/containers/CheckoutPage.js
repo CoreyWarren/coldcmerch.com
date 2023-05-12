@@ -126,30 +126,25 @@ const CheckoutPage = () => {
         <div className="dashboard_panel">
         <h1>Checkout </h1>
 
-        <div className="mb-5"></div>
+          <div className="mb-5"></div>
 
-        
+            <div id="stripe-checkout-container">
 
-        <div id="stripe-checkout-container">
+            {clientSecret && (
+              <Elements options={options} stripe={stripePromise}>
+                <AddressForm />
+                <br></br>
+                <CheckoutForm />
+                <br></br>
+              </Elements>
+            )}
 
-        {clientSecret && (
-          <Elements options={options} stripe={stripePromise}>
-            <AddressForm />
-            <br></br>
-            <CheckoutForm />
-            <br></br>
-          </Elements>
-        )}
+            </div>
 
-        </div>
+          <div id="stripe-checkout-container">
+          <StripePoweredButton />
 
-
-
-
-        <div id="stripe-checkout-container">
-        <StripePoweredButton />
-
-        </div>
+          </div>
 
         </div>
 
