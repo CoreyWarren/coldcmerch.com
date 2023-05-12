@@ -3,14 +3,11 @@ import Layout from 'components/Layout';
 const HomePage = () => {
     return (
         <Layout title = 'ColdC(ut) Merch | Home' content='Home Page'>
-            <h1 className='mb-5'>Cold Cut Merchandise</h1>
+
             <div className="home_panel">
+            <h1 className='mb-5'>Cold Cut Merchandise</h1>
 
-                
-            </div>
-            
 
-            <div className="dashboard_panel">
 
             <div className="info-item">
             <p>Thanks for supporting us!</p>
@@ -28,8 +25,6 @@ const HomePage = () => {
             </div>
 
             
-
-
             </div>
         </Layout>
     );

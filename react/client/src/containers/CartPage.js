@@ -264,11 +264,12 @@ const CartPage = () => {
         return(
             <Layout title = 'Cold Cut Merch | Cart' content='Cart Page'>
 
+            <div className="home_panel">
             <h1 className='mb-5'>Shopping Cart</h1>
 
                 <div className="mb-4"></div>
 
-                <div className="home_panel">
+                
                     {cart_intro(email_display)}
                     <div className="total-price">Total: {calculate_cart_total()} USD</div>
                     <a href="/checkout" className="checkout-button-top">Checkout</a>

@@ -300,7 +300,8 @@ const StorePage = () => {
         return (
             <Layout title = 'Cold Cut Merch | Store' content = 'Store page'>
                 <div className="dashboard_panel">
-                    <h2> Loading Store: </h2>
+                    <h1> Loading Store: </h1>
+                    <div className="mb-4"></div>
                     <p> Done Loading Products? <br></br> {String(!loading_products)}</p>
                     <p> Done Loading Product Sizes? <br></br> {String(!loading_product_sizes)}</p>
                 </div>
