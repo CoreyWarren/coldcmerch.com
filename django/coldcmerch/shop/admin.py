@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product, Order, ProductImage, ProductSize, Cart, CartItem
+from .models import Product, ProductImage, ProductSize, Cart, CartItem
 
 # Register your models here.
 
@@ -59,11 +59,6 @@ class CartAdmin(admin.ModelAdmin):
 
 admin.site.register(Cart, CartAdmin)
 
-
-class OrderAdmin(admin.ModelAdmin):
-    readonly_fields = ['cart', 'user', 'date_placed', 'city', 'state']
-
-admin.site.register(Order, OrderAdmin)
 
 
 # The rest:

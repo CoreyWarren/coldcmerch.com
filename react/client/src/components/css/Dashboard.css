@@ -482,8 +482,10 @@ div.dropdown-menu.show{
     position: absolute;
 }
 
-/*
+/* 
+========================
     Misc
+========================
 */
 
 #dev-help-link{
@@ -503,6 +505,18 @@ div.dropdown-menu.show{
     text-decoration: underline;
 }
 
+form{
+    max-width: 70vw;
+    margin: auto;
+}
+
+label.form-label{
+    font-size: 1.5rem;
+    font-family: Courier New;
+    font-weight: bold;
+    margin: 1rem 0;
+    display: block;
+}
 
 /*
 ========================

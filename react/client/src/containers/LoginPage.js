@@ -79,7 +79,7 @@ const LoginPage = () => {
 
     return (
         <Layout title = 'Cold Cut Merch | Login Page' content = 'Login page'>
-            <h2>Log into your account:</h2>
+            <h1>Log into your account:</h1>
 
             <form className='mt-5' onSubmit={onSubmit}>
 
