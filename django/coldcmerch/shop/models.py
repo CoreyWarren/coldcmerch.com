@@ -120,8 +120,3 @@ class CartItem(models.Model):
 
 
 
-#
-# Orders: 
-#
-
-

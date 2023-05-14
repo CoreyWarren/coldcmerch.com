@@ -21,12 +21,6 @@ class RetrieveCartView(APIView):
     permission_classes = [IsAuthenticated]
     def get(self,request):
 
-        # Check if the requester is an authenticated user (i.e.: logged in)
-        if not request.user.is_authenticated:
-            # Let them/our front end know by sending a 401 response and a message.
-            return Response({'response': 'Authentication credentials were not provided.'},
-                            status=status.HTTP_401_UNAUTHORIZED)
-
         # Only give results that belong to the currently requesting User.
         this_cart = Cart.objects.filter(my_user=request.user, checked_out=False).first()
 
@@ -112,12 +106,6 @@ class RetrieveCartItemsView(APIView):
     # GET (request) data from Django backend
     def get(self,request):
 
-        # Check if the requester is an authenticated user (i.e.: logged in)
-        if not request.user.is_authenticated:
-            # Let them/our front end know by sending a 401 response and a message.
-            return Response({'response': 'Authentication credentials were not provided.'},
-                            status=status.HTTP_401_UNAUTHORIZED)
-
         # Only give results that belong to the currently requesting User.
         cart_items = CartItem.objects.filter(cart__my_user=request.user, cart__checked_out=False)
 
@@ -135,12 +123,6 @@ class RetrieveCartItemsView(APIView):
 class CreateCartItemView(APIView):
     permission_classes = [IsAuthenticated]
     def post(self, request):
-
-        # Check if the requester is an authenticated user (i.e.: logged in)
-        if not request.user.is_authenticated:
-            # Let them/our front end know by sending a 401 response and a message.
-            return Response({'response': 'Authentication credentials were not provided.'},
-                            status=status.HTTP_401_UNAUTHORIZED)
         
         # Grab the data from the request
         data = request.data
@@ -246,12 +228,6 @@ class CreateCartItemView(APIView):
 class DeleteCartItemView(APIView):
     permission_classes = [IsAuthenticated]
     def post(self, request):
-
-        # Check if the requester is an authenticated user (i.e.: logged in)
-        if not request.user.is_authenticated:
-            # Let them/our front end know by sending a 401 response and a message.
-            return Response({'response': 'Authentication credentials were not provided.'},
-                            status=status.HTTP_401_UNAUTHORIZED)
         
         data = request.data
 
