@@ -26,6 +26,7 @@ environ.Env.read_env()
 STRIPE_PRIVATE_KEY      = env('STRIPE_PRIVATE_KEY')
 STRIPE_PUBLIC_KEY       = env('STRIPE_PUBLIC_KEY')
 STRIPE_WEBHOOK_SECRET   = env('STRIPE_WEBHOOK_SECRET')
+DJANGO_SECRET_KEY       = env('DJANGO_SECRET_KEY')
 
 
 # Quick-start development settings - unsuitable for production
@@ -34,12 +35,12 @@ STRIPE_WEBHOOK_SECRET   = env('STRIPE_WEBHOOK_SECRET')
 SITE_URL = 'http://localhost:3000'
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-5c1=0n+i^47&j-br2uokdx-ditv_+@z8xs$7ml)u*o$rfppq9&'
+SECRET_KEY = DJANGO_SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['coldcmerch.com', '*']
 
 
 # Application definition
