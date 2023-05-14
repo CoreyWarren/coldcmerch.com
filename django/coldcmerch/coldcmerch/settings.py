@@ -27,6 +27,9 @@ STRIPE_PRIVATE_KEY      = env('STRIPE_PRIVATE_KEY')
 STRIPE_PUBLIC_KEY       = env('STRIPE_PUBLIC_KEY')
 STRIPE_WEBHOOK_SECRET   = env('STRIPE_WEBHOOK_SECRET')
 DJANGO_SECRET_KEY       = env('DJANGO_SECRET_KEY')
+DATABASE_NAME           = env('DATABASE_NAME') 
+DATABASE_USER           = env('DATABASE_USER')
+DATABASE_USER_PASSWORD  = env('DATABASE_PASSWORD')
 
 
 # Quick-start development settings - unsuitable for production
@@ -37,10 +40,28 @@ SITE_URL = 'http://localhost:3000'
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = DJANGO_SECRET_KEY
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
-ALLOWED_HOSTS = ['coldcmerch.com', '*']
+# These modes are used to determine which settings to use.
+windows_test_mode       = True
+linux_test_mode         = False
+live_development_mode   = False
+production_mode         = False
+
+# SECURITY WARNING: don't run with debug turned on in production!
+if windows_test_mode:
+    DEBUG = True
+    ALLOWED_HOSTS = ['coldcmerch.com', '*']
+elif linux_test_mode:
+    DEBUG = True
+    ALLOWED_HOSTS = ['coldcmerch.com', '*']
+elif live_development_mode:
+    DEBUG = False
+    ALLOWED_HOSTS = ['coldcmerch.com']
+elif production_mode:
+    DEBUG = False
+    ALLOWED_HOSTS = ['coldcmerch.com']
+
+
 
 
 # Application definition
@@ -96,17 +117,31 @@ WSGI_APPLICATION = 'coldcmerch.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 
-## TODO: CHANGE TO MYSQL DATABASE.
+# Database
+# https://docs.djangoproject.com/en/3.0/ref/settings/#databases
+
 DATABASES = {
-    'default': {
+
+	'default': {
+
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': DATABASE_NAME,
+        'USER': DATABASE_USER,
+        'PASSWORD': DATABASE_USER_PASSWORD,
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
+
+    },
+
+    'test': {
+
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+
     },
-    'test': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'memory',
-    },
+
 }
+
 
 
 # Password validation
@@ -169,7 +204,16 @@ SIMPLE_JWT = {
 # Cannot be changed (after migrations) without destroying your entire project:
 AUTH_USER_MODEL = 'users.UserAccount'
 
-CORS_ALLOWED_ORIGINS = ['*']
+
+if (windows_test_mode or linux_test_mode):
+    CORS_ALLOWED_ORIGINS = ['*']
+else:
+    CORS_ALLOWED_ORIGINS = [
+    'https://www.example.com',
+    'https://subdomain.example.com',
+    'http://localhost:8000',  # Example for allowing requests from localhost
+    # Add more origins as needed
+    ]
 
 MEDIA_URL = '/media/'
 
