@@ -91,14 +91,25 @@ class CheckoutValidateStock(APIView):
 
             # Loop over each item in the cart
             for item in cart_items:
-                # Fetch the Product instance using the product id from the cart item
-                some_product = Product.objects.get(id=item['product'])
+                try:
+                    # Fetch the Product instance using the product id from the cart item
+                    some_product = Product.objects.get(id=item['product'])
+                except Product.DoesNotExist:
+                    return Response({"success": False, 
+                        "message": f"Product with id {item['product']} does not exist."},
+                        status=status.HTTP_400_BAD_REQUEST)
 
                 # Get the size of the product from the cart item
                 item_size = item['size']
 
-                # Fetch the ProductSize instance using the fetched product and size
-                some_product_size = ProductSize.objects.get(product=some_product, size=item_size)
+                try:
+                    # Fetch the ProductSize instance using the fetched product and size
+                    some_product_size = ProductSize.objects.get(product=some_product, size=item_size)
+                except ProductSize.DoesNotExist:
+                    return Response({"success": False, 
+                        "message": f"ProductSize with product id {item['product']} and size {item_size} does not exist."},
+                        status=status.HTTP_400_BAD_REQUEST)
+
 
                 # Get the quantity of the product requested from the cart item
                 requested_amount = item['quantity']
