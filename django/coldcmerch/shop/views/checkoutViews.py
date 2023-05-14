@@ -86,6 +86,7 @@ class CheckoutValidateStock(APIView):
             
             # success is a boolean flag that will remain True if all items are in stock, and False if any item is out of stock.
             success = True
+            database_error = False
 
 
 
@@ -96,7 +97,8 @@ class CheckoutValidateStock(APIView):
                     some_product = Product.objects.get(id=item['product'])
                 except Product.DoesNotExist:
                     return Response({"success": False, 
-                        "message": f"Product with id {item['product']} does not exist."},
+                        "message": f"Product with id {item['product']} does not exist.",
+                        "database_error": True},
                         status=status.HTTP_400_BAD_REQUEST)
 
                 # Get the size of the product from the cart item
@@ -107,7 +109,8 @@ class CheckoutValidateStock(APIView):
                     some_product_size = ProductSize.objects.get(product=some_product, size=item_size)
                 except ProductSize.DoesNotExist:
                     return Response({"success": False, 
-                        "message": f"ProductSize with product id {item['product']} and size {item_size} does not exist."},
+                        "message": f"ProductSize with product id {item['product']} and size {item_size} does not exist.",
+                        "database_error": True},
                         status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -175,13 +178,13 @@ class CheckoutValidateStock(APIView):
             ########################################
 
             response = {"success": success}
+            response["database_error"] = database_error
+
             if success:
                 response["message"] = "All items are in stock."
+                return Response(response, status=status.HTTP_200_OK)
+            
             else:
                 response["message"] = "Some items are not in stock."
                 response["out_of_stock_items"] = out_of_stock_items
-
-            if success:
-                return Response(response, status=status.HTTP_200_OK)
-            else:
                 return Response(response, status=status.HTTP_409_CONFLICT)
