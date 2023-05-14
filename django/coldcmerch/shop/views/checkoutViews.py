@@ -36,15 +36,76 @@ class CheckoutValidateStock(APIView):
         #    "quantity": 1
         # }
 
+
+        cart_items = request.cart_items
+        this_user = request.user
+
+
         # Process:
 
         # For each item in request.cart_items, check if the product is in stock compared to the amount that the user is ordering. 
+
+        item_stock_dict = {}
+        out_of_stock_items = []
+        # {product_size_id: X, stock_left: Y}
+
+        # assemble the quantity for each type of product size in the cart
+        # We will need to do some calculations after this for statement,
+        # In order to check if the requested amount is available in stock.
+        for item in cart_items:
+            some_product = Product.objects.get(id=item['product'])
+            item_size = item['size']
+            some_product_size = ProductSize.objects.get(product=some_product, size=item_size)
+
+            requested_amount = item['quantity']
+
+            if some_product_size.id not in item_stock_dict:
+                item_stock_dict[some_product_size.id] \
+                    = some_product_size.available_amount - requested_amount
+                
+                if item_stock_dict[some_product_size.id] < 0:
+                    out_of_stock_items.append({
+                        "product": item['product'],
+                        "size": item['size'],
+                        "adjusted_total": item['adjusted_total'],
+                        "quantity": item['quantity'],
+                        "available_quantity": some_product_size.available_amount
+                    })
+                    success = False
+
+            else:
+                item_stock_dict[some_product_size.id] -= requested_amount
+
+
+
+
+
         # If it is, then proceed. If not, then return a message saying that the product is out of stock, and specify which product and size it is!
 
         # So, we will need to calculate and return these:
+        ###
         # 1. In stock or not? (True/False)
+        ###
+
+
+
+
+        ###
         # 2. If not (1/2), then which product and size is out of stock?
+        ###
+
+
+
+        ###
         # 3. If not (2/2), then how many are in stock?
+        ###
+
+
+
+
+
+
+
 
         # Output:
 
