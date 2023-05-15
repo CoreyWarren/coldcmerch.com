@@ -35,7 +35,7 @@ DATABASE_USER_PASSWORD  = env('DATABASE_PASSWORD')
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
-SITE_URL = 'http://localhost:3000'
+SITE_URL = 'coldcmerch.com'
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = DJANGO_SECRET_KEY
@@ -68,18 +68,21 @@ elif production_mode:
 
 INSTALLED_APPS = [
     # base:
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # added:
-    'rest_framework',
-    'rest_framework.authtoken',
+
+    # custom/added:
+
+    'rest_framework', # rest api
+    'rest_framework.authtoken', # token authentication
     'users', #custom user authentication django app
     'shop', # e-commerce backend django app
-    'stripePayments',
+    'stripePayments', # stripe payments as a django app
 ]
 
 MIDDLEWARE = [
@@ -208,6 +211,7 @@ AUTH_USER_MODEL = 'users.UserAccount'
 if (windows_test_mode or linux_test_mode):
     CORS_ALLOWED_ORIGINS = ['*']
 else:
+    # Cors for deployment?:
     CORS_ALLOWED_ORIGINS = [
     'https://www.example.com',
     'https://subdomain.example.com',
