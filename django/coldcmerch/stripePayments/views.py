@@ -15,6 +15,7 @@ from django.http import HttpResponseRedirect
 
 import stripe
 from django.conf import settings
+from django.db import transaction, OperationalError
 
 
 # Create your views here.
@@ -160,6 +161,132 @@ def order_confirmation_webhook(request):
     # For example:
         # In the Checkout code.
         # In the Stripe payment intent creation code.
+
+    if event.type == 'payment_intent.processing':
+        with transaction.atomic():
+            payment_intent = event.data.object
+            confirmed_cart_id = payment_intent.metadata.get('cart_id')
+
+            try:
+                confirmed_cart = Cart.objects.select_for_update().get(id=confirmed_cart_id, checked_out=False)
+            except:
+                return HttpResponse("The cart does not exist or has already been checked out.", status=HTTP_400_BAD_REQUEST)
+
+            try:
+                cart_items = CartItem.objects.select_for_update().filter(cart=confirmed_cart.id)
+            except:
+                return HttpResponse("The cart does not have any items.", status=HTTP_400_BAD_REQUEST)
+            
+            # item_stock_dict is used to keep track of the remaining stock for each product size.
+            item_stock_dict = {}
+            
+            # total_requested_dict is used to keep track of the total quantity requested for each product size.
+            total_requested_dict = {}
+            
+            # out_of_stock_items is a list that will hold dictionaries of out of stock items,
+            # where each dictionary contains the product, size, adjusted total, quantity requested, and available quantity.
+            out_of_stock_items = []
+            
+            # success is a boolean flag that will remain True if all items are in stock, and False if any item is out of stock.
+            success = True
+            database_error = False
+
+
+
+            # Loop over each item in the cart
+            for item in cart_items:
+                try:
+                    # Fetch the Product instance using the product id from the cart item
+                    # select_for_update() is used to lock the row in the database, so that no other user can access it until the transaction is complete.
+                    some_product = Product.objects.select_for_update().get(id=item['product'])
+                except Product.DoesNotExist:
+                    return Response({"success": False, 
+                        "message": f"Product with id {item['product']} does not exist.",
+                        "database_error": True},
+                        status=status.HTTP_400_BAD_REQUEST)
+                except OperationalError:
+                # Handle the case where the items are already locked by another transaction
+                    return Response({"success": False, 
+                        "message": "The item is currently being purchased by another user. Please try again later."},
+                        status=status.HTTP_409_CONFLICT)
+
+                # Get the size of the product from the cart item
+                item_size = item['size']
+
+                try:
+                    # Fetch the ProductSize instance using the fetched product and size
+                    # select_for_update() is used to lock the row in the database, so that no other user can access it until the transaction is complete.
+                    some_product_size = ProductSize.objects.select_for_update().get(product=some_product, size=item_size)
+                except ProductSize.DoesNotExist:
+                    return Response({"success": False, 
+                        "message": f"ProductSize with product id {item['product']} and size {item_size} does not exist.",
+                        "database_error": True},
+                        status=status.HTTP_400_BAD_REQUEST)
+                except OperationalError:
+                # Handle the case where the items are already locked by another transaction
+                    return Response({"success": False, 
+                        "message": "The item is currently being purchased by another user. Please try again later."},
+                        status=status.HTTP_409_CONFLICT)
+
+
+                # Get the quantity of the product requested from the cart item
+                requested_amount = item['quantity']
+
+                # Check if the product size id is already present in item_stock_dict
+                if some_product_size.id not in item_stock_dict:
+                    # If not, then add it to the item_stock_dict with the available amount from the product size
+                    item_stock_dict[some_product_size.id] = some_product_size.available_amount
+
+                    # Also add it to the total_requested_dict with the requested amount
+                    total_requested_dict[some_product_size.id] = requested_amount
+                else:
+                    # No need to update the available amount in item_stock_dict, since it will be the same for all cart items of the same product size
+                    # If the product size id is already present, then increment the total requested amount in total_requested_dict
+                    total_requested_dict[some_product_size.id] += requested_amount
+
+
+                # Check if the available stock for the product size is greater than or equal to the requested amount
+                if item_stock_dict[some_product_size.id] - requested_amount >= 0:
+                    # If yes, then subtract the requested amount from the available stock in item_stock_dict
+                    item_stock_dict[some_product_size.id] -= requested_amount
+                else:
+                    # If not, then append the cart item to the out_of_stock_items list,
+                    # with additional fields for total requested quantity and available quantity,
+                    # and set the success flag to False
+                    out_of_stock_items.append({
+                        "product": item['product'],
+                        "size": item['size'],
+                        "adjusted_total": item['adjusted_total'],
+                        "quantity": total_requested_dict[some_product_size.id],
+                        "available_quantity": item_stock_dict[some_product_size.id]
+                    })
+                    success = False
+            # End of FOR LOOP (for item in cart_items)
+            # (All cart items have been processed at this point)
+            # (And the database has been locked for all the rows that were fetched)
+            # (And the item_stock_dict and total_requested_dict have been populated)
+            # (And the out_of_stock_items list has been populated if any item was out of stock)
+            # (And the success flag has been set to True if all items were in stock, and False if any item was out of stock)
+            # (And the database_error flag has been set to True if any database error occurred)
+
+            if success==False:
+                # Not enough stock, cancel the payment intent
+                stripe.PaymentIntent.cancel(payment_intent.id)
+                return HttpResponse({"message":"Sorry, the item was bought by another customer while you were checking out. Your payment has been cancelled.",
+                                     "success":success, #(false)
+                                     "out_of_stock_items": out_of_stock_items},
+                                     status=409)
+            else:
+            # If everything is OK, confirm the PaymentIntent to finalize the payment
+                try:
+                     stripe.PaymentIntent.confirm(payment_intent.id)
+                except stripe.error.StripeError as e:
+                    return HttpResponse({"message": "Error confirming the payment. Please try again later.",
+                            "stripe_error": str(e)},
+                        status=HTTP_500_INTERNAL_SERVER_ERROR)
+
+    
+
 
 
     if event.type == 'payment_intent.succeeded':

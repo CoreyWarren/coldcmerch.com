@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 from rest_framework import permissions, status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from django.db import transaction
+from django.db import transaction, OperationalError
 import json
 
 # CHECKOUT VIEWS
@@ -94,24 +94,36 @@ class CheckoutValidateStock(APIView):
             for item in cart_items:
                 try:
                     # Fetch the Product instance using the product id from the cart item
-                    some_product = Product.objects.get(id=item['product'])
+                    # select_for_update() is used to lock the row in the database, so that no other user can access it until the transaction is complete.
+                    some_product = Product.objects.select_for_update().get(id=item['product'])
                 except Product.DoesNotExist:
                     return Response({"success": False, 
                         "message": f"Product with id {item['product']} does not exist.",
                         "database_error": True},
                         status=status.HTTP_400_BAD_REQUEST)
+                except OperationalError:
+                # Handle the case where the items are already locked by another transaction
+                    return Response({"success": False, 
+                        "message": "The item is currently being purchased by another user. Please try again later."},
+                        status=status.HTTP_409_CONFLICT)
 
                 # Get the size of the product from the cart item
                 item_size = item['size']
 
                 try:
                     # Fetch the ProductSize instance using the fetched product and size
-                    some_product_size = ProductSize.objects.get(product=some_product, size=item_size)
+                    # select_for_update() is used to lock the row in the database, so that no other user can access it until the transaction is complete.
+                    some_product_size = ProductSize.objects.select_for_update().get(product=some_product, size=item_size)
                 except ProductSize.DoesNotExist:
                     return Response({"success": False, 
                         "message": f"ProductSize with product id {item['product']} and size {item_size} does not exist.",
                         "database_error": True},
                         status=status.HTTP_400_BAD_REQUEST)
+                except OperationalError:
+                # Handle the case where the items are already locked by another transaction
+                    return Response({"success": False, 
+                        "message": "The item is currently being purchased by another user. Please try again later."},
+                        status=status.HTTP_409_CONFLICT)
 
 
                 # Get the quantity of the product requested from the cart item
