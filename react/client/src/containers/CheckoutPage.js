@@ -40,7 +40,7 @@ const CheckoutPage = () => {
         // Updates the Payment Intent with the new cart total
       
   
-        
+
     // Grab the cart items from the database for payment intent creation:
     useEffect(() => {
 
@@ -73,6 +73,26 @@ const CheckoutPage = () => {
       checkout_stock_validation_message, 
       loading_validation 
     } = useSelector(state => state.checkout_stock_validation);
+
+
+
+
+    const WarningPage = ({ message, items }) => (
+      <div>
+        <h2>Warning</h2>
+        <p>{message}</p>
+        <h2>Out of Stock Items</h2>
+        {
+          items.map(item => (
+            <div key={item.id}>
+              <h3>{item.title}</h3>
+              <p>{item.description}</p>
+              <img src={item.image_preview} alt={item.title} />
+            </div>
+          ))
+        }
+      </div>
+    );
 
 
 
@@ -144,20 +164,32 @@ const CheckoutPage = () => {
 
           <div className="mb-5"></div>
 
-            <div id="stripe-checkout-container">
-              {clientSecret && (
-                <Elements options={options} stripe={stripePromise}>
-                  <AddressForm />
-                  <br></br>
-                  <CheckoutForm />
-                  <br></br>
-                </Elements>
-              )}
-            </div>
+
+          {!checkout_stock_validation_success ? (
+          <WarningPage 
+            message={checkout_stock_validation_message}
+            items={out_of_stock_items_map}
+          />
+          ) : (
+
+          <div id="stripe-checkout-container">
+            {clientSecret && (
+              <Elements options={options} stripe={stripePromise}>
+                <AddressForm />
+                <br></br>
+                <CheckoutForm />
+                <br></br>
+              </Elements>
+            )}
+          </div>
+
+          )}
 
           <div id="stripe-checkout-container">
             <StripePoweredButton />
           </div>
+
+
 
         </div>
 
