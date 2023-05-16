@@ -10,6 +10,7 @@ import productSizeReducer from 'features/productSize';
 import cartReducer from 'features/cart';
 import cartItemsReducer from 'features/cartItems';
 import stripePaymentsReducer from 'features/stripePayments';
+import checkoutStockValidationReducer from 'features/checkoutValidation';
 
 // The 'combineReducers' function from the '@reduxjs/toolkit' library is used to combine the individual reducers into one.
 // The resulting combined reducer will manage the entire application state.
@@ -22,12 +23,13 @@ import { combineReducers } from '@reduxjs/toolkit';
 // These slices will merge into the store for our application, which is managed by Redux.
 
 const rootReducer = combineReducers({
-    user:               userReducer,
-    products:           productsReducer,
-    product_size:       productSizeReducer,
-    cart:               cartReducer,
-    cart_items:         cartItemsReducer,
-    stripe_payments:    stripePaymentsReducer,
+    user:                       userReducer,
+    products:                   productsReducer,
+    product_size:               productSizeReducer,
+    cart:                       cartReducer,
+    cart_items:                 cartItemsReducer,
+    stripe_payments:            stripePaymentsReducer,
+    checkout_stock_validation:  checkoutStockValidationReducer,
 });
 
 // The resulting combined reducer is passed to the 'configureStore' function.

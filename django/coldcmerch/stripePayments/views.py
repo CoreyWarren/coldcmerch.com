@@ -280,8 +280,9 @@ def order_confirmation_webhook(request):
             # If everything is OK, confirm the PaymentIntent to finalize the payment
                 try:
                      stripe.PaymentIntent.confirm(payment_intent.id)
+
                 except stripe.error.StripeError as e:
-                    return HttpResponse({"message": "Error confirming the payment. Please try again later.",
+                    return HttpResponse({"message": "Error confirming the payment. Is your information correct?.",
                             "stripe_error": str(e)},
                         status=HTTP_500_INTERNAL_SERVER_ERROR)
 

@@ -21,7 +21,7 @@ import json
 # This view will be called by the front end when the user
 # clicks the "Checkout" button.
 
-class CheckoutValidateStock(APIView):
+class CheckoutStockValidationView(APIView):
 
         # Input:
 
@@ -65,14 +65,24 @@ class CheckoutValidateStock(APIView):
     permission_classes = [IsAuthenticated]
 
 
-    def post(self, request):
+    def get(self, request):
         # Transaction.atomic() is used to ensure that all database operations are completed successfully, or none of them are.
         # This is useful because we are making multiple database operations in this view.
         # Additionally, if MULTIPLE USERS are trying to checkout at the same time, we don't want to run into any issues with the database.
         # transaction.atomic() will roll back all database operations if any of them fail.
         with transaction.atomic():
-            cart_items = request.data['cart_items']
+            # user comes in with cookie/access token, so this is still a GET request:
             this_user = request.user
+
+            # I didn't want to have to POST cart items data, so
+            # let's just grab it from our database:
+            try:
+                cart_items = CartItem.objects.select_for_update().filter(cart__user=this_user, cart__checkout_out = False)
+            except:
+                return Response({"success": False, 
+                    "message": "There was an error retrieving your cart items.",
+                    "database_error": True},
+                    status=status.HTTP_400_BAD_REQUEST)
 
             # item_stock_dict is used to keep track of the remaining stock for each product size.
             item_stock_dict = {}

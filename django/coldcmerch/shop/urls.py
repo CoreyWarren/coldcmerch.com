@@ -34,5 +34,8 @@ urlpatterns = [
     # api/shop/cart_items/delete
     path('cart_items/delete', DeleteCartItemView.as_view(), name='delete_cart_item'),
 
+    # api/checkout/stock_validation
+    path('checkout/stock_validation', CheckoutStockValidationView.as_view(), name='stock_validation'),
+
 
 ]

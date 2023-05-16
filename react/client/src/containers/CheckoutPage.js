@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { getCartItems } from 'features/cartItems';
 import { createPaymentIntent } from 'features/stripePayments';
+import { getCheckoutStockValidation } from "features/checkoutValidation";
 
 import CheckoutForm from "./CheckoutForm";
 import AddressForm from '../components/stripe/AddressForm';
@@ -39,24 +40,39 @@ const CheckoutPage = () => {
         // Updates the Payment Intent with the new cart total
       
   
+        
     // Grab the cart items from the database for payment intent creation:
     useEffect(() => {
 
-      // Dispatch our 'retrieve cart items' action here:
+      // First, check if user is able to checkout by validating if their cart items exceed the available stock:
+      dispatch(getCheckoutStockValidation()).catch(error => console.error('Error when validating checkout stock:', error));
 
+      
+      // Dispatch our 'retrieve cart items' action here:
       dispatch(getCartItems()).catch(error => console.error('Error when grabbing Cart Items:', error));
+
 
     }, [dispatch]);
 
 
 
 
+    // These are the client secret keys we need to pass to the Stripe API:
+    const [ clientSecret, setClientSecret ] = useState("");
 
-    const [clientSecret, setClientSecret] = useState("");
-
+    // Do we even need to import cart items for Checkout Page?
     let { cart_items_map, loading_cart_items } = useSelector(state => state.cart_items);
 
+    // Check if user is authenticated:
     let { isAuthenticated, user, user_loading } = useSelector(state => state.user);
+
+    // Check checkout stock validation for this user's cart:
+    let { 
+      out_of_stock_items_map, 
+      checkout_stock_validation_success, 
+      checkout_stock_validation_message, 
+      loading_validation 
+    } = useSelector(state => state.checkout_stock_validation);
 
 
 
