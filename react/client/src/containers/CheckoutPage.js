@@ -124,7 +124,7 @@ const CheckoutPage = () => {
             <h2>{index_starting_at_one}:  {selective_products_map[i].title}</h2>
             <img alt={selective_products_map[i].description} src={image_sauce} ></img>
             <p>Size: <strong>{out_of_stock_items_map[i].size}</strong></p>
-            <p>Adjusted Total: <strong>{out_of_stock_items_map[i].adjusted_total}</strong></p>
+            <p>Price: <strong>{out_of_stock_items_map[i].adjusted_total}</strong></p>
             <p>In Cart: <strong>{out_of_stock_items_map[i].quantity}</strong></p>
             <p>Available: <strong>{out_of_stock_items_map[i].available_quantity}</strong></p>
           </div>
