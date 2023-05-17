@@ -164,12 +164,23 @@ class CheckoutStockValidationView(APIView):
                     # If not, then append the cart item to the out_of_stock_items list,
                     # with additional fields for total requested quantity and available quantity,
                     # and set the success flag to False
+
+                    try:
+                        # retrieve the remaining stock for this product size:
+                        remaining_stock = ProductSize.objects.get(id=some_product_size.id).available_amount
+                    except ProductSize.DoesNotExist:
+                        print(f"ProductSize with id {some_product_size.id} does not exist.")
+                        return Response({"success": False, 
+                            "message": f"ProductSize with id {some_product_size.id} does not exist.",
+                            "database_error": True},
+                            status=status.HTTP_400_BAD_REQUEST)
+                    
                     out_of_stock_items.append({
                         "product": item.product_id,
                         "size": item.size,
                         "adjusted_total": item.adjusted_total,
                         "quantity": total_requested_dict[some_product_size.id],
-                        "available_quantity": item_stock_dict[some_product_size.id]
+                        "available_quantity": remaining_stock
                     })
                     success = False
 

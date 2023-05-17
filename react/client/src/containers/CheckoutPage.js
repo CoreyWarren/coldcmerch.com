@@ -74,8 +74,7 @@ const CheckoutPage = () => {
     // Check checkout stock validation for this user's cart:
     let { 
       out_of_stock_items_map, 
-      checkout_stock_validation_success, 
-      checkout_stock_validation_message, 
+      checkout_stock_validation_success,
       loading_validation 
     } = useSelector(state => state.checkout_stock_validation);
 
@@ -86,12 +85,13 @@ const CheckoutPage = () => {
 
 
 
-    const WarningPage = ({message}) => (
+    const WarningPage = () => (
       <div className="info-item">
         <h2>Warning</h2>
-        <p>Message from The Shop ["{message}"]</p>
-        <p>Some Item(s) in your CART has lost available stock since you added them:</p>
+        <p>Some CART ITEMS in your CART have lost available stock since you last added them:</p>
         {displayOutOfStockItems()}
+        <p>Please remove any excess cart items to continue.</p>
+        <p>I am very sorry for the inconvenience.</p>
       </div>
     );
 
@@ -100,10 +100,6 @@ const CheckoutPage = () => {
 
     let displayOutOfStockItems = () => {
       let result = [];
-      console.log("Out of Stock Items Map:", out_of_stock_items_map);
-      console.log("success of validation:", checkout_stock_validation_success);
-      console.log("loading validation:", loading_validation);
-      console.log("message of validation:", checkout_stock_validation_message);
     
       for (let i = 0; i < out_of_stock_items_map.length; i += 1) {
         let index_starting_at_one = 0;
@@ -205,9 +201,7 @@ const CheckoutPage = () => {
 
 
           {(!checkout_stock_validation_success && !loading_validation) ? (
-          <WarningPage 
-            message={checkout_stock_validation_message}
-          />
+          <WarningPage />
           ) : (
 
           <div id="stripe-checkout-container">
