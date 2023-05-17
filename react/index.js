@@ -1,10 +1,15 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const path = require('path');
+// rate limiting to prevent brute force attacks
+const rateLimit = require("express-rate-limit");
+
 
 // Enable .env (environment variables) to work:
 // and immediately call its config
 require('dotenv').config();
+
+
 
 // register.js route
 const registerRoute = require('./routes/auth/register');
@@ -42,6 +47,14 @@ const app = express();
 // to actually work and receieve JSON data for our User Data
 app.use(express.json());
 app.use(cookieParser());
+
+
+// Rate limiting:
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // this = 15 minutes
+    max: 222 // limit each IP to 'max' requests, per 'windowMs'
+  });
+app.use(limiter);
 
 app.use(registerRoute);
 app.use(loginRoute);
