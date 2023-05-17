@@ -1,10 +1,22 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
+const morgan = require('morgan');
 const path = require('path');
+// rate limiting to prevent brute force attacks
+const rateLimit = require("express-rate-limit");
+
 
 // Enable .env (environment variables) to work:
 // and immediately call its config
 require('dotenv').config();
+
+
+// This is a global error handler for async functions, with Express.
+// It will catch any errors that occur in async functions and pass them to the next function.
+// This is necessary because Express will not catch errors that occur in async functions by default.
+require('express-async-errors');
+
+
 
 // register.js route
 const registerRoute = require('./routes/auth/register');
@@ -36,12 +48,33 @@ const stripe_CreatePaymentIntentRoute = require('./routes/stripe/paymentIntent')
 const stripe_CheckoutStockValidationRoute = require('./routes/stripe/checkoutStockValidation');
 
 
+
 const app = express();
 
 // Middleware within Express to allow our 'req.body' in 'routes/auth/register.js'
 // to actually work and receieve JSON data for our User Data
 app.use(express.json());
 app.use(cookieParser());
+
+
+
+// Rate limiting:
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // this = 15 minutes
+    max: 222 // limit each IP to 'max' requests, per 'windowMs'
+  });
+app.use(limiter);
+
+
+// Use morgan for logging. In production, you might want to use a 'short' format.
+if (process.env.NODE_ENV === 'development') {
+    app.use(morgan('dev'));  // Detailed log
+} else {
+app.use(morgan('short'));  // Less detailed log
+}
+
+
+// Our Routes:
 
 app.use(registerRoute);
 app.use(loginRoute);
@@ -58,12 +91,30 @@ app.use(cartItemsDeleteRoute);
 app.use(stripe_CreatePaymentIntentRoute);
 app.use(stripe_CheckoutStockValidationRoute);
 
+
+// Serve static assets if in production
+// Set static folder
 app.use(express.static('client/build'));
+// '*' means any route that is not defined above
 app.get('*', (req, res) => {
     return res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
 });
 
 
+// Set up the port for the server to listen on
+// This is used for both the Express server and the React client
+// If the environment variable 'PORT' is not defined, use port 5000
 const PORT = process.env.PORT || 5000;
+
+
+
+// Error handling middleware
+// This is a global error handler for async functions, with Express.
+// It will catch any errors that occur in async functions and pass them to the next function.
+app.use((err, req, res, next) => {
+    console.error(err.stack);  // Log the error stack trace on the server
+    res.status(500).send('Something went wrong!');  // Send a generic message to the client
+  });
+
 
 app.listen(PORT, () => console.log('Coco, the Express Server is listening on port:', PORT));
