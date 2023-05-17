@@ -29,7 +29,6 @@ STRIPE_WEBHOOK_SECRET   = env('STRIPE_WEBHOOK_SECRET')
 DJANGO_SECRET_KEY       = env('DJANGO_SECRET_KEY')
 DATABASE_NAME           = env('DATABASE_NAME') 
 DATABASE_USER           = env('DATABASE_USER')
-DATABASE_USER_PASSWORD  = env('DATABASE_PASSWORD')
 
 
 # Quick-start development settings - unsuitable for production
@@ -130,7 +129,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': DATABASE_NAME,
         'USER': DATABASE_USER,
-        'PASSWORD': DATABASE_USER_PASSWORD,
+        'PASSWORD': '',
         'HOST': '127.0.0.1',
         'PORT': '3306',
 

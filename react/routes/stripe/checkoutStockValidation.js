@@ -5,14 +5,14 @@ const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch
 const router = express.Router();
 
 
-router.get('/api/checkout/stock_validation', async (req, res) => {
+router.get('/api/shop/checkout/stock_validation', async (req, res) => {
 
     try {
         const { access } = req.cookies;
 
         //retrieve data from Django Backend
 
-        const apiResponse = await fetch(`${process.env.API_URL}/api/checkout/stock_validation`, {
+        const apiResponse = await fetch(`${process.env.API_URL}/api/shop/checkout/stock_validation`, {
             method: 'GET',
             headers: {
                 Accept: 'application/json',

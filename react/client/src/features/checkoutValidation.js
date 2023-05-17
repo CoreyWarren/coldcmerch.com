@@ -1,14 +1,17 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 
-export const getCheckoutStockValidation = createAsyncThunk('product/all', async (_, thunkAPI) => {
+export const getCheckoutStockValidation = createAsyncThunk('api/shop/checkout/stock_validation', async (_, thunkAPI) => {
+
+
 
     try{
+
       // cookies will come along the way with this request
-      const res = await fetch('api/shop/product/all', {
+      const res = await fetch('/api/shop/checkout/stock_validation', {
         method: 'GET',
         headers: {
-          Accept: 'application/json'
+          Accept: 'application/json',
         }
       });
 
@@ -17,8 +20,8 @@ export const getCheckoutStockValidation = createAsyncThunk('product/all', async 
       if (res.status === 200) {
         // success - return data as a payload, but map it first for easy manipulation:
 
-        
-
+        console.log("Checkout Stock Validation API accepted validation.");
+      
         return {
             success: true,
             message: data.message
@@ -26,10 +29,13 @@ export const getCheckoutStockValidation = createAsyncThunk('product/all', async 
       } else {
         // failure - reject with rejected data.
 
+        console.log("Checkout Stock Validation API rejected validation.");
+
         // check if it has "out_of_stock_items" key:
         if (data.hasOwnProperty("out_of_stock_items")) {
             // it does, so we have to return it as a payload:
             let out_of_stock_items_map = [];
+            console.log("Checkout Stock Validation API rejected validation. It has out_of_stock_items_map.")
 
         // MAP our products
 
@@ -49,6 +55,8 @@ export const getCheckoutStockValidation = createAsyncThunk('product/all', async 
                 // 2) success (True because we got a response)
                 // 3) message (we will use this to display a message to the user)
                 // 4) // NOT status, we don't need it in the frontend.
+
+            console.log("data.message from Checkout Stock Validation API:", data.message);
 
             return {
                 out_of_stock_items_map,
@@ -95,12 +103,13 @@ const initialState = {
             //
         .addCase( getCheckoutStockValidation.fulfilled, (state, action) => {
             state.loading_validation = false;
-            state.success = action.payload.success;
+            state.checkout_stock_validation_success = true;
             state.message = action.payload.message;
         })
             // Failed Validation:
-        .addCase( getCheckoutStockValidation.rejected, state => {
+        .addCase( getCheckoutStockValidation.rejected, (state, action) => {
             state.loading_validation = false;
+            state.checkout_stock_validation_success = false;
           
             // Check if there are out_of_stock_items_map in the payload
             if (action.payload.hasOwnProperty('out_of_stock_items_map')) {

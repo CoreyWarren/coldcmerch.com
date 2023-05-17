@@ -52,6 +52,9 @@ class CartManager(models.Manager):
         )
         cart.save(using=self._db)
         return cart
+    
+    def has_active_cart(self, user):
+        return self.filter(my_user=user, checked_out=False).exists()
 
 
 # The logic behind the cart model is as follows:
@@ -77,6 +80,8 @@ class Cart(models.Model):
             myStatus = "Pending"
         
         return str(self.id) + ', ' + myStatus + ', for ' + str(self.my_user)
+    
+
 
 
 
@@ -99,6 +104,8 @@ class CartItemManager(models.Manager):
         )
         cart_item.save(using=self._db)
         return cart_item
+
+
 
 class CartItem(models.Model):
     cart                = models.ForeignKey('Cart', related_name="cart_items", on_delete=models.CASCADE, null = True, blank = True, default=None)

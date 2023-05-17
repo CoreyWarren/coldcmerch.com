@@ -70,15 +70,19 @@ class CheckoutStockValidationView(APIView):
         # This is useful because we are making multiple database operations in this view.
         # Additionally, if MULTIPLE USERS are trying to checkout at the same time, we don't want to run into any issues with the database.
         # transaction.atomic() will roll back all database operations if any of them fail.
+        print("CheckoutStockValidationView GET request received.")
         with transaction.atomic():
             # user comes in with cookie/access token, so this is still a GET request:
-            this_user = request.user
+            this_user_id = request.user.id
+
+            print("this_user: ", this_user_id)
 
             # I didn't want to have to POST cart items data, so
             # let's just grab it from our database:
             try:
-                cart_items = CartItem.objects.select_for_update().filter(cart__user=this_user, cart__checkout_out = False)
+                cart_items = CartItem.objects.select_for_update().filter(cart__my_user=this_user_id, cart__checked_out = False)
             except:
+                print("There was an error retrieving your cart items.")
                 return Response({"success": False, 
                     "message": "There was an error retrieving your cart items.",
                     "database_error": True},
@@ -105,10 +109,11 @@ class CheckoutStockValidationView(APIView):
                 try:
                     # Fetch the Product instance using the product id from the cart item
                     # select_for_update() is used to lock the row in the database, so that no other user can access it until the transaction is complete.
-                    some_product = Product.objects.select_for_update().get(id=item['product'])
+                    some_product = Product.objects.select_for_update().get(id=item.product_id)
                 except Product.DoesNotExist:
+                    print(f"Product with id {item.product_id} does not exist.")
                     return Response({"success": False, 
-                        "message": f"Product with id {item['product']} does not exist.",
+                        "message": f"Product with id {item.product_id} does not exist.",
                         "database_error": True},
                         status=status.HTTP_400_BAD_REQUEST)
                 except OperationalError:
@@ -118,15 +123,16 @@ class CheckoutStockValidationView(APIView):
                         status=status.HTTP_409_CONFLICT)
 
                 # Get the size of the product from the cart item
-                item_size = item['size']
+                item_size = item.size
 
                 try:
                     # Fetch the ProductSize instance using the fetched product and size
                     # select_for_update() is used to lock the row in the database, so that no other user can access it until the transaction is complete.
-                    some_product_size = ProductSize.objects.select_for_update().get(product=some_product, size=item_size)
+                    some_product_size = ProductSize.objects.select_for_update().get(product_id=some_product, size=item_size)
                 except ProductSize.DoesNotExist:
+                    print(f"ProductSize with product id {item.product_id} and size {item_size} does not exist.")
                     return Response({"success": False, 
-                        "message": f"ProductSize with product id {item['product']} and size {item_size} does not exist.",
+                        "message": f"ProductSize with product id {item.product_id} and size {item_size} does not exist.",
                         "database_error": True},
                         status=status.HTTP_400_BAD_REQUEST)
                 except OperationalError:
@@ -137,7 +143,7 @@ class CheckoutStockValidationView(APIView):
 
 
                 # Get the quantity of the product requested from the cart item
-                requested_amount = item['quantity']
+                requested_amount = item.quantity
 
                 # Check if the product size id is already present in item_stock_dict
                 if some_product_size.id not in item_stock_dict:
@@ -159,9 +165,9 @@ class CheckoutStockValidationView(APIView):
                     # with additional fields for total requested quantity and available quantity,
                     # and set the success flag to False
                     out_of_stock_items.append({
-                        "product": item['product'],
-                        "size": item['size'],
-                        "adjusted_total": item['adjusted_total'],
+                        "product": item.product_id,
+                        "size": item.size,
+                        "adjusted_total": item.adjusted_total,
                         "quantity": total_requested_dict[some_product_size.id],
                         "available_quantity": item_stock_dict[some_product_size.id]
                     })
@@ -204,9 +210,11 @@ class CheckoutStockValidationView(APIView):
 
             if success:
                 response["message"] = "All items are in stock."
+                print(response)
                 return Response(response, status=status.HTTP_200_OK)
             
             else:
                 response["message"] = "Some items are not in stock."
                 response["out_of_stock_items"] = out_of_stock_items
+                print(response)
                 return Response(response, status=status.HTTP_409_CONFLICT)

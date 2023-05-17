@@ -45,11 +45,16 @@ const CheckoutPage = () => {
     useEffect(() => {
 
       // First, check if user is able to checkout by validating if their cart items exceed the available stock:
+  
       dispatch(getCheckoutStockValidation()).catch(error => console.error('Error when validating checkout stock:', error));
 
       
       // Dispatch our 'retrieve cart items' action here:
       dispatch(getCartItems()).catch(error => console.error('Error when grabbing Cart Items:', error));
+
+
+
+      
 
 
     }, [dispatch]);
@@ -74,25 +79,64 @@ const CheckoutPage = () => {
       loading_validation 
     } = useSelector(state => state.checkout_stock_validation);
 
+    // We want to load products so we can display product details alongside the cart items they are a part of.
+    let { selective_products_map, loading_products} = useSelector(state => state.products);
 
 
 
-    const WarningPage = ({ message, items }) => (
-      <div>
+
+
+    const WarningPage = ({message}) => (
+      <div className="info-item">
         <h2>Warning</h2>
-        <p>{message}</p>
-        <h2>Out of Stock Items</h2>
-        {
-          items.map(item => (
-            <div key={item.id}>
-              <h3>{item.title}</h3>
-              <p>{item.description}</p>
-              <img src={item.image_preview} alt={item.title} />
-            </div>
-          ))
-        }
+        <p>Message from The Shop ["{message}"]</p>
+        <p>Some Item(s) in your CART has lost available stock since you added them:</p>
+        {displayOutOfStockItems()}
       </div>
     );
+
+
+
+
+    let displayOutOfStockItems = () => {
+      let result = [];
+      console.log("Out of Stock Items Map:", out_of_stock_items_map);
+      console.log("success of validation:", checkout_stock_validation_success);
+      console.log("loading validation:", loading_validation);
+      console.log("message of validation:", checkout_stock_validation_message);
+    
+      for (let i = 0; i < out_of_stock_items_map.length; i += 1) {
+        let index_starting_at_one = 0;
+        let image_sauce = "";
+        let item_key = "";
+    
+        try {
+          index_starting_at_one = i + 1;
+          image_sauce = ('http://localhost:8000' + selective_products_map[i].image_preview).toString();
+          item_key = (out_of_stock_items_map[i].product + selective_products_map[i].title).toString() + i.toString();
+        } catch (error) {
+          console.log("Error:", error);
+          return (
+            <div>
+              <p>There was an error loading your out-of-stock items.</p>
+            </div>
+          )
+        }
+    
+        result.push(
+          <div className="out_of_stock_item" key={`out-of-stock-item-${item_key}`}>
+            <h2>{index_starting_at_one}:  {selective_products_map[i].title}</h2>
+            <img alt={selective_products_map[i].description} src={image_sauce} ></img>
+            <p>Size: <strong>{out_of_stock_items_map[i].size}</strong></p>
+            <p>Adjusted Total: <strong>{out_of_stock_items_map[i].adjusted_total}</strong></p>
+            <p>Quantity: <strong>{out_of_stock_items_map[i].quantity}</strong></p>
+            <p>Available Quantity: <strong>{out_of_stock_items_map[i].available_quantity}</strong></p>
+          </div>
+        );
+      }
+      return result;
+    }
+    
 
 
 
@@ -102,15 +146,12 @@ const CheckoutPage = () => {
 
       // Check if we're even able to create a payment intent:
       if(!isAuthenticated) {
-        console.log("Error when creating Payment Intent: User not authenticated");
         return;
       };
       if(!user || user.email === null) {
-        console.log("Error when creating Payment Intent: No User Email");
         return;
       };
       if(!cart_items_map) {
-        console.log("Error when creating Payment Intent: No Cart Items");
         return;
       };
       console.log("Creating Payment Intent...! All checks passed.");
@@ -154,8 +195,6 @@ const CheckoutPage = () => {
       appearance,
     };
 
-    console.log("Client Secret:", clientSecret)
-
     return (
       <LayoutStripeCheckout title = 'Cold Cut Merch | Dashboard' content = 'Dashboard page' >
 
@@ -165,10 +204,9 @@ const CheckoutPage = () => {
           <div className="mb-5"></div>
 
 
-          {!checkout_stock_validation_success ? (
+          {(!checkout_stock_validation_success && !loading_validation) ? (
           <WarningPage 
             message={checkout_stock_validation_message}
-            items={out_of_stock_items_map}
           />
           ) : (
 
