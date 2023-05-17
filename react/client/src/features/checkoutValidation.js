@@ -39,7 +39,7 @@ export const getCheckoutStockValidation = createAsyncThunk('api/shop/checkout/st
 
         // MAP our products
 
-            out_of_stock_items_map = data.map(item => {
+            out_of_stock_items_map = data.out_of_stock_items.map(item => {
                 const { product, size, adjusted_total, quantity, available_quantity} = item;
                 return {
                     product,
@@ -58,12 +58,14 @@ export const getCheckoutStockValidation = createAsyncThunk('api/shop/checkout/st
 
             console.log("data.message from Checkout Stock Validation API:", data.message);
 
-            return {
-                out_of_stock_items_map,
-                success: data.success,
-                message: data.message,
-                status: data.status
-            };
+            return thunkAPI.rejectWithValue({
+              out_of_stock_items_map,
+              success: data.success,
+              message: data.message,
+              status: data.status,
+              data: data
+          });
+
         } 
 
 
@@ -96,28 +98,34 @@ const initialState = {
     },
     extraReducers: builder => {
       builder
-        // Check User Validation for Checkout Page Access:
-        .addCase( getCheckoutStockValidation.pending, state => {
-            state.loading_validation = true;
-        })
-            //
-        .addCase( getCheckoutStockValidation.fulfilled, (state, action) => {
-            state.loading_validation = false;
-            state.checkout_stock_validation_success = true;
-            state.message = action.payload.message;
-        })
-            // Failed Validation:
-        .addCase( getCheckoutStockValidation.rejected, (state, action) => {
-            state.loading_validation = false;
-            state.checkout_stock_validation_success = false;
-          
-            // Check if there are out_of_stock_items_map in the payload
-            if (action.payload.hasOwnProperty('out_of_stock_items_map')) {
-                state.out_of_stock_items_map = action.payload.out_of_stock_items_map;
-            }
+      // Check User Validation for Checkout Page Access:
+      .addCase( getCheckoutStockValidation.pending, state => {
+          state.loading_validation = true;
+      })
+          //
+      .addCase( getCheckoutStockValidation.fulfilled, (state, action) => {
+          state.loading_validation = false;
+          state.checkout_stock_validation_success = true;
+          state.message = action.payload.message;
+      })
+          // Failed Validation:
+      .addCase( getCheckoutStockValidation.rejected, (state, action) => {
+          state.loading_validation = false;
+          state.checkout_stock_validation_success = false;
+        
+        if(action.payload === undefined) {
+          // if we don't have a payload, it means that the server is down:
+          state.message = "Server is down. Please try again later.";
+          return;
+        } else{
+          // Check if there are out_of_stock_items_map in the payload
+          if (action.payload.hasOwnProperty('out_of_stock_items_map')) {
+            state.out_of_stock_items_map = action.payload.out_of_stock_items_map;
+          }
+          state.success = action.payload.success;
+          state.message = action.payload.message;
+        }
 
-            state.success = action.payload.success;
-            state.message = action.payload.message;
         })
 
     },
