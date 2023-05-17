@@ -87,7 +87,7 @@ const CheckoutPage = () => {
 
     const WarningPage = () => (
       <div className="info-item">
-        <h2>Warning</h2>
+        <h2>High Product Demand:</h2>
         <p>Some CART ITEMS in your CART have lost available stock since you last added them:</p>
         {displayOutOfStockItems()}
         <p>Please remove any excess cart items to continue.</p>
@@ -125,8 +125,8 @@ const CheckoutPage = () => {
             <img alt={selective_products_map[i].description} src={image_sauce} ></img>
             <p>Size: <strong>{out_of_stock_items_map[i].size}</strong></p>
             <p>Adjusted Total: <strong>{out_of_stock_items_map[i].adjusted_total}</strong></p>
-            <p>Quantity: <strong>{out_of_stock_items_map[i].quantity}</strong></p>
-            <p>Available Quantity: <strong>{out_of_stock_items_map[i].available_quantity}</strong></p>
+            <p>In Cart: <strong>{out_of_stock_items_map[i].quantity}</strong></p>
+            <p>Available: <strong>{out_of_stock_items_map[i].available_quantity}</strong></p>
           </div>
         );
       }
