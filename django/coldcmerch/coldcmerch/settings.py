@@ -29,7 +29,7 @@ STRIPE_WEBHOOK_SECRET   = env('STRIPE_WEBHOOK_SECRET')
 DJANGO_SECRET_KEY       = env('DJANGO_SECRET_KEY')
 DATABASE_NAME           = env('DATABASE_NAME') 
 DATABASE_USER           = env('DATABASE_USER')
-
+DATABASE_USER_PASSWORD	= env('DATABASE_USER_PASSWORD')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -41,10 +41,10 @@ SECRET_KEY = DJANGO_SECRET_KEY
 
 
 # These modes are used to determine which settings to use.
-windows_test_mode       = True
+windows_test_mode       = False
 linux_test_mode         = False
 live_development_mode   = False
-production_mode         = False
+production_mode         = True
 
 # SECURITY WARNING: don't run with debug turned on in production!
 if windows_test_mode:
@@ -58,7 +58,7 @@ elif live_development_mode:
     ALLOWED_HOSTS = ['coldcmerch.com']
 elif production_mode:
     DEBUG = False
-    ALLOWED_HOSTS = ['coldcmerch.com']
+    ALLOWED_HOSTS = ['137.184.114.49', 'coldcmerch.com']
 
 
 
@@ -129,10 +129,12 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': DATABASE_NAME,
         'USER': DATABASE_USER,
-        'PASSWORD': '',
+        'PASSWORD': DATABASE_USER_PASSWORD,
         'HOST': '127.0.0.1',
-        'PORT': '3306',
 
+	'OPTIONS': {
+		'read_default_file': '/etc/mysql/my.cnf',
+	},
     },
 
     'test': {
@@ -170,7 +172,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Tijuana'
 
 USE_I18N = True
 
@@ -212,12 +214,16 @@ if (windows_test_mode or linux_test_mode):
 else:
     # Cors for deployment?:
     CORS_ALLOWED_ORIGINS = [
-    'https://www.example.com',
-    'https://subdomain.example.com',
-    'http://localhost:8000',  # Example for allowing requests from localhost
+    'http://localhost:3000',
     # Add more origins as needed
     ]
 
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+STATIC_URL = '/static/'
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+
