@@ -228,7 +228,7 @@ const StorePage = () => {
 
         // PRINT THE PRODUCTS, FOR LOOP:
         for (let i = 0; i < products_map.length; i += 1) {
-            const image_sauce = ('http://localhost:8000' + products_map[i].image_preview).toString();
+            const image_sauce = (`${process.env.MY_URL}` + products_map[i].image_preview).toString();
 
             let product_to_add = {
                 product: products_map[i].id,
