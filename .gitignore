@@ -1,7 +1,7 @@
 .env
-winenv/
-env/
-venv/
+*/winenv/*
+*/env/*
+*/venv/*
 *.pyc
 commit_message.txt
 */stripe.exe

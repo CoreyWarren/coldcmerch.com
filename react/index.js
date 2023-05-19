@@ -4,7 +4,7 @@ const morgan = require('morgan');
 const path = require('path');
 // rate limiting to prevent brute force attacks
 const rateLimit = require("express-rate-limit");
-
+const fs = require('fs');
 
 // Enable .env (environment variables) to work:
 // and immediately call its config
@@ -56,7 +56,8 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 
-
+// create a write stream (in append mode)
+var accessLogStream = fs.createWriteStream(path.join(__dirname, 'express-access.log'), { flags: 'a' })
 
 // Rate limiting:
 const limiter = rateLimit({
@@ -70,7 +71,7 @@ app.use(limiter);
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));  // Detailed log
 } else {
-app.use(morgan('short'));  // Less detailed log
+app.use(morgan('combined', {stream: accessLogStream }));  // Less detailed log
 }
 
 
@@ -91,13 +92,14 @@ app.use(cartItemsDeleteRoute);
 app.use(stripe_CreatePaymentIntentRoute);
 app.use(stripe_CheckoutStockValidationRoute);
 
+console.log("Sanity Check 1");
 
 // Serve static assets if in production
 // Set static folder
-app.use(express.static('client/build'));
+app.use(express.static(path.join(__dirname, 'client/build')));
 // '*' means any route that is not defined above
 app.get('*', (req, res) => {
-    return res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+    return res.sendFile(path.resolve(__dirname,'client', 'build', 'index.html'));
 });
 
 
@@ -113,8 +115,9 @@ const PORT = process.env.PORT || 5000;
 // It will catch any errors that occur in async functions and pass them to the next function.
 app.use((err, req, res, next) => {
     console.error(err.stack);  // Log the error stack trace on the server
-    res.status(500).send('Something went wrong!');  // Send a generic message to the client
+    res.status(500).send('Something went wrong! This is an express error at index.js in the Express section of cocos React app!');  // Send a generic message to the client
   });
+
 
 
 app.listen(PORT, () => console.log('Coco, the Express Server is listening on port:', PORT));
