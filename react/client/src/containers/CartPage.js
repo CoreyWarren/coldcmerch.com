@@ -178,7 +178,7 @@ const CartPage = () => {
 
             try{
                 index_starting_at_one_for_cart_items = i + 1;
-                image_sauce = ('http://localhost:8000' + selective_products_map[i].image_preview).toString();
+                image_sauce = `${process.env.MY_URL}${selective_products_map[i].image_preview}`;
                 cart_item_key = (cart_items_map[i].product + selective_products_map[i].title).toString() + i.toString();
             }catch(error){
                 console.log("Error:", error);
