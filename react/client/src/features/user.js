@@ -86,7 +86,7 @@ export const login = createAsyncThunk(
     
     try {
       const res = await fetch(
-        '/api/users/login', {
+        '/api/token', {
             method: 'POST',
             headers: {
               Accept: 'application/json',
@@ -112,7 +112,7 @@ export const login = createAsyncThunk(
       } else {
         // failure:
         // users/login/rejected
-        console.log('Coco - api/users/login/rejected');
+        console.log('Coco - api/token/rejected');
         console.log('Coco - res.ok = ', res.ok);
 
         // thunkAPI connects to our userSlice function.

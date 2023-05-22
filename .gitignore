@@ -15,6 +15,14 @@ commit_message.txt
 # testing
 /coverage
 
+# i hate node modules
+*/node_modules/*
+*/node_modules
+/node_modules
+node_modules
+node_modules/*
+
+
 # production
 /build
 

@@ -6,6 +6,7 @@ const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch
 
 const router = express.Router();
 
+
 // api/token/verify/ will be used to verify
 router.get('/api/users/verify', async (req, res) => {
     // we will later parse the access token from cookies

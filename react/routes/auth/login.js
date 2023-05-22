@@ -5,13 +5,13 @@ const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch
 const router = express.Router();
 
 
-router.post('/api/users/login', async (req, res) => {
+router.post('/api/token', async (req, res) => {
     const { email, password } = req.body;
 
     const body = JSON.stringify({ email, password });
 
     try{
-        const apiResponse = await fetch(`${process.env.API_URL}/api/token/`, {
+        const apiResponse = await fetch(`${process.env.API_URL}/api/token`, {
             method: 'POST',
             headers: {
                 Accept: 'application/json',

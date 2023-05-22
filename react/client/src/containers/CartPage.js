@@ -5,6 +5,7 @@ import { resetProductsMap } from 'features/product';
 import { resetCartItemsMap } from "features/cartItems";
 import { getCartItems, deleteCartItem } from 'features/cartItems';
 import RefreshButton from "components/RefreshButton";
+import { MY_URL, API_URL } from "config";
 
 import { motion } from 'framer-motion';
 import Dropdown from 'react-bootstrap/Dropdown';
@@ -178,7 +179,7 @@ const CartPage = () => {
 
             try{
                 index_starting_at_one_for_cart_items = i + 1;
-                image_sauce = `${process.env.MY_URL}${selective_products_map[i].image_preview}`;
+                image_sauce = `${MY_URL}${selective_products_map[i].image_preview}`;
                 cart_item_key = (cart_items_map[i].product + selective_products_map[i].title).toString() + i.toString();
             }catch(error){
                 console.log("Error:", error);
