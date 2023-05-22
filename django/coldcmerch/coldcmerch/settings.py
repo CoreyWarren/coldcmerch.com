@@ -217,8 +217,8 @@ else:
     'http://127.0.0.1:5000',
     'http://137.184.114.49',
     'http://137.184.114.49:5000',
-    'http://137.184.114.49:3000',
-    '*',
+    'https://coldcmerch.com:5000',
+    'https://coldcmerch.com',
     # Add more origins as needed
     ]
 
