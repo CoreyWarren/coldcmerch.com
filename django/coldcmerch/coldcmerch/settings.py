@@ -41,7 +41,7 @@ elif live_development_mode:
     ALLOWED_HOSTS = ['coldcmerch.com']
 elif production_mode:
     DEBUG = False
-    ALLOWED_HOSTS = ['137.184.114.49', 'coldcmerch.com']
+    ALLOWED_HOSTS = ['137.184.114.49', 'coldcmerch.com', 'www.coldcmerch.com']
 
 
 
@@ -242,7 +242,11 @@ if (windows_test_mode or linux_test_mode):
 else:
     # Cors for deployment?:
     CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000',
+    'http://127.0.0.1:5000',
+    'http://137.184.114.49',
+    'http://137.184.114.49:5000',
+    'https://coldcmerch.com:5000',
+    'https://coldcmerch.com',
     # Add more origins as needed
     ]
 

@@ -51,6 +51,9 @@ const stripe_CheckoutStockValidationRoute = require('./routes/stripe/checkoutSto
 
 const app = express();
 
+// Added because of POST requests in production being turned into GET requests (especially for logins):
+app.set('trust proxy', 1);
+
 // Middleware within Express to allow our 'req.body' in 'routes/auth/register.js'
 // to actually work and receieve JSON data for our User Data
 app.use(express.json());
