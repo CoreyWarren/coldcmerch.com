@@ -131,12 +131,16 @@ export const login = createAsyncThunk(
 // verify user authentication - checkAuth
 export const checkAuth = createAsyncThunk('users/verify', async(_, thunkAPI) => {
   try {
+
+
     const res = await fetch(
       '/api/users/verify', {
-          method: 'GET',
+          method: 'POST',
           headers: {
+            'Content-Type': 'application/json',
             Accept: 'application/json',
           },
+          credentials: 'include',
         });
 
     // on successful request, send back user data,
