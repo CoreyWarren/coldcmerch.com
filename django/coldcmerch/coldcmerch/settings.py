@@ -23,23 +23,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 env = environ.Env()
 environ.Env.read_env()
 
-STRIPE_PRIVATE_KEY      = env('STRIPE_PRIVATE_KEY')
-STRIPE_PUBLIC_KEY       = env('STRIPE_PUBLIC_KEY')
-STRIPE_WEBHOOK_SECRET   = env('STRIPE_WEBHOOK_SECRET')
-DJANGO_SECRET_KEY       = env('DJANGO_SECRET_KEY')
-DATABASE_NAME           = env('DATABASE_NAME') 
-DATABASE_USER           = env('DATABASE_USER')
-DATABASE_USER_PASSWORD	= env('DATABASE_USER_PASSWORD')
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
-
-SITE_URL = 'coldcmerch.com'
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = DJANGO_SECRET_KEY
-
-
 # These modes are used to determine which settings to use.
 windows_test_mode       = False
 linux_test_mode         = False
@@ -58,7 +41,30 @@ elif live_development_mode:
     ALLOWED_HOSTS = ['coldcmerch.com']
 elif production_mode:
     DEBUG = False
-    ALLOWED_HOSTS = ['137.184.114.49', 'coldcmerch.com']
+    ALLOWED_HOSTS = ['137.184.114.49', 'coldcmerch.com', 'www.coldcmerch.com']
+
+
+
+STRIPE_PRIVATE_KEY      = env('STRIPE_PRIVATE_KEY')
+STRIPE_PUBLIC_KEY       = env('STRIPE_PUBLIC_KEY')
+STRIPE_WEBHOOK_SECRET   = env('STRIPE_WEBHOOK_SECRET')
+DJANGO_SECRET_KEY       = env('DJANGO_SECRET_KEY')
+DATABASE_NAME           = env('DATABASE_NAME') 
+DATABASE_USER           = env('DATABASE_USER')
+
+if(live_development_mode or production_mode):
+    DATABASE_USER_PASSWORD  = env('DATABASE_USER_PASSWORD')
+
+# Quick-start development settings - unsuitable for production
+# See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
+
+SITE_URL = 'coldcmerch.com'
+
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = DJANGO_SECRET_KEY
+
+
+
 
 
 
@@ -122,29 +128,51 @@ WSGI_APPLICATION = 'coldcmerch.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-DATABASES = {
+if(live_development_mode or production_mode):
+    DATABASES = {
 
-	'default': {
+        'default': {
 
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': DATABASE_NAME,
-        'USER': DATABASE_USER,
-        'PASSWORD': DATABASE_USER_PASSWORD,
-        'HOST': '127.0.0.1',
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': DATABASE_NAME,
+            'USER': DATABASE_USER,
+            'PASSWORD': DATABASE_USER_PASSWORD,
+            'HOST': '127.0.0.1',
 
-	'OPTIONS': {
-		'read_default_file': '/etc/mysql/my.cnf',
-	},
-    },
+        'OPTIONS': {
+            'read_default_file': '/etc/mysql/my.cnf',
+        },
+        },
 
-    'test': {
+        'test': {
 
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
 
-    },
+        },
 
-}
+    }
+else:
+    DATABASES = {
+        'default': {
+
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': DATABASE_NAME,
+            'USER': DATABASE_USER,
+            'HOST': '127.0.0.1',
+
+        'OPTIONS': {
+            'read_default_file': '/etc/mysql/my.cnf',
+        },
+        },
+
+        'test': {
+
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+
+        },
+    }
 
 
 
@@ -214,7 +242,11 @@ if (windows_test_mode or linux_test_mode):
 else:
     # Cors for deployment?:
     CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000',
+    'http://127.0.0.1:5000',
+    'http://137.184.114.49',
+    'http://137.184.114.49:5000',
+    'https://coldcmerch.com:5000',
+    'https://coldcmerch.com',
     # Add more origins as needed
     ]
 

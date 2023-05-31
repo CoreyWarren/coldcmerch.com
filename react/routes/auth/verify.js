@@ -6,10 +6,17 @@ const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch
 
 const router = express.Router();
 
+
 // api/token/verify/ will be used to verify
-router.get('/api/users/verify', async (req, res) => {
+router.post('/api/users/verify/', async (req, res) => {
     // we will later parse the access token from cookies
     const { access } = req.cookies;
+
+    if (!access) {
+        return res.status(401).json({
+          error: 'Access token not found',
+        });
+      }
 
     const body = JSON.stringify({
         token: access

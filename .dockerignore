@@ -1,4 +1,11 @@
 .env
+/node_modules
+/winenv
+/env
+
+
+# copied from .gitignore
+.env
 */winenv/*
 */env/*
 */venv/*

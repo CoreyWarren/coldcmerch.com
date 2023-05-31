@@ -33,7 +33,7 @@ from django.views.static import serve
 
 urlpatterns = [
     # Admin URL:
-    path('admin/', admin.site.urls),
+    path('admin', admin.site.urls),
 
 
     # User authentication API endpoints:
@@ -43,9 +43,9 @@ urlpatterns = [
 
 
     # Django apps API endpoints (INCLUDE):
-    path('api/users/', include('users.urls')),
-    path('api/shop/', include('shop.urls')),
-    path('api/stripe/', include('stripePayments.urls')),
+    path('api/users', include('users.urls')),
+    path('api/shop', include('shop.urls')),
+    path('api/stripe', include('stripePayments.urls')),
 
 
     # Models images, and other static/media files:
