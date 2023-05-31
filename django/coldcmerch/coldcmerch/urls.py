@@ -33,7 +33,7 @@ from django.views.static import serve
 
 urlpatterns = [
     # Admin URL:
-    path('admin', admin.site.urls),
+    path('admin/', admin.site.urls),
 
 
     # User authentication API endpoints:

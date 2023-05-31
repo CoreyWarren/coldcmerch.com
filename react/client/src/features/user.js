@@ -52,7 +52,7 @@ const getUser = createAsyncThunk('users/me', async (_, thunkAPI) => {
 
     try{
       // cookies will come along the way with this request
-      const res = await fetch('api/users/me', {
+      const res = await fetch('api/users/me/', {
         method: 'GET',
         headers: {
           Accept: 'application/json'
@@ -134,7 +134,7 @@ export const checkAuth = createAsyncThunk('users/verify', async(_, thunkAPI) => 
 
 
     const res = await fetch(
-      '/api/users/verify', {
+      '/api/users/verify/', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -178,7 +178,7 @@ export const logout = createAsyncThunk(
     
     try {
       const res = await fetch(
-        '/api/users/logout', {
+        '/api/users/logout/', {
             method: 'GET',
             headers: {
               Accept: 'application/json',
