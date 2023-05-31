@@ -86,7 +86,7 @@ export const login = createAsyncThunk(
     
     try {
       const res = await fetch(
-        '/api/token', {
+        '/api/token/', {
             method: 'POST',
             headers: {
               Accept: 'application/json',
@@ -94,12 +94,6 @@ export const login = createAsyncThunk(
             },
             body,
           });
-
-      if (!apiResponse.ok) {
-        // Log the response from Django JWT to see what the issue might be.
-        console.error(await apiResponse.text());
-        throw new Error(`Request failed with status ${apiResponse.status}`);
-      }
 
       // on successful request (login.js data), send back user data,
       // as seen in 'django/users/views.py'
