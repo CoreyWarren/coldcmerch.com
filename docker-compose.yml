@@ -1,0 +1,23 @@
+version: '3'
+services:
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+
+  django:
+    build: ./django
+    command: gunicorn my_project.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - ./django:/coldcmerch
+    depends_on:
+      - db
+
+  express:
+    build: ./react
+    volumes:
+      - ./react:/app
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db

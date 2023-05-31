@@ -8,7 +8,7 @@ const router = express.Router();
 
 
 // api/token/verify/ will be used to verify
-router.post('/api/users/verify', async (req, res) => {
+router.post('/api/users/verify/', async (req, res) => {
     // we will later parse the access token from cookies
     const { access } = req.cookies;
 
@@ -23,7 +23,7 @@ router.post('/api/users/verify', async (req, res) => {
     });
 
     try {
-        const apiResponse = await fetch(`${process.env.API_URL}/api/users/verify`, {
+        const apiResponse = await fetch(`${process.env.API_URL}/api/users/verify/`, {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
