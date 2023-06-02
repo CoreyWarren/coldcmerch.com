@@ -103,6 +103,23 @@ export const login = createAsyncThunk(
       if (res.status === 200) {
         // success
 
+        // PLEASE WORK FOR ME, COOKIES:
+
+        try{
+          const cookies = res.headers.get('Set-Cookie');
+        if (cookies) {
+          // Process the cookies and set them in the browser
+          const cookiesArray = cookies.split(',');
+          cookiesArray.forEach((cookie) => {
+            document.cookie = cookie;
+          });
+        }
+        }catch(err){
+          console.log("Coco - Error with cookies: ", err);
+
+        }
+        
+
         const { dispatch } = thunkAPI;
 
         // use our getUser() function
