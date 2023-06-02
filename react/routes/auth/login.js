@@ -33,7 +33,8 @@ router.post('/api/token/', async (req, res) => {
                     // path: '/api/',
                     path: '/',
                     sameSite: 'none',
-                    secure: process.env.NODE_ENV === 'production' // if true, become true; false for false.
+                    secure: process.env.NODE_ENV === 'production', // if true, become true; false for false.
+                    domain: process.env.BASE_URL,
                 }),
                 cookie.serialize('refresh', data.access, {
                     // pass various keys and values here (learn more: google 'npm cookie')
@@ -42,7 +43,8 @@ router.post('/api/token/', async (req, res) => {
                     // path: '/api/',
                     path: '/',
                     sameSite: 'none',
-                    secure: process.env.NODE_ENV === 'production' // if true, become true; false for false.
+                    secure: process.env.NODE_ENV === 'production', // if true, become true; false for false.
+                    domain: process.env.BASE_URL,
                 }),
             ]);
 
