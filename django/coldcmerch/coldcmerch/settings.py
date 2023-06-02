@@ -252,6 +252,7 @@ else:
     'https://www.coldcmerch.com',
     'www.coldcmerch.com',
     'coldcmerch.com',
+    '*',
     # Add more origins as needed
     ]
 
