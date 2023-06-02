@@ -248,6 +248,10 @@ else:
     'http://137.184.114.49:5000',
     'https://coldcmerch.com:5000',
     'https://coldcmerch.com',
+    'https://www.coldcmerch.com:5000',
+    'https://www.coldcmerch.com',
+    'www.coldcmerch.com',
+    'coldcmerch.com',
     # Add more origins as needed
     ]
 
