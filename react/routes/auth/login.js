@@ -35,7 +35,7 @@ router.post('/api/token/', async (req, res) => {
                     secure: process.env.NODE_ENV === 'production', // if true, become true; false for false.
                     domain: process.env.BASE_URL,
                 }),
-                cookie.serialize('refresh', data.access, {
+                cookie.serialize('refresh', data.refresh, {
                     // pass various keys and values here (learn more: google 'npm cookie')
                     httpOnly: true,
                     maxAge: 60 * 60 * 24, // 24 hours, aka 1 day
