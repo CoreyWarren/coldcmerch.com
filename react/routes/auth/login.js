@@ -30,7 +30,7 @@ router.post('/api/token/', async (req, res) => {
                 maxAge: 60 * 60 * 4 * 1000, // Express uses milliseconds, not seconds
                 path: '/',
                 sameSite: 'lax',
-                secure: process.env.NODE_ENV === 'production',
+                secure: true,
             });
             
             res.cookie('refresh', data.refresh, {
@@ -38,7 +38,7 @@ router.post('/api/token/', async (req, res) => {
                 maxAge: 60 * 60 * 24 * 1000, // Express uses milliseconds, not seconds
                 path: '/',
                 sameSite: 'lax',
-                secure: process.env.NODE_ENV === 'production',
+                secure: true,
             });
 
             console.log(res.getHeaders());
