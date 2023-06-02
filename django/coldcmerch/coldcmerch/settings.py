@@ -88,10 +88,11 @@ INSTALLED_APPS = [
     'users', #custom user authentication django app
     'shop', # e-commerce backend django app
     'stripePayments', # stripe payments as a django app
+    'corsheaders', # django cors headers middleware required app
 ]
 
 MIDDLEWARE = [
-    'django.middleware.cors.CorsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -252,7 +253,7 @@ else:
     'https://www.coldcmerch.com',
     'www.coldcmerch.com',
     'coldcmerch.com',
-    '*',
+    '.coldcmerch.com',
     # Add more origins as needed
     ]
 
