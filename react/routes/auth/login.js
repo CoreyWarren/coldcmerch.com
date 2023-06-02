@@ -29,18 +29,16 @@ router.post('/api/token/', async (req, res) => {
                 httpOnly: true,
                 maxAge: 60 * 60 * 4 * 1000, // Express uses milliseconds, not seconds
                 path: '/',
-                sameSite: 'none',
+                sameSite: 'lax',
                 secure: process.env.NODE_ENV === 'production',
-                domain: process.env.BASE_URL,
             });
             
             res.cookie('refresh', data.refresh, {
                 httpOnly: true,
                 maxAge: 60 * 60 * 24 * 1000, // Express uses milliseconds, not seconds
                 path: '/',
-                sameSite: 'none',
+                sameSite: 'lax',
                 secure: process.env.NODE_ENV === 'production',
-                domain: process.env.BASE_URL,
             });
 
             console.log(res.getHeaders());
