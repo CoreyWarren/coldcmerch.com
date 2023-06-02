@@ -77,6 +77,11 @@ if (process.env.NODE_ENV === 'development') {
 app.use(morgan('combined', {stream: accessLogStream }));  // Less detailed log
 }
 
+app.use(cors({
+    origin: "https://coldcmerch.com",
+    credentials: true
+}));
+
 
 // Our Routes:
 
