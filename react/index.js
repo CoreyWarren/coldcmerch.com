@@ -11,44 +11,10 @@ const fs = require('fs');
 // and immediately call its config
 require('dotenv').config();
 
-
 // This is a global error handler for async functions, with Express.
 // It will catch any errors that occur in async functions and pass them to the next function.
 // This is necessary because Express will not catch errors that occur in async functions by default.
 require('express-async-errors');
-
-
-
-// register.js route
-const registerRoute = require('./routes/auth/register');
-// login.js route
-const loginRoute = require('./routes/auth/login');
-// me.js route
-const meRoute = require('./routes/auth/me');
-// logout.js route
-const logoutRoute = require('./routes/auth/logout');
-// verify.js route
-const verifyRoute = require('./routes/auth/verify');
-// product.js route
-const productRoute = require('./routes/shop/product');
-// productByIDs.js route
-const productsbyIDsRoute = require('./routes/shop/productsByIDs');
-// productSizes.js route
-const productSizeRoute = require('./routes/shop/productSize');
-// cart.js route
-const cartRoute = require('./routes/shop/cart');
-// cartItems.js route
-const cartItemsGetRoute = require('./routes/shop/cartItemsGet');
-// cartItemsCreate.js route
-const cartItemsCreateRoute = require('./routes/shop/cartItemsCreate');
-// cartItemsDelete.js route
-const cartItemsDeleteRoute = require('./routes/shop/cartItemsDelete');
-// stripe_CreatePaymentIntent.js route
-const stripe_CreatePaymentIntentRoute = require('./routes/stripe/paymentIntent');
-// stripe_CheckoutStockValidation.js route
-const stripe_CheckoutStockValidationRoute = require('./routes/stripe/checkoutStockValidation');
-
-
 
 const app = express();
 
@@ -84,7 +50,40 @@ app.use(cors({
 }));
 
 
+
+
 // Our Routes:
+
+
+// register.js route
+const registerRoute = require('./routes/auth/register');
+// login.js route
+const loginRoute = require('./routes/auth/login');
+// me.js route
+const meRoute = require('./routes/auth/me');
+// logout.js route
+const logoutRoute = require('./routes/auth/logout');
+// verify.js route
+const verifyRoute = require('./routes/auth/verify');
+// product.js route
+const productRoute = require('./routes/shop/product');
+// productByIDs.js route
+const productsbyIDsRoute = require('./routes/shop/productsByIDs');
+// productSizes.js route
+const productSizeRoute = require('./routes/shop/productSize');
+// cart.js route
+const cartRoute = require('./routes/shop/cart');
+// cartItems.js route
+const cartItemsGetRoute = require('./routes/shop/cartItemsGet');
+// cartItemsCreate.js route
+const cartItemsCreateRoute = require('./routes/shop/cartItemsCreate');
+// cartItemsDelete.js route
+const cartItemsDeleteRoute = require('./routes/shop/cartItemsDelete');
+// stripe_CreatePaymentIntent.js route
+const stripe_CreatePaymentIntentRoute = require('./routes/stripe/paymentIntent');
+// stripe_CheckoutStockValidation.js route
+const stripe_CheckoutStockValidationRoute = require('./routes/stripe/checkoutStockValidation');
+
 
 app.use(registerRoute);
 app.use(loginRoute);
@@ -101,7 +100,6 @@ app.use(cartItemsDeleteRoute);
 app.use(stripe_CreatePaymentIntentRoute);
 app.use(stripe_CheckoutStockValidationRoute);
 
-console.log("Sanity Check 1");
 
 // Serve static assets if in production
 // Set static folder

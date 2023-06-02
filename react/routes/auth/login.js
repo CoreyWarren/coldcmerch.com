@@ -41,7 +41,7 @@ router.post('/api/token/', async (req, res) => {
                 secure: true,
             });
 
-            console.log(res.getHeaders());
+            console.log("These are the headers received upon your 200 login:" , res.getHeaders());
 
             return res.status(200).json({ success: true }); // Successful login
 
