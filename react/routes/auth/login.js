@@ -25,26 +25,25 @@ router.post('/api/token/', async (req, res) => {
 
         if(apiResponse.status === 200) {
             // set response data to a cookie
-            res.setHeader('Set-Cookie', [
-                cookie.serialize('access', data.access, {
-                    // pass various keys and values here (learn more: google 'npm cookie')
-                    httpOnly: true,
-                    maxAge: 60 * 60 * 4, // measured in seconds, django has a similar setting! check it out in settings.py!
-                    path: '/',
-                    sameSite: 'none',
-                    secure: process.env.NODE_ENV === 'production', // if true, become true; false for false.
-                    domain: process.env.BASE_URL,
-                }),
-                cookie.serialize('refresh', data.refresh, {
-                    // pass various keys and values here (learn more: google 'npm cookie')
-                    httpOnly: true,
-                    maxAge: 60 * 60 * 24, // 24 hours, aka 1 day
-                    path: '/',
-                    sameSite: 'none',
-                    secure: process.env.NODE_ENV === 'production', // if true, become true; false for false.
-                    domain: process.env.BASE_URL,
-                }),
-            ]);
+            res.cookie('access', data.access, {
+                httpOnly: true,
+                maxAge: 60 * 60 * 4 * 1000, // Express uses milliseconds, not seconds
+                path: '/',
+                sameSite: 'none',
+                secure: process.env.NODE_ENV === 'production',
+                domain: process.env.BASE_URL,
+            });
+            
+            res.cookie('refresh', data.refresh, {
+                httpOnly: true,
+                maxAge: 60 * 60 * 24 * 1000, // Express uses milliseconds, not seconds
+                path: '/',
+                sameSite: 'none',
+                secure: process.env.NODE_ENV === 'production',
+                domain: process.env.BASE_URL,
+            });
+
+            console.log(res.getHeaders());
 
             return res.status(200).json({ success: true }); // Successful login
 
