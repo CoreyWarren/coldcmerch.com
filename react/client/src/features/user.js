@@ -103,7 +103,9 @@ export const login = createAsyncThunk(
       if (res.status === 200) {
         // success
 
-        // PLEASE WORK FOR ME, COOKIES:
+        // Extra cookie handling and contingency plans:
+        
+        let try_body_into_cookies = false;
 
         try{
           const cookies = res.headers.get('Set-Cookie');
@@ -116,8 +118,32 @@ export const login = createAsyncThunk(
         }
         }catch(err){
           console.log("Coco - Error with cookies: ", err);
+          try_body_into_cookies = true;
+        }
+
+
+
+        // Do this if we can't process cookies coming from Express:
+
+        if(try_body_into_cookies){
+
+          try{
+            // Extract the necessary information from the response data
+            const { access, refresh } = data;
+
+            const cookie_max_age = 60 * 60 * 24 // In seconds. So, 1 Day.
+
+            // Set the access token and refresh token as cookies, using the data from the body of the response.
+            document.cookie = `access=${access}; path=/; Secure; HttpOnly; SameSite=Lax; max-age=${cookie_max_age}`;
+            document.cookie = `refresh=${refresh}; path=/; Secure; HttpOnly; SameSite=Lax; max-age=${cookie_max_age}`;
+
+          }catch(err){
+            console.log("Coco - Error with cookies, and with login response body: ", err);
+          }
 
         }
+
+
         
 
         const { dispatch } = thunkAPI;
