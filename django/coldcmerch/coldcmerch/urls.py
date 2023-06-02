@@ -43,9 +43,9 @@ urlpatterns = [
 
 
     # Django apps API endpoints (INCLUDE):
-    path('api/users', include('users.urls')),
-    path('api/shop', include('shop.urls')),
-    path('api/stripe', include('stripePayments.urls')),
+    path('api/users/', include('users.urls')),
+    path('api/shop/', include('shop.urls')),
+    path('api/stripe/', include('stripePayments.urls')),
 
 
     # Models images, and other static/media files:
