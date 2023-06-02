@@ -30,22 +30,18 @@ router.post('/api/token/', async (req, res) => {
                     // pass various keys and values here (learn more: google 'npm cookie')
                     httpOnly: true,
                     maxAge: 60 * 60 * 4, // measured in seconds, django has a similar setting! check it out in settings.py!
-                    // path: '/api/',
                     path: '/',
                     sameSite: 'none',
-                    // secure: process.env.NODE_ENV === 'production', // if true, become true; false for false.
-                    secure: false,
+                    secure: process.env.NODE_ENV === 'production', // if true, become true; false for false.
                     domain: process.env.BASE_URL,
                 }),
                 cookie.serialize('refresh', data.access, {
                     // pass various keys and values here (learn more: google 'npm cookie')
                     httpOnly: true,
                     maxAge: 60 * 60 * 24, // 24 hours, aka 1 day
-                    // path: '/api/',
                     path: '/',
                     sameSite: 'none',
-                    // secure: process.env.NODE_ENV === 'production', // if true, become true; false for false.
-                    secure: false,
+                    secure: process.env.NODE_ENV === 'production', // if true, become true; false for false.
                     domain: process.env.BASE_URL,
                 }),
             ]);
