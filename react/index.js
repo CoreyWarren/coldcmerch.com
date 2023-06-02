@@ -1,5 +1,6 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
+const cors = require('cors');
 const morgan = require('morgan');
 const path = require('path');
 // rate limiting to prevent brute force attacks
