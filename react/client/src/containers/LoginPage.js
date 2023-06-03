@@ -55,7 +55,7 @@ const LoginPage = () => {
         });
 
 
-
+        if ( isAuthenticated ) return <Navigate to='/dashboard' />;
 
         if ( success == false ) {
             const toast_error = document.getElementById(`login-toast-error`);

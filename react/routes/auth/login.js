@@ -18,6 +18,7 @@ router.post('/api/token/', async (req, res) => {
                 'Content-Type': 'application/json',
             },
             body,
+            credentials: 'include',
         });
 
         // data contains our access token as well...
