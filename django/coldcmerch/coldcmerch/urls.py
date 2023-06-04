@@ -22,6 +22,8 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
     TokenVerifyView
 )
+# Custom Token API setup
+from .views import CookieTokenObtainPairView
 
 # Media and Static files support
 from django.conf import settings
@@ -37,7 +39,8 @@ urlpatterns = [
 
 
     # User authentication API endpoints:
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    # path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'), # original
+    path('api/token/', CookieTokenObtainPairView.as_view(), name='token_obtain_pair'), # custom
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/users/verify/', TokenVerifyView.as_view(), name='token_verify'),
 
