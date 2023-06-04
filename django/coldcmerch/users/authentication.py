@@ -13,4 +13,4 @@ class CookieJWTAuthentication(JWTAuthentication):
         return request.COOKIES.get('access')  
     
 
-# Path: django\coldcmerch\coldcmerch\urls.py
+# Path: .users.authentication
