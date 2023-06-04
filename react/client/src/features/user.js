@@ -116,6 +116,14 @@ export const login = createAsyncThunk(
           cookiesArray.forEach((cookie) => {
             document.cookie = cookie;
           });
+
+          console.log("Coco - Cookies set from login response headers.");
+          console.log("Number of cookies set: ", cookiesArray.length);
+          //Securely show some of the cookie data set:
+          // But only show the first few characters of cookiesArray[i]:
+          if(cookiesArray[0])  console.log("First cookie set: ", cookiesArray[0].substring(0, 10));
+          if(cookiesArray[1])  console.log("Second cookie set: ", cookiesArray[1].substring(0, 10));
+          
         }
         }catch(err){
           console.log("Coco - Error with cookies: ", err);
