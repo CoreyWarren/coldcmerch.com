@@ -25,24 +25,6 @@ router.post('/api/token/', async (req, res) => {
         const data = await apiResponse.json();
 
         if(apiResponse.status === 200) {
-            // set response data to a cookie
-            res.cookie('access', data.access, {
-                httpOnly: true,
-                maxAge: 60 * 60 * 4 * 1000, // Express uses milliseconds, not seconds
-                path: '/',
-                sameSite: 'lax',
-                secure: true,
-            });
-            
-            res.cookie('refresh', data.refresh, {
-                httpOnly: true,
-                maxAge: 60 * 60 * 24 * 1000, // Express uses milliseconds, not seconds
-                path: '/',
-                sameSite: 'lax',
-                secure: true,
-            });
-
-            console.log("These are the headers received upon your 200 login:" , res.getHeaders());
 
             return res.status(200).json({ success: true }); // Successful login
 

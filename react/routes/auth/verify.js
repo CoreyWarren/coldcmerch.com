@@ -30,6 +30,7 @@ router.post('/api/users/verify/', async (req, res) => {
                 'Content-Type': 'application/json',
             },
             body,
+            credentials: 'include',
         });
 
         const data = await apiResponse.json();

@@ -103,59 +103,9 @@ export const login = createAsyncThunk(
       // successful if response status is 201:
       if (res.status === 200) {
         // success
+        console.log("Coco - api/token/ was fulfilled");
+        console.log("Coco - res.ok = ", res.ok);
 
-        // Extra cookie handling and contingency plans:
-        
-        let try_body_into_cookies = false;
-
-        try{
-          const cookies = res.headers.get('Set-Cookie');
-        if (cookies) {
-          // Process the cookies and set them in the browser
-          const cookiesArray = cookies.split(',');
-          cookiesArray.forEach((cookie) => {
-            document.cookie = cookie;
-          });
-
-          console.log("Coco - Cookies set from login response headers.");
-          console.log("Number of cookies set: ", cookiesArray.length);
-          //Securely show some of the cookie data set:
-          // But only show the first few characters of cookiesArray[i]:
-          if(cookiesArray[0])  console.log("First cookie set: ", cookiesArray[0].substring(0, 10));
-          if(cookiesArray[1])  console.log("Second cookie set: ", cookiesArray[1].substring(0, 10));
-          
-        }
-        }catch(err){
-          console.log("Coco - Error with cookies: ", err);
-          try_body_into_cookies = true;
-        }
-
-
-
-        // Do this if we can't process cookies coming from Express:
-
-        if(try_body_into_cookies){
-
-          console.log("Attempting to set cookies using body of login response.")
-
-          try{
-            // Extract the necessary information from the response data
-            const { access, refresh } = data;
-
-            const cookie_max_age = 60 * 60 * 24 // In seconds. So, 1 Day.
-
-            // Set the access token and refresh token as cookies, using the data from the body of the response.
-            document.cookie = `access=${access}; path=/; Secure; HttpOnly; SameSite=Lax; max-age=${cookie_max_age}`;
-            document.cookie = `refresh=${refresh}; path=/; Secure; HttpOnly; SameSite=Lax; max-age=${cookie_max_age}`;
-
-          }catch(err){
-            console.log("Coco - Error with cookies, and with login response body: ", err);
-          }
-
-        }
-
-
-        
 
         const { dispatch } = thunkAPI;
 
@@ -166,7 +116,7 @@ export const login = createAsyncThunk(
       } else {
         // failure:
         // users/login/rejected
-        console.log('Coco - api/token/rejected');
+        console.log('Coco - api/token/ was rejected');
         console.log('Coco - res.ok = ', res.ok);
 
         // thunkAPI connects to our userSlice function.
