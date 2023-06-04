@@ -51,7 +51,7 @@ const LoginPage = () => {
         await dispatch(login({email, password})).then((action) =>
         {
             // destructure action.payload:
-            const { access, refresh, success } = action.payload;
+            let { access, refresh, success } = action.payload;
             // Here we show that we received the access and refresh tokens:
             if (access) console.log("Received access token.");
             if (refresh) console.log("Received refresh token.");
@@ -70,13 +70,12 @@ const LoginPage = () => {
 
 
         // If login is unsuccessful, show error toast:
-        if ( success == false ) {
+        if ( success === false ) {
             const toast_error = document.getElementById(`login-toast-error`);
 
             if (toast_error) toast_error.classList.add('show');
             
             setTimeout(() => {
-
                 if(toast_error) toast_error.classList.remove('show');
             }, 4000);
         }
