@@ -15,7 +15,8 @@ router.get('/api/users/me', async (req, res) => {
             headers: {
                 Accept: 'application/json',
                 Authorization: `Bearer ${access}`,
-            }
+            },
+            credentials: 'include',
         });
 
         const data = await apiResponse.json();
