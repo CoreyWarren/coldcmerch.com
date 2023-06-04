@@ -16,3 +16,18 @@ class CookieTokenObtainPairView(TokenObtainPairView):
             # response.data = {'detail': 'success'}
 
         return response
+    
+
+# This is a custom token verification view
+# We added this because JWT tokens are stored in cookies
+# And HTTPONLY cookies cannot be accessed by javascript
+# So we need to send the token from the cookies to this django backend view.
+# This view will then verify the token and return the result.
+
+from rest_framework_simplejwt.views import TokenVerifyView
+
+class CustomTokenVerifyView(TokenVerifyView):
+    def post(self, request, *args, **kwargs):
+        # Get the token from cookies
+        request.data['token'] = request.COOKIES.get('access')
+        return super().post(request, *args, **kwargs)
