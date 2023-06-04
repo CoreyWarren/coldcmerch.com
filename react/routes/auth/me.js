@@ -17,6 +17,7 @@ router.get('/api/users/me', async (req, res) => {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
+                'Content-Type': 'application/json',
             },
             credentials: 'include',
         });

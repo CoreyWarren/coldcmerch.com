@@ -11,6 +11,13 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 class CookieJWTAuthentication(JWTAuthentication):
     def get_raw_token(self, request):
         return request.COOKIES.get('access')  
+        # another way to get the request access cookie is:
+        # return request.COOKIES['access']
+        # or:
+        # return request.COOKIES.get('access', None)
+        # or:
+        # return request.COOKIES.get('access', 'default value')
+
     
 
 # Path: .users.authentication

@@ -48,7 +48,7 @@ class RegisterView(APIView):
 # You must go thru the frontend to get an auth token.
 class RetrieveUserView(APIView):
     # post an authorization header
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
 
     def get(self, request):
