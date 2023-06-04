@@ -50,13 +50,20 @@ export const register = createAsyncThunk(
 // '_' means parameter won't have any value, that it won't be passed.
 const getUser = createAsyncThunk('users/me', async (_, thunkAPI) => {
 
+  // Similar to our 'verify' route, we don't fetch the access token from the headers here, because we won't be receiving it in the Authorization header in this setup.
+
+  // Instead, we rely on the cookie that was attached to the request by the browser and will be automatically included in the request to Django, without needing to handle it explicitly here.
+
+  // This is why we have 'credentials: include' in our fetch request.
+
     try{
       // cookies will come along the way with this request
       const res = await fetch('api/users/me/', {
         method: 'GET',
         headers: {
           Accept: 'application/json'
-        }
+        },
+        credentials: 'include',
       });
 
       const data = await res.json();
