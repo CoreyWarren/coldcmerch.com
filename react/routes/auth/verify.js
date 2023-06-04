@@ -9,17 +9,26 @@ const router = express.Router();
 
 // api/token/verify/ will be used to verify
 router.post('/api/users/verify/', async (req, res) => {
-    // we will later parse the access token from cookies
-    const { access } = req.cookies;
 
-    if (!access) {
+    // Get the access token from the headers
+    const authHeader = req.headers['authorization'];
+
+    // The below code is confusing, but its main purpose is to:
+    // 1. Check if the authHeader exists
+    // 2. If it does exist, take the token that comes after the first space ' '.
+    // 3. If it doesn't exist, set the token to null
+
+
+    const token = authHeader && authHeader.split(' ')[1];
+
+    if (!token) {
         return res.status(401).json({
           error: 'Access token not found',
         });
       }
 
     const body = JSON.stringify({
-        token: access
+        token: token
     });
 
     try {
@@ -28,9 +37,9 @@ router.post('/api/users/verify/', async (req, res) => {
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
             },
             body,
-            credentials: 'include',
         });
 
         const data = await apiResponse.json();
