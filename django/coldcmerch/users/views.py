@@ -5,6 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from .serializers import UserCreateSerializer, UserSerializer
 from shop.models import Cart
+from users.authentication import CookieJWTAuthentication
 
 import logging
 logger = logging.getLogger(__name__)
@@ -52,6 +53,7 @@ class RegisterView(APIView):
 # You must go thru the frontend to get an auth token.
 class RetrieveUserView(APIView):
     # post an authorization header
+    authentication_classes = [CookieJWTAuthentication]
     permission_classes = [IsAuthenticated]
 
     # The below is an override of the default check_permissions method.
