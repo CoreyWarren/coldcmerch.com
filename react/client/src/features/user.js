@@ -132,16 +132,26 @@ export const login = createAsyncThunk(
 );
 
 
+// Function to get cookie:
+function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(';').shift();
+}
+
+
 // verify user authentication - checkAuth
 export const checkAuth = createAsyncThunk('users/verify', async(_, thunkAPI) => {
   try {
 
+    const access = getCookie('access');
 
     const res = await fetch(
       '/api/users/verify/', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Bearer ${access}`,
             Accept: 'application/json',
           },
           credentials: 'include',
