@@ -45,24 +45,39 @@ const LoginPage = () => {
 
         let success = false;
         e.preventDefault();
-        
+
+
+        // dispatch login action:
         await dispatch(login({email, password})).then((action) =>
         {
-            console.log("login action.payload:", action.payload);
+            // destructure action.payload:
+            const { access, refresh, success } = action.payload;
+            // Here we show that we received the access and refresh tokens:
+            if (access) console.log("Received access token.");
+            if (refresh) console.log("Received refresh token.");
+            
+            // If we received a success message, then set success to true:
             if (action.payload.success) {
+                // (This is used for the toast error message.)
                 success = true;
             }
         });
 
 
-        if ( isAuthenticated ) return <Navigate to='/dashboard' />;
+        // Navigate to dashboard if login is successful:
+        if ( isAuthenticated || success ) return <Navigate to='/dashboard' />;
 
+
+
+        // If login is unsuccessful, show error toast:
         if ( success == false ) {
             const toast_error = document.getElementById(`login-toast-error`);
-            toast_error.classList.add('show');
+
+            if (toast_error) toast_error.classList.add('show');
             
             setTimeout(() => {
-                toast_error.classList.remove('show');
+
+                if(toast_error) toast_error.classList.remove('show');
             }, 4000);
         }
 

@@ -93,6 +93,7 @@ export const login = createAsyncThunk(
               'Content-Type': 'application/json',
             },
             body,
+            credentials: 'include',
           });
 
       // on successful request (login.js data), send back user data,
@@ -126,6 +127,8 @@ export const login = createAsyncThunk(
         // Do this if we can't process cookies coming from Express:
 
         if(try_body_into_cookies){
+
+          console.log("Attempting to set cookies using body of login response.")
 
           try{
             // Extract the necessary information from the response data

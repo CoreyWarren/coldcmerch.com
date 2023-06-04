@@ -41,7 +41,7 @@ app.use(limiter);
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));  // Detailed log
 } else {
-app.use(morgan('dev', {stream: accessLogStream }));  // Less detailed log
+app.use(morgan('combined', {stream: accessLogStream }));  // Less detailed log
 }
 
 app.use(cors({
