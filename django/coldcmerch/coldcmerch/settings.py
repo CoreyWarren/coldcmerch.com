@@ -268,4 +268,25 @@ STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
+###
+# DEBUGGING LOGS:
+###
 
+# [Debugging logs for advanced debugging in production.]
+# This configuration will output all logs of level DEBUG 
+#   and above to the console, which should be visible 
+#   in our Gunicorn logs.
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'DEBUG',
+    },
+}

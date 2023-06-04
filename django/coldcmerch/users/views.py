@@ -6,6 +6,9 @@ from rest_framework.response import Response
 from .serializers import UserCreateSerializer, UserSerializer
 from shop.models import Cart
 
+import logging
+logger = logging.getLogger(__name__)
+
 # Create your views here.
 # Endpoints are here.
 # Retrieve the user.
@@ -51,12 +54,25 @@ class RetrieveUserView(APIView):
     # post an authorization header
     permission_classes = [IsAuthenticated]
 
+    # The below is an override of the default check_permissions method.
+    # The 'f' before the string allows for variable interpolation (i.e.: insertion)
+    def check_permissions(self, request):
+        logger.debug("Checking permissions...")
+        logger.debug(f"Method: {request.method}")
+        logger.debug(f"Path: {request.path}")
+        logger.debug(f"Cookies: {request.COOKIES}")
+        logger.debug(f"User: {request.user}")
+        logger.debug(f"Authenticators: {self.get_authenticators()}")
+        logger.debug(f"Headers: {request.META}")
+        super().check_permissions(request)
 
     def get(self, request):
         user = request.user
+        logger.debug(f"User from request: {user}")
         # serialize that user
         user = UserSerializer(user)
-
         # return it in a response that's a 200 OK response.
         return Response(user.data, status=status.HTTP_200_OK)
+    
+
 

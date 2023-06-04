@@ -7,17 +7,19 @@
 
 
 from rest_framework_simplejwt.authentication import JWTAuthentication
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 class CookieJWTAuthentication(JWTAuthentication):
     def get_raw_token(self, request):
-        return request.COOKIES.get('access')  
-        # another way to get the request access cookie is:
-        # return request.COOKIES['access']
-        # or:
-        # return request.COOKIES.get('access', None)
-        # or:
-        # return request.COOKIES.get('access', 'default value')
 
+        raw_token = request.COOKIES.get('access')
+        
+        logger.debug(f"Raw token from cookies: {raw_token}")
+
+        return raw_token
     
 
 # Path: .users.authentication
