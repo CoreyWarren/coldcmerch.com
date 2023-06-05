@@ -277,6 +277,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 #   and above to the console, which should be visible 
 #   in our Gunicorn logs.
 
+# /var/log/gunicorn/error.log
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
