@@ -6,36 +6,36 @@ urlpatterns = [
 
     # PRODUCTS:
     # api/shop/product
-    path('/product', RetrieveSingleProductView.as_view(), name='get_product'),
+    path('product', RetrieveSingleProductView.as_view(), name='get_product'),
 
     # api/shop/product/size
-    path('/product/size', RetrieveProductSizeView.as_view(), name='get_product_size'),
+    path('product/size', RetrieveProductSizeView.as_view(), name='get_product_size'),
 
     # api/shop/product/all
-    path('/product/all', RetrieveAllProductView.as_view(), name='get_all_products'),
+    path('product/all', RetrieveAllProductView.as_view(), name='get_all_products'),
 
     # api/shop/product/by_ids
-    path('/product/by_ids', RetrieveProductsUsingIDs.as_view(), name='get_products_using_ids'),
+    path('product/by_ids', RetrieveProductsUsingIDs.as_view(), name='get_products_using_ids'),
 
     # CARTS:
     # api/shop/cart
-    path('/cart', RetrieveCartView.as_view(), name='get_cart'), 
+    path('cart', RetrieveCartView.as_view(), name='get_cart'), 
 
     # api/shop/cart/post
-    path('/cart/post', CreateCartView.as_view(), name='create_cart'), 
+    path('cart/post', CreateCartView.as_view(), name='create_cart'), 
 
     # CART ITEMS:
     # api/shop/cart_items
-    path('/cart_items', RetrieveCartItemsView.as_view(), name='get_cart_items'), 
+    path('cart_items', RetrieveCartItemsView.as_view(), name='get_cart_items'), 
 
     # api/shop/cart_items/post
-    path('/cart_items/post', CreateCartItemView.as_view(), name='create_cart_item'),
+    path('cart_items/post', CreateCartItemView.as_view(), name='create_cart_item'),
 
     # api/shop/cart_items/delete
-    path('/cart_items/delete', DeleteCartItemView.as_view(), name='delete_cart_item'),
+    path('cart_items/delete', DeleteCartItemView.as_view(), name='delete_cart_item'),
 
     # api/shop/checkout/stock_validation
-    path('/checkout/stock_validation', CheckoutStockValidationView.as_view(), name='stock_validation'),
+    path('checkout/stock_validation', CheckoutStockValidationView.as_view(), name='stock_validation'),
 
 
 ]
