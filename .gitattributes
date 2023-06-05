@@ -1,7 +1,0 @@
-*.py linguist-language=python
-*.js linguist-language=JS
-*.html linguist-language=html
-*.css linguist-language=css
-
-
-*/venv/** linguist-documentation
