@@ -16,18 +16,19 @@ logger = logging.getLogger(__name__)
 class CookieJWTAuthentication(JWTAuthentication):
 
     def get_raw_token(self, request):
-
-        raw_token = request.COOKIES.get('access')
-
-        logger.debug(f"\nRaw token from cookies: {raw_token}")
-
+        try:
+            raw_token = request.COOKIES.get('access')
+            logger.error(f"Raw token from cookies: {raw_token}")
+        except Exception as e:
+            logger.error(f"Error in get_raw_token: {e}")
         return raw_token
+
     
 
     def get_validated_token(self, raw_token):
         try:
             validated_token = super().get_validated_token(raw_token)
-            logger.debug(f"\nValidated token: {validated_token}")
+            logger.error(f"\nValidated token: {validated_token}")
             return validated_token
         except InvalidToken as e:
             logger.error(f"\nToken validation failed: {e}")
@@ -36,7 +37,7 @@ class CookieJWTAuthentication(JWTAuthentication):
     def get_user(self, validated_token):
         try:
             user = super().get_user(validated_token)
-            logger.debug(f"\nUser from token: {user}")
+            logger.error(f"\nUser from token: {user}")
             return user
         except Exception as e:
             logger.error(f"\nFailed to get user from token: {e}")
