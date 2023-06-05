@@ -17,9 +17,11 @@ import { motion } from 'framer-motion';
 import { getProducts } from '../features/product';
 import { getProductSize } from '../features/productSize';
 import { addToCart } from 'features/cartItems';
+
 // Components Imports
 import Layout from 'components/Layout';
 import ProductSizeDropdownMenu from 'components/products/productSizeDropdownMenu';
+import { MY_URL, API_URL } from "config";
 
 
 import Dropdown from 'react-bootstrap/Dropdown';
@@ -228,7 +230,9 @@ const StorePage = () => {
 
         // PRINT THE PRODUCTS, FOR LOOP:
         for (let i = 0; i < products_map.length; i += 1) {
-            const image_sauce = ('http://localhost:8000' + products_map[i].image_preview).toString();
+            const image_sauce = `${MY_URL}${products_map[i].image_preview}`;
+            // image_sauce = `${process.env.MY_URL}${selective_products_map[i].image_preview}`;
+
 
             let product_to_add = {
                 product: products_map[i].id,

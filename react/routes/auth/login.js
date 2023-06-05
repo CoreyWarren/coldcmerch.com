@@ -5,7 +5,7 @@ const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch
 const router = express.Router();
 
 
-router.post('/api/users/login', async (req, res) => {
+router.post('/api/token/', async (req, res) => {
     const { email, password } = req.body;
 
     const body = JSON.stringify({ email, password });
@@ -18,31 +18,13 @@ router.post('/api/users/login', async (req, res) => {
                 'Content-Type': 'application/json',
             },
             body,
+            credentials: 'include',
         });
 
         // data contains our access token as well...
         const data = await apiResponse.json();
 
         if(apiResponse.status === 200) {
-            // set response data to a cookie
-            res.setHeader('Set-Cookie', [
-                cookie.serialize('access', data.access, {
-                    // pass various keys and values here (learn more: google 'npm cookie')
-                    httpOnly: true,
-                    maxAge: 60 * 60 * 4, // measured in seconds, django has a similar setting! check it out in settings.py!
-                    path: '/api/',
-                    sameSite: 'strict',
-                    secure: process.env.NODE_ENV === 'production' // if true, become true; false for false.
-                }),
-                cookie.serialize('refresh', data.access, {
-                    // pass various keys and values here (learn more: google 'npm cookie')
-                    httpOnly: true,
-                    maxAge: 60 * 60 * 24, // 24 hours, aka 1 day
-                    path: '/api/',
-                    sameSite: 'strict',
-                    secure: process.env.NODE_ENV === 'production' // if true, become true; false for false.
-                }),
-            ]);
 
             return res.status(200).json({ success: true }); // Successful login
 

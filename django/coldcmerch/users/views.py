@@ -1,9 +1,14 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
-from rest_framework import permissions, status
+from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from .serializers import UserCreateSerializer, UserSerializer
 from shop.models import Cart
+from users.authentication import CookieJWTAuthentication
+
+import logging
+logger = logging.getLogger(__name__)
 
 # Create your views here.
 # Endpoints are here.
@@ -48,14 +53,28 @@ class RegisterView(APIView):
 # You must go thru the frontend to get an auth token.
 class RetrieveUserView(APIView):
     # post an authorization header
-    permission_classes = [permissions.IsAuthenticated]
+    authentication_classes = [CookieJWTAuthentication]
+    permission_classes = [IsAuthenticated]
 
+    # The below is an override of the default check_permissions method.
+    # The 'f' before the string allows for variable interpolation (i.e.: insertion)
+    def check_permissions(self, request):
+        # logger.debug("Checking permissions for debugging purposes...\n")
+        # logger.debug(f"Method: {request.method}\n")
+        # logger.debug(f"Path: {request.path}\n")
+        # logger.debug(f"Cookies: {request.COOKIES}\n")
+        # logger.debug(f"User: {request.user}\n")
+        # logger.debug(f"Authenticators: {self.get_authenticators()}\n")
+        # logger.debug(f"Headers: {request.META}")
+        super().check_permissions(request)
 
     def get(self, request):
         user = request.user
+        # logger.debug(f"User from request: {user}")
         # serialize that user
         user = UserSerializer(user)
-
         # return it in a response that's a 200 OK response.
         return Response(user.data, status=status.HTTP_200_OK)
+    
+
 

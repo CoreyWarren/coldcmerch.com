@@ -1,6 +1,0 @@
-## RENAME THIS TO ".ENV" without the quotation marks! ... And remove this! ## 
-
-NODE_ENV='development' or 'production'
-API_URL='http://127.0.0.1:8000'
-STRIPE_PRIVATE_KEY=''
-STRIPE_PUBLIC_KEY=''

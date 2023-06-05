@@ -24,7 +24,7 @@ const App = () => {
   // just when this component mounts, run our checkAuth function.
   useEffect(() => {
     dispatch(checkAuth());
-  }, []);
+  });
 
   return (
 

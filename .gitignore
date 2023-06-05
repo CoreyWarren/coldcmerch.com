@@ -1,5 +1,7 @@
 .env
-winenv/
+*/winenv/*
+*/env/*
+*/venv/*
 *.pyc
 commit_message.txt
 */stripe.exe
@@ -7,12 +9,21 @@ commit_message.txt
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/node_modules
 /.pnp
 .pnp.js
 
 # testing
 /coverage
+
+express-access.log
+
+# i hate node modules
+*/node_modules/*
+*/node_modules
+/node_modules
+node_modules
+node_modules/*
+
 
 # production
 /build
