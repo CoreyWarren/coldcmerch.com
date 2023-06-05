@@ -8,6 +8,9 @@
 
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.exceptions import InvalidToken
+from rest_framework.exceptions import AuthenticationFailed
+from jwt.exceptions import InvalidTokenError
+from rest_framework_simplejwt.tokens import UntypedToken
 
 import logging
 logger = logging.getLogger(__name__)
@@ -54,7 +57,7 @@ class CookieJWTAuthentication(JWTAuthentication):
 
         try:
             UntypedToken(raw_token)
-        except (InvalidToken, TokenError) as e:
+        except (InvalidToken, InvalidTokenError) as e:
             logger.error(f"Token validation failed: {e}")
             raise AuthenticationFailed('Invalid token.')
 
