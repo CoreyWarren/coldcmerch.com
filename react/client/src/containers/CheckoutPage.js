@@ -109,11 +109,7 @@ const CheckoutPage = () => {
     
         try {
           index_starting_at_one = i + 1;
-<<<<<<< HEAD
-          image_sauce = (`${process.env.MY_URL}` + selective_products_map[i].image_preview).toString();
-=======
           image_sauce = `${MY_URL}${selective_products_map[i].image_preview}`;
->>>>>>> 31192592b3ea36a55652e33e66a96fd816d33629
           item_key = (out_of_stock_items_map[i].product + selective_products_map[i].title).toString() + i.toString();
         } catch (error) {
           console.log("Error:", error);
