@@ -44,9 +44,24 @@ class CookieJWTAuthentication(JWTAuthentication):
             raise
     
     def authenticate(self, request):
-        logger = logging.getLogger(__name__)
-        logger.debug("CookieJWTAuthentication authenticate method called")
-        return super().authenticate(request)
+        logger.error("CookieJWTAuthentication authenticate method start")
+
+        raw_token = self.get_raw_token(request)
+        logger.error(f"Raw token after get_raw_token: {raw_token}")
+
+        if raw_token is None:
+            return None
+
+        try:
+            UntypedToken(raw_token)
+        except (InvalidToken, TokenError) as e:
+            logger.error(f"Token validation failed: {e}")
+            raise AuthenticationFailed('Invalid token.')
+
+        validated_token = self.get_validated_token(raw_token)
+        logger.error(f"Validated token after get_validated_token: {validated_token}")
+
+        return self.get_user(validated_token), validated_token
     
 
 # Path: .users.authentication
