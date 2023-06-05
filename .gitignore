@@ -1,5 +1,46 @@
 .env
-winenv/
+/winenv
 *.pyc
 commit_message.txt
 */stripe.exe
+
+# Ignore the virtual environment
+venv/
+env/
+ENV/
+
+# Ignore the static files
+staticfiles/
+node_modules/
+
+# Ignore the media files
+media/
+
+# Ignore the database
+*.sqlite3
+
+# Ignore anything but our core app
+
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# production
+/build
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
