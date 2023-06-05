@@ -1,16 +1,12 @@
 .env
-<<<<<<< HEAD
 /winenv
-=======
 */winenv/*
 */env/*
 */venv/*
->>>>>>> 31192592b3ea36a55652e33e66a96fd816d33629
 *.pyc
 commit_message.txt
 */stripe.exe
 
-<<<<<<< HEAD
 # Ignore the virtual environment
 venv/
 env/
@@ -32,19 +28,15 @@ media/
 
 # dependencies
 /node_modules
-=======
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
->>>>>>> 31192592b3ea36a55652e33e66a96fd816d33629
 /.pnp
 .pnp.js
 
 # testing
 /coverage
 
-<<<<<<< HEAD
-=======
 express-access.log
 
 # i hate node modules
@@ -55,7 +47,6 @@ node_modules
 node_modules/*
 
 
->>>>>>> 31192592b3ea36a55652e33e66a96fd816d33629
 # production
 /build
 
@@ -69,8 +60,5 @@ node_modules/*
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-<<<<<<< HEAD
-=======
 
 *.pyc
->>>>>>> 31192592b3ea36a55652e33e66a96fd816d33629
