@@ -133,9 +133,12 @@ class StripeListAllActiveProductsView(APIView):
 
 
 
+
+
 # Let Stripe tell us when a payment intent has succeeded.
 # This allows us to only checkout a user's cart when the payment intent has succeeded.
 
+# This is our stripe webhook for the entire website! 
 @csrf_exempt
 def order_confirmation_webhook(request):
     payload = request.body
@@ -343,5 +346,6 @@ def order_confirmation_webhook(request):
     else:
         # Unexpected event type
         return HttpResponse(status=400)
+
 
     return HttpResponse(status=200)

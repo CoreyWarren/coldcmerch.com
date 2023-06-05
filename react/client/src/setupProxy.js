@@ -21,3 +21,12 @@ module.exports = function(app) {
     })
   );
 };
+
+// NOTE:
+
+// This setup is for development purposes.
+// It won't affect the production build.
+// Thus, it won't affect how cookies are handled in production.
+// In a production setting, the browser will send cookies
+//   with requests to the same domain from which the cookies
+//   originated, as per the standard Same-Origin policy.

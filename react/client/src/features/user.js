@@ -50,13 +50,21 @@ export const register = createAsyncThunk(
 // '_' means parameter won't have any value, that it won't be passed.
 const getUser = createAsyncThunk('users/me', async (_, thunkAPI) => {
 
+  // Similar to our 'verify' route, we don't fetch the access token from the headers here, because we won't be receiving it in the Authorization header in this setup.
+
+  // Instead, we rely on the cookie that was attached to the request by the browser and will be automatically included in the request to Django, without needing to handle it explicitly here.
+
+  // This is why we have 'credentials: include' in our fetch request.
+
     try{
       // cookies will come along the way with this request
-      const res = await fetch('api/users/me', {
+      const res = await fetch('api/users/me/', {
         method: 'GET',
         headers: {
-          Accept: 'application/json'
-        }
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
       });
 
       const data = await res.json();
@@ -86,13 +94,14 @@ export const login = createAsyncThunk(
     
     try {
       const res = await fetch(
-        '/api/users/login', {
+        '/api/token/', {
             method: 'POST',
             headers: {
               Accept: 'application/json',
               'Content-Type': 'application/json',
             },
             body,
+            credentials: 'include',
           });
 
       // on successful request (login.js data), send back user data,
@@ -102,6 +111,9 @@ export const login = createAsyncThunk(
       // successful if response status is 201:
       if (res.status === 200) {
         // success
+        console.log("Coco - api/token/ was fulfilled");
+        console.log("Coco - res.ok = ", res.ok);
+
 
         const { dispatch } = thunkAPI;
 
@@ -112,7 +124,7 @@ export const login = createAsyncThunk(
       } else {
         // failure:
         // users/login/rejected
-        console.log('Coco - api/users/login/rejected');
+        console.log('Coco - api/token/ was rejected');
         console.log('Coco - res.ok = ', res.ok);
 
         // thunkAPI connects to our userSlice function.
@@ -128,15 +140,19 @@ export const login = createAsyncThunk(
 );
 
 
+
 // verify user authentication - checkAuth
 export const checkAuth = createAsyncThunk('users/verify', async(_, thunkAPI) => {
   try {
+
     const res = await fetch(
-      '/api/users/verify', {
-          method: 'GET',
+      '/api/users/verify/', {
+          method: 'POST',
           headers: {
+            'Content-Type': 'application/json',
             Accept: 'application/json',
           },
+          credentials: 'include',
         });
 
     // on successful request, send back user data,
@@ -174,7 +190,7 @@ export const logout = createAsyncThunk(
     
     try {
       const res = await fetch(
-        '/api/users/logout', {
+        '/api/users/logout/', {
             method: 'GET',
             headers: {
               Accept: 'application/json',

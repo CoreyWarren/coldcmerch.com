@@ -8,6 +8,8 @@ from rest_framework.permissions import IsAuthenticated
 
 import json
 
+import logging
+logger = logging.getLogger(__name__)
 
 # PRODUCT VIEWS
 
@@ -32,15 +34,21 @@ class RetrieveSingleProductView(APIView):
 #
 class RetrieveAllProductView(APIView):
 
+    authentication_classes = []
     permission_classes = []
     # GET (request) data from Django backend
     def get(self,request):
+        logger.debug("Received GET request in RetrieveAllProductView\n")
+        logger.debug(f"Path: {request.path}\n")
+        logger.debug(f"User: {request.user}\n")
         # Filter all products according to their availibility being True only.
         product =  Product.objects.filter(available = True)
+        logger.info(f'Found {len(product)} available products')
         # product = Product.objects.filter(available = True)
         # Serialize that data into JSON
         # product.sizes = Object.FindAll(productsizes whos product=this)
         product = ProductSerializer(product, many = True)
+        logger.info('Products serialized')
         # Return that JSON
         return Response(product.data, status=status.HTTP_200_OK)
     
