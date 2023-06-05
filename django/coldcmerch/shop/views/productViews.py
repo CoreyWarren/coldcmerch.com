@@ -32,6 +32,7 @@ class RetrieveSingleProductView(APIView):
 #
 class RetrieveAllProductView(APIView):
 
+    authentication_classes = []
     permission_classes = []
     # GET (request) data from Django backend
     def get(self,request):
