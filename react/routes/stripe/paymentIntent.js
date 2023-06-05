@@ -15,15 +15,12 @@ const router = express.Router();
 // After this POST, 
 
 stripe_public_key = process.env.STRIPE_PUBLIC_KEY
-stripe_private_key = process.env.STRIPE_PRIVATE_KEY
 
 
 router.post('/api/stripe/create-payment-intent', async (req, res) => {
 
-    
 
     try {
-        const { access } = req.cookies;
 
         //retrieve data from Django Backend
         const { cart_items, currency, payment_method, receipt_email } = req.body;
@@ -37,8 +34,8 @@ router.post('/api/stripe/create-payment-intent', async (req, res) => {
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${access}`,
             },
+            credentials: 'include',
             body
         });
 
@@ -47,8 +44,6 @@ router.post('/api/stripe/create-payment-intent', async (req, res) => {
 
         // print either success OR fail:
         return res.status(apiResponse.status).json(data);
-
-        return res.status();
     } catch (err) {
         
 

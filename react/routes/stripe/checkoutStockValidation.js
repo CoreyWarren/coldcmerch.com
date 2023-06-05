@@ -8,8 +8,6 @@ const router = express.Router();
 router.get('/api/shop/checkout/stock_validation', async (req, res) => {
 
     try {
-        const { access } = req.cookies;
-
         //retrieve data from Django Backend
 
         const apiResponse = await fetch(`${process.env.API_URL}/api/shop/checkout/stock_validation`, {
@@ -17,8 +15,8 @@ router.get('/api/shop/checkout/stock_validation', async (req, res) => {
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${access}`,
             },
+            credentials: 'include',
         });
 
         // wait for that response (we are async so it works as such.)
