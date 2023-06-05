@@ -59,13 +59,13 @@ class RetrieveUserView(APIView):
     # The below is an override of the default check_permissions method.
     # The 'f' before the string allows for variable interpolation (i.e.: insertion)
     def check_permissions(self, request):
-        logger.debug("Checking permissions...")
-        logger.debug(f"Method: {request.method}")
-        logger.debug(f"Path: {request.path}")
-        logger.debug(f"Cookies: {request.COOKIES}")
-        logger.debug(f"User: {request.user}")
-        logger.debug(f"Authenticators: {self.get_authenticators()}")
-        logger.debug(f"Headers: {request.META}")
+        logger.debug("Checking permissions...\n")
+        logger.debug(f"Method: {request.method}\n")
+        logger.debug(f"Path: {request.path}\n")
+        logger.debug(f"Cookies: {request.COOKIES}\n")
+        logger.debug(f"User: {request.user}\n")
+        logger.debug(f"Authenticators: {self.get_authenticators()}\n")
+        # logger.debug(f"Headers: {request.META}")
         super().check_permissions(request)
 
     def get(self, request):
