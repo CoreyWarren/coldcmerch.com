@@ -6,6 +6,7 @@ from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
+from users.permissions import NotBlacklisted
 import json
 
 
@@ -18,7 +19,7 @@ import json
 # Grab our CART
 class RetrieveCartView(APIView):
     # GET (request) data from Django backend
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, NotBlacklisted]
     def get(self,request):
 
         # Only give results that belong to the currently requesting User.
@@ -45,7 +46,7 @@ class RetrieveCartView(APIView):
 # "my_user" : "#"
 # }
 class CreateCartView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, NotBlacklisted]
 
     def post(self, request):
         data = request.data
@@ -75,7 +76,7 @@ class CreateCartView(APIView):
 # so that an order can be assigned to it,
 # and that order can be processed
 class CheckoutCartView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, NotBlacklisted]
     def post(self, request):
         data = request.data
         requested_user = data['my_user']
@@ -101,7 +102,7 @@ class CheckoutCartView(APIView):
 
 class RetrieveCartItemsView(APIView):
 
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, NotBlacklisted]
 
     # GET (request) data from Django backend
     def get(self,request):
@@ -121,7 +122,7 @@ class RetrieveCartItemsView(APIView):
 # CREATE CART ITEM
 # fields = ('cart', 'product', 'adjusted_total', 'size', 'quantity', 'my_user')
 class CreateCartItemView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, NotBlacklisted]
     def post(self, request):
         
         # Grab the data from the request
@@ -226,7 +227,7 @@ class CreateCartItemView(APIView):
 # Remove Cart Item
 
 class DeleteCartItemView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, NotBlacklisted]
     def post(self, request):
         
         data = request.data

@@ -3,6 +3,7 @@ from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
+from .permissions import NotBlacklisted
 
 # we need to import authentication_classes:
 
@@ -61,7 +62,7 @@ class RegisterView(APIView):
 class RetrieveUserView(APIView):
     # post an authorization header
     authentication_classes = [CookieJWTAuthentication]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, NotBlacklisted]
 
     # The below is an override of the default check_permissions method.
     # The 'f' before the string allows for variable interpolation (i.e.: insertion)
@@ -101,7 +102,7 @@ class LogoutUserView(APIView):
     def get(self, request):
 
         authentication_classes = [CookieJWTAuthentication]
-        permission_classes = [IsAuthenticated]
+        permission_classes = [IsAuthenticated, NotBlacklisted]
 
 
         # Grab the refresh token

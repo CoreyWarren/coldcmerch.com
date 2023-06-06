@@ -102,7 +102,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
     # custom middleware:
-    'users.middleware.BlacklistMiddleware', #blacklists refresh tokens to logout users
 ]
 
 ROOT_URLCONF = 'coldcmerch.urls'

@@ -6,6 +6,7 @@ from rest_framework import permissions, status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from django.db import transaction, OperationalError
+from .permissions import NotBlacklisted
 import json
 
 # CHECKOUT VIEWS
@@ -62,7 +63,7 @@ class CheckoutStockValidationView(APIView):
         # 3. If not (2/2), then how many are in stock?
         ###
 
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, NotBlacklisted]
 
 
     def get(self, request):
