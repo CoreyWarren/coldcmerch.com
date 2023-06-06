@@ -255,9 +255,6 @@ else:
     'https://coldcmerch.com',
     'https://www.coldcmerch.com:5000',
     'https://www.coldcmerch.com',
-    'www.coldcmerch.com',
-    'coldcmerch.com',
-    '.coldcmerch.com',
     # Add more origins as needed
     ]
 
