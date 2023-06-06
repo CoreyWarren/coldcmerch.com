@@ -5,6 +5,7 @@ import {
   useStripe,
   useElements
 } from "@stripe/react-stripe-js";
+import { MY_URL, API_URL } from "config";
 
 
 
@@ -69,7 +70,7 @@ export default function CheckoutForm() {
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: "http://localhost:3000/cart/success",
+        return_url: `${MY_URL}/cart`,
       },
     });
 
