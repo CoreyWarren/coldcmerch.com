@@ -59,3 +59,8 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
         return self.email
 
 
+
+class BlacklistedToken(models.Model):
+    token = models.CharField(max_length=500)
+    user = models.ForeignKey(UserAccount, related_name="blacklisted_tokens", on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now_add=True)

@@ -1,32 +1,32 @@
 const express = require('express');
-const cookie = require('cookie');
+const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 
 const router = express.Router();
 
-router.get('/api/users/logout', (req, res) => {
-    // in order to log the user out,
-    // simply expire the cookies.
-    // --Set them to be empty and with an expiration date that
-    //      is in the past.
+router.get('/api/users/logout', async (req, res) => {
+    
+    // Previously, we were expiring the cookies 'access' and 'refresh' here.
+    
+    // In this new method, we rely on the Django backend to expire the cookies.
+    // This is done by adding them to a blacklist.
 
-    res.setHeader('Set-Cookie', [
-        cookie.serialize('access', '', {
-            // pass various keys and values here (learn more: google 'npm cookie')
-            httpOnly: true,
-            expires: new Date(0), // returns a date far, far into the past.
-            path: '/api/',
-            sameSite: 'strict',
-            secure: process.env.NODE_ENV === 'production' // if true, become true; false for false.
-            }),
-        cookie.serialize('refresh', '', {
-            // pass various keys and values here (learn more: google 'npm cookie')
-            httpOnly: true,
-            expires: new Date(0), // returns a date far, far into the past.
-            path: '/api/',
-            sameSite: 'strict',
-            secure: process.env.NODE_ENV === 'production' // if true, become true; false for false.
-            })
-        ]);
+    try {
+        const apiResponse = await fetch(`${process.env.API_URL}/api/users/me/`, {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include',
+        });
+    }
+    catch (err) {
+        // catch error
+        return res.status(500).json({
+            error: 'Something went wrong when trying to retrieve user',
+        });
+    }
+
 
     return res.status(200).json({ success: 'Logged out successfully.'});
 

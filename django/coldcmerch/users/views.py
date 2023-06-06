@@ -1,10 +1,17 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework import status
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
+
+# we need to import authentication_classes:
+
+
 from rest_framework.response import Response
+from rest_framework_simplejwt.tokens import RefreshToken
 from .serializers import UserCreateSerializer, UserSerializer
 from shop.models import Cart
+from .models import BlacklistedToken
 from users.authentication import CookieJWTAuthentication
 
 import logging
@@ -76,5 +83,41 @@ class RetrieveUserView(APIView):
         # return it in a response that's a 200 OK response.
         return Response(user.data, status=status.HTTP_200_OK)
     
+
+
+#
+# This is the logout view associated with our customized
+#   user authentication middleware:
+#
+#   django\coldcmerch\users\authentication.py 
+#       - CookieJWTAuthentication (Done for HTTPONLY cookie compatibility)
+#
+#   django\coldcmerch\users\middleware.py 
+#       - BlacklistMiddleware (Done to log users out, with HttpOnly cookies, by blacklisting)
+#
+
+class LogoutUserView(APIView):
+
+    def get(self, request):
+
+        authentication_classes = [CookieJWTAuthentication]
+        permission_classes = [IsAuthenticated]
+
+
+        # Grab the refresh token
+        refresh_token = request.data["refresh"]
+        if not refresh_token:
+            return Response({'error': 'Refresh token not found.'}, status=status.HTTP_400_BAD_REQUEST)
+        
+
+        # blacklist the refresh token
+        try:
+            blacklisted = BlacklistedToken.objects.create(user=request.user, token=refresh_token)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
+
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 

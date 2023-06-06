@@ -195,6 +195,7 @@ export const logout = createAsyncThunk(
             headers: {
               Accept: 'application/json',
             },
+            credentials: 'include',
           });
 
       const data = await res.json();
