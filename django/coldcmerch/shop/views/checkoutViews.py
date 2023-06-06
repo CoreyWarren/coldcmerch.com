@@ -6,7 +6,7 @@ from rest_framework import permissions, status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from django.db import transaction, OperationalError
-from .permissions import NotBlacklisted
+from users.permissions import NotBlacklisted
 import json
 
 # CHECKOUT VIEWS
