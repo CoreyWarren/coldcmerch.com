@@ -263,7 +263,40 @@ npm start
 
 # &#x1F528; Maintenance Notes
 
-> To be added after Deployment...
+> To restart Gunicorn, Express (on PM2), and Nginx:
+
+```
+sudo systemctl daemon-reload
+sudo systemctl restart gunicorn
+sudo systemctl reload nginx
+pm2 reload some-id-here
+```
+> Commands:
+> > Nginx:
+> > ``` stuff here ```
+> > Gunicorn:
+> > ``` stuff here ```
+> > PM2:
+> > ``` stuff here ```
+
+> Paths:
+> > Nginx:
+> > ``` stuff here ```
+> > Gunicorn:
+> > ``` stuff here ```
+> > PM2:
+> > ``` stuff here ```
+
+> Logs:
+> > Nginx:
+> > ``` stuff here ```
+> > Gunicorn:
+> > 
+> > PM2:
+> > ``` stuff here ```
+
+
+
 
 # &#x1F528; Dependencies
 

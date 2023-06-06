@@ -1,4 +1,5 @@
 .env
+/winenv
 */winenv/*
 */env/*
 */venv/*
@@ -6,6 +7,27 @@
 commit_message.txt
 */stripe.exe
 
+# Ignore the virtual environment
+venv/
+env/
+ENV/
+
+# Ignore the static files
+staticfiles/
+node_modules/
+
+# Ignore the media files
+media/
+
+# Ignore the database
+*.sqlite3
+
+# Ignore anything but our core app
+
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
