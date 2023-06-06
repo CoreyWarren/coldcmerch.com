@@ -279,6 +279,16 @@ const userSlice = createSlice({
         state.user = action.payload; // user state = user data
       })
       .addCase( getUser.rejected, state => {
+        state.isAuthenticated = false; // Added because isAuthenticated is used to load the app,
+        // and we don't want to load certain components unless we're logged in.
+
+        // Related issue: dashboard will display over Login page when we're not logged in,
+        //  Which is a problem because a normal user will never be able to see the login page.
+
+        // I believe this change is safe, because if we're logged in, 99.9% of the time this
+        //  will not impede UX. It's way more annoying to try to login and not be able to, than
+        //  to not be able to see the dashboard if the API doesn't return success once or twice.
+        //  This is especially true because our dashboard is not the main focus of the app.
         state.loading = false;
       })
 
