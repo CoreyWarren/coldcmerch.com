@@ -90,27 +90,6 @@ export default function CheckoutForm() {
 
   const paymentElementOptions = {
     layout: 'tabs',
-    fields: {
-      billing_details: {
-        name: 'auto',
-        email: 'auto',
-        address: {
-          line1: 'auto',
-          line2: 'auto',
-          city: 'auto',
-          country: 'auto',
-          postal_code: 'auto',
-          state: 'auto',
-        },
-      },
-    },
-    options : {
-      defaultValues: {
-        billingDetails: {
-          email: email,
-        }
-      }
-    }
   };
 
   return (
