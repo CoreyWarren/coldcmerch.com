@@ -105,9 +105,9 @@ class LogoutUserView(APIView):
 
 
         # Grab the refresh token
-        refresh_token = request.data["refresh"]
+        refresh_token = request.COOKIES.get('refresh')
         if not refresh_token:
-            return Response({'error': 'Refresh token not found.'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'error': 'Refresh token/cookie not found.'}, status=status.HTTP_400_BAD_REQUEST)
         
 
         # blacklist the refresh token
