@@ -23,6 +23,7 @@ logger = logging.getLogger(__name__)
 # Retrieve the user.
 
 class RegisterView(APIView):
+    authentication_classes = []
     permission_classes = []
 
     def post(self, request):
