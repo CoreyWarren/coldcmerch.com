@@ -23,28 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 env = environ.Env()
 environ.Env.read_env()
 
-# These modes are used to determine which settings to use.
-windows_test_mode       = False
-linux_test_mode         = False
-live_development_mode   = False
-production_mode         = True
-
-# SECURITY WARNING: don't run with debug turned on in production!
-if windows_test_mode:
-    DEBUG = True
-    ALLOWED_HOSTS = ['coldcmerch.com', '*']
-elif linux_test_mode:
-    DEBUG = True
-    ALLOWED_HOSTS = ['coldcmerch.com', '*']
-elif live_development_mode:
-    DEBUG = False
-    ALLOWED_HOSTS = ['coldcmerch.com']
-elif production_mode:
-    DEBUG = False
-    ALLOWED_HOSTS = ['137.184.114.49', 'coldcmerch.com', 'www.coldcmerch.com']
-
-
-
+DEVELOPMENT_MODE        = env.int('DEVELOPMENT_MODE')
 STRIPE_PRIVATE_KEY      = env('STRIPE_PRIVATE_KEY')
 STRIPE_PUBLIC_KEY       = env('STRIPE_PUBLIC_KEY')
 STRIPE_WEBHOOK_SECRET   = env('STRIPE_WEBHOOK_SECRET')
@@ -52,8 +31,40 @@ DJANGO_SECRET_KEY       = env('DJANGO_SECRET_KEY')
 DATABASE_NAME           = env('DATABASE_NAME') 
 DATABASE_USER           = env('DATABASE_USER')
 
-if(live_development_mode or production_mode):
+# These modes are used to determine which settings to use.
+if(DEVELOPMENT_MODE == 1):
+    windows_test_mode       = True
+elif(DEVELOPMENT_MODE == 2):
+    linux_test_mode         = True
+elif(DEVELOPMENT_MODE == 3):
+    live_development_mode   = True
+elif(DEVELOPMENT_MODE == 4):
+    production_mode         = True
+
+# Only use a password for the mySQL database
+#   if we are in live development mode/production mode.
+if(DEVELOPMENT_MODE == 3 or DEVELOPMENT_MODE == 4):
     DATABASE_USER_PASSWORD  = env('DATABASE_USER_PASSWORD')
+
+
+
+# SECURITY WARNING: don't run with debug turned on in production!
+if DEVELOPMENT_MODE == 1:
+    DEBUG = True
+    ALLOWED_HOSTS = ['coldcmerch.com', '*']
+elif DEVELOPMENT_MODE == 2:
+    DEBUG = True
+    ALLOWED_HOSTS = ['coldcmerch.com', '*']
+elif DEVELOPMENT_MODE == 3:
+    DEBUG = False
+    ALLOWED_HOSTS = ['coldcmerch.com']
+elif DEVELOPMENT_MODE == 4:
+    DEBUG = False
+    ALLOWED_HOSTS = ['137.184.114.49', 'coldcmerch.com', 'www.coldcmerch.com']
+
+
+
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -62,10 +73,6 @@ SITE_URL = 'coldcmerch.com'
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = DJANGO_SECRET_KEY
-
-
-
-
 
 
 
@@ -132,7 +139,7 @@ WSGI_APPLICATION = 'coldcmerch.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-if(live_development_mode or production_mode):
+if(DEVELOPMENT_MODE == 3 or DEVELOPMENT_MODE == 4):
     DATABASES = {
 
         'default': {
@@ -242,8 +249,8 @@ SIMPLE_JWT = {
 AUTH_USER_MODEL = 'users.UserAccount'
 
 
-if (windows_test_mode or linux_test_mode):
-    CORS_ALLOWED_ORIGINS = ['*']
+if (DEVELOPMENT_MODE == 1 or DEVELOPMENT_MODE == 2):
+    CORS_ALLOWED_ORIGINS = ['http://localhost:8000', 'https://localhost:5000', 'https://localhost:3000']
 else:
     # Cors for deployment?:
     CORS_ALLOWED_ORIGINS = [

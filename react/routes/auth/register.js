@@ -30,7 +30,7 @@ router.post(`/api/users/register`, async (req, res) => {
         // This handler is localhost 8000:
         // This is to send to our Django backend API:
         const apiResponse = await fetch(
-            `${process.env.API_URL}/api/users/register`, 
+            `${process.env.API_URL}/api/users/register/`, 
             {
                 // our django users app, views.py is expecting a post
                 method: 'POST',

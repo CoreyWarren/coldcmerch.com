@@ -1,4 +1,6 @@
 .env
+.env-production
+.env-development
 /winenv
 */winenv/*
 */env/*
