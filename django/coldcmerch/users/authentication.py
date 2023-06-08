@@ -24,10 +24,12 @@ class CookieJWTAuthentication(JWTAuthentication):
         try:
             raw_token = request.COOKIES.get('access')
             # logger.error(f"Raw token from cookies: {raw_token}")
+            if raw_token is None:
+                raise AuthenticationFailed('No access token found in cookies')
+            return raw_token
         except Exception as e:
             # logger.error(f"Error in get_raw_token: {e}")
             return Response({"message": "Failed to retrieve raw token from cookies."}, status=status.HTTP_400_BAD_REQUEST)
-        return raw_token
 
     
 
