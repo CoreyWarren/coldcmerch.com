@@ -6,7 +6,7 @@ const HomePage = () => {
         <Layout title = 'ColdC(ut) Merch | Home' content='Home Page'>
 
             <div className="home_page_panel">
-            <h1 className='mb-5'>Cold Cut Merchandise</h1>
+            <h1 className='mb-5'>Home</h1>
 
             <div className="display-item">
 
@@ -38,45 +38,9 @@ const HomePage = () => {
             <p>- Elmar</p>
             <p>- Lou</p>
             <p>- Brian</p>
+            <p>- (and Corey, too!)</p>
             </div>
 
-
-            <div className="info-item">
-            <h2>Need Help?</h2>
-            <p></p>
-            <p>Please contact our admin Corey at:</p>
-            <p style={{fontSize:"1.1rem", textDecoration:"underline"}}>support@coldcmerch.com</p>
-            <p>for suggestions or reports.</p>
-
-
-            </div>
-
-
-            <div className="info-item">
-            <h2>Privacy Concerns?</h2>
-            <p></p>
-            <p>This site respects your privacy and time:</p>
-            <p>- No ads</p>
-            <p>- No cross-site cookies</p>
-            <p>- No clunky Wordpress or Shopify templates</p>
-
-            <p></p>
-
-            <p>Here, why don't you take a look at the code?</p>
-            <div className="info-item-link"> 
-                <p><a href="https://github.com/CoreyWarren/coldcmerch.com">
-                [Github Repo]</a></p>
-            </div>
-            </div>
-
-
-            <div className="info-item">
-            <h2>In The Works:</h2>
-            <p></p>
-            <p>- Password Resets</p>
-            <p>- Order History</p>
-            <p>- User Rewards</p>
-            </div>
 
             <br></br>
 

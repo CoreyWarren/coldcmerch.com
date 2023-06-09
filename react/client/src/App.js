@@ -11,10 +11,15 @@ import StorePage from 'containers/StorePage';
 import CartPage from 'containers/CartPage';
 import CheckoutPage from 'containers/CheckoutPage';
 import OrderSuccessPage from 'containers/OrderSuccessPage';
+import PrivacyPage from 'containers/PrivacyPage';
+import AboutPage from 'containers/AboutPage';
+
+import BackgroundContainer from 'components/BackgroundContainer';
 
 import RouteWrapper from 'features/RouteWrapper';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './components/css/Dashboard.css';
 
 
 const App = () => {
@@ -29,9 +34,12 @@ const App = () => {
   return (
 
     <Router>
+      <BackgroundContainer>
       <Routes>
         <Route path='/' element={<HomePage/>} />
         <Route path='/dashboard' element={<DashboardPage/>} />
+        <Route path='/privacy' element={<PrivacyPage/>} />
+        <Route path='/about' element={<AboutPage/>} />
         <Route path='/login' element={<LoginPage/>} />
         <Route path='/register' element={<RegisterPage/>} />
         <Route
@@ -53,6 +61,7 @@ const App = () => {
         <Route path='/checkout' element={<CheckoutPage/>} />
         <Route path='/cart/success' element={<OrderSuccessPage/>} />
       </Routes>
+      </BackgroundContainer>
     </Router>
 
   )

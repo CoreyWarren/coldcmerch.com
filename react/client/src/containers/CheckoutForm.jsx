@@ -69,8 +69,8 @@ export default function CheckoutForm() {
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        // Make sure to change this to your payment completion page
-        return_url: `${MY_URL}/cart`,
+        // We have a payment completion page here bro!
+        return_url: `${MY_URL}/cart/success`,
       },
     });
 

@@ -2,46 +2,42 @@ import {Link, NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from 'features/user';
 import { useEffect } from 'react';
-import { useState } from 'react';
 
 const Navbar = () => {
     const dispatch = useDispatch();
     const { isAuthenticated } = useSelector(state => state.user);
 
-    const chars1 = ['.', ',', 'u', '+', '=', '%', 'O', 'U', 'U', 'O', '%', '=', '+', 'u', ',', '.'];
-    const chars2 = ['/', '\\', '{', '}', 't', '\\', '/', 'T'];
-
-    const [char1, setChar1] = useState(chars1[0]);
-    const [char2, setChar2] = useState(chars2[0]);
-
     useEffect(() => {
-        let cycleCount1 = 0;
-        let cycleCount2 = 0;
-        let intervalId1, intervalId2;
-
-        const animate1 = () => {
-            const char = chars1[cycleCount1 % chars1.length];
-            setChar1(char);
-            cycleCount1++;
-            intervalId1 = setTimeout(animate1, 100 + 100 * Math.abs(Math.sin(cycleCount1/10)));
+        // make sure the document is loaded using the DOMContentLoaded event:
+        try{
+            const chars = ['.', ',', 'u', '+', '=', '%', 'O', 'U', 'U', 'O', '%', '=', '+', 'u', ',', '.'];
+            // now reverse it by hand without using a function:
+            const glitchChar = document.getElementById("char1");
+            let cycleCount = 0;
+            setInterval(() => {
+                cycleCount++;
+                const char = chars[cycleCount % chars.length];
+                glitchChar.innerText = char;
+            }, 150);
+        }
+        catch(err){
+            console.log("Tried to make a cool animation with the censored ColdC%$Merch text, but it didn't work. Oh well.");
         }
 
-        const animate2 = () => {
-            const char = chars2[cycleCount2 % chars2.length];
-            setChar2(char);
-            cycleCount2++;
-            intervalId2 = setTimeout(animate2, 100 + 100 * Math.abs(Math.cos(cycleCount2/10)));
+        try{
+            const chars = ['/', '\\', '{', '}', 't', '\\', '/', 'T'];
+            const glitchChar = document.getElementById("char2");
+            let cycleCount = 0;
+            setInterval(() => {
+                cycleCount++;
+                const char = chars[cycleCount % chars.length];
+                glitchChar.innerText = char;
+            }, 120);
         }
-
-        animate1();
-        animate2();
-
-        return () => {
-            clearInterval(intervalId1);
-            clearInterval(intervalId2);
+        catch(err){
+            console.log("Tried to make a cool animation with the censored ColdC%$Merch text, but it didn't work. Oh well.");
         }
     }, []);
-
 
     const authLinks = (
         <>
@@ -103,8 +99,8 @@ const Navbar = () => {
 
             <h1 aria-label="Cold Cut Merch at coldcmerch.com">
                 <span>ColdC[</span>
-                <span class="glitch-char" id="char1">{char1}</span>
-                <span class="glitch-char" id="char2">{char2}</span>
+                <span class="glitch-char" id="char1">#</span>
+                <span class="glitch-char" id="char2">#</span>
                 <span>]Merch.com</span>
             </h1>
 
