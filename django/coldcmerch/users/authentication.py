@@ -10,9 +10,11 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.exceptions import InvalidToken
 from rest_framework.exceptions import AuthenticationFailed
 from jwt.exceptions import InvalidTokenError
-from rest_framework_simplejwt.tokens import UntypedToken
+from rest_framework_simplejwt.tokens import UntypedToken, RefreshToken
 from rest_framework import status
 from rest_framework.response import Response
+from jwt.exceptions import ExpiredSignatureError
+
 
 import logging
 logger = logging.getLogger(__name__)
@@ -62,6 +64,9 @@ class CookieJWTAuthentication(JWTAuthentication):
 
         try:
             UntypedToken(raw_token)
+        except ExpiredSignatureError as e:
+            # If the token has expired, refresh it
+            return self.handle_token_expired(request)
         except (InvalidToken, InvalidTokenError) as e:
             # logger.error(f"Token validation failed: {e}")
             # raise AuthenticationFailed('Invalid token.')
@@ -72,5 +77,23 @@ class CookieJWTAuthentication(JWTAuthentication):
 
         return self.get_user(validated_token), validated_token
     
+
+    # Refresh user tokens
+    def handle_token_expired(self, request):
+        refresh_token = request.COOKIES.get('refresh')
+
+        if refresh_token is None:
+            return Response({"message": "Refresh token not found."}, status=status.HTTP_401_UNAUTHORIZED)
+
+        try:
+            # Try to create a new token
+            token = RefreshToken(refresh_token)
+
+            # If successful, return the new access token
+            return {
+                'access': str(token.access_token),
+            }
+        except InvalidToken:
+            return Response({"message": "Invalid refresh token."}, status=status.HTTP_401_UNAUTHORIZED)
 
 # Path: .users.authentication
