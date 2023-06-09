@@ -542,6 +542,154 @@ label.form-label{
 
 /*
 ========================
+    Beautiful Home Page!
+========================
+*/
+
+.home_page_panel{
+    margin: auto;
+    padding: 0;
+    font-size: 5vw;
+}
+
+.home_page_panel .display-item{
+    display: flex;
+    width: 98%;
+    margin: 2rem 1%;
+    padding: 2rem 2rem 5rem 5rem;
+    position: relative;
+    border-radius: 1rem;
+    box-shadow:rgb(15, 15, 15) 0.5rem 0.5rem 0.5rem;
+    background: linear-gradient(160deg, rgba(0, 0, 0, 0.952), rgba(19, 20, 19, 0.932), rgba(0, 0, 0, 0.952));
+    color: black;
+
+    -webkit-box-shadow: inset 0 0 10rem rgb(255, 162, 133), 0 0 10px rgb(14, 9, 9);
+    -moz-box-shadow: inset 0 0 3rem rgb(255, 213, 173), 0 0 10px rgb(19, 11, 11);
+    box-shadow: inset 0 0 15rem rgb(100, 33, 24), 0 0 10px rgb(14, 9, 9);
+}
+
+
+.home_page_panel .display-item .left{
+    display: flex;
+    width: 50%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    flex-direction: column; /* This places the image and the title on top of each other */
+    align-items: center; /* This aligns the items to the left */
+    justify-content: center; /* This aligns the items to the top */
+}
+
+.home_page_panel .display-item .left img{
+    width: 100%;
+    height: 100%;
+    border-radius: 1rem;
+    display: flex;
+    box-shadow: 0 0 20px 5px rgba(255, 0, 0, 0.6);
+    animation: glowing_red_1 4s infinite;
+}
+
+.home_page_panel .display-item .right{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 2rem;
+}
+
+.home_page_panel .display-item .left h1,
+.home_page_panel .display-item .left p,
+.home_page_panel .display-item .right h2,
+.home_page_panel .display-item .right p{
+    color: white!important;
+    text-shadow: none;
+    text-align: center;
+}
+
+
+.home_page_panel .display-item .left h1{
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 4.5rem;
+    font-weight: 600;
+    margin: 0rem 0rem 1.5rem;
+    text-align: center;
+    color: #fff;
+}
+
+.home_page_panel .display-item .right h2{
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 3rem;
+    font-weight: bold;
+    margin: 1rem 0;
+    color: #fff;
+}
+
+.home_page_panel .display-item .right p,
+.home_page_panel .display-item .left p
+{
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin: 0rem 0;
+    line-height: 2rem;
+    color: #fff;
+}
+
+/* Add styles for button here */
+
+.home_page_panel .display-item .right .cta-button{
+    display: inline-block;
+    width: 100%;
+    margin-top: 2rem;
+    padding: 1rem 2rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #fff;
+    border: none;
+    border-radius: 1rem;
+    cursor: pointer;
+    text-decoration: none;
+    background: linear-gradient(160deg, rgba(0, 0, 0, 0.9), rgba(40, 40, 40, 0.85), rgba(0, 0, 0, 0.9));
+    box-shadow: 0 0 20px 5px rgba(255, 0, 0, 0.274);
+    animation: glowing_yellow_1 2.64s infinite;
+    /* box-shadow: 0px 5px 15px rgba(0,0,0,0.2); */
+    transition: all 0.3s ease;
+}
+
+.home_page_panel .display-item .right .cta-button:hover{
+    transform: translateY(-3px);
+    box-shadow: 0px 5px 15px rgba(0,0,0,0.4);
+    letter-spacing: -1px;
+}
+
+.home_page_panel .display-item .right .cta-button:active{
+    transform: translateY(1px);
+    box-shadow: 0px 3px 10px rgba(0,0,0,0.2);
+}
+
+.home_page_panel .info-item {
+    display:block;
+    color:white;
+    padding: 2rem;
+    background: linear-gradient(160deg, rgba(0, 0, 0, 0.822), rgba(51, 51, 51, 0.747));
+    backdrop-filter: blur(10px);
+    margin: 1rem;
+    margin-bottom: 3rem;
+    border-radius: 0.5rem;
+    box-shadow:rgb(15, 15, 15) 0.5rem 0.5rem 0.5rem;
+    word-wrap: break-word;
+}
+.home_page_panel .info-item p{
+    font-family: Courier New;
+    font-size: 1.3rem;
+    margin: 0;
+    line-height: 1.3rem;
+}
+
+
+
+/*
+========================
     Toast Notifications
 ========================
 */
@@ -631,6 +779,41 @@ label.form-label{
     }
 }
 
+@keyframes glowing_red_1 {
+    0% {
+        box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.6); /* Dark shadow */
+    }
+    50% {
+        box-shadow: 0 0 20px 5px rgba(255, 0, 0, 0.308); /* Red shadow */
+    }
+    100% {
+        box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.6); /* Dark shadow */
+    }
+}
+
+@keyframes glowing_red_1_offset {
+    0% {
+        box-shadow: 0 0 20px 5px rgba(255, 0, 0, 0.308); /* Red shadow */
+    }
+    35% {
+        box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.6); /* Dark shadow */
+    }
+    100% {
+        box-shadow: 0 0 20px 5px rgba(255, 0, 0, 0.308); /* Red shadow */
+    }
+}
+
+@keyframes glowing_yellow_1 {
+    0% {
+        box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.6); /* Dark shadow */
+    }
+    50% {
+        box-shadow: 0 0 5rem 5px rgba(189, 123, 0, 0.308); /* Red shadow */
+    }
+    100% {
+        box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.6); /* Dark shadow */
+    }
+}
 
 /* 
 ========================
@@ -712,7 +895,48 @@ label.form-label{
   }
 
 
+/* LOGIN AND REGISTER BUTTONS*/
 
+form.mt-5 .btn.btn-primary.mt-4 {
+    background: linear-gradient(160deg, rgba(0, 0, 0, 0.98), rgba(41, 41, 41, 0.98), rgba(0, 0, 0, 0.98)) !important;
+
+    border: none !important;
+    color: white !important;
+    width: 100% !important;
+    height: 4rem;
+    font-family: Courier New;
+    font-weight:600;
+    font-size: clamp(1.2rem, 2vw, 2rem);
+    transition: transform .2s ease-in-out, box-shadow .2s ease-in-out;
+    position: relative;
+    overflow: hidden;
+}
+
+form.mt-5 .btn.btn-primary.mt-4:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(160deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0)) !important;
+    transform: skewX(-20deg) translateX(-150%);
+    transition: transform 0.5s ease-in-out;
+}
+
+form.mt-5 .btn.btn-primary.mt-4:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+form.mt-5 .btn.btn-primary.mt-4:hover:before {
+    transform: skewX(-20deg) translateX(150%);
+}
+
+form.mt-5 .btn.btn-primary.mt-4:active {
+    transform: scale(0.98);
+    box-shadow: 0 0 5px rgba(0,0,0,0.2);
+}
 
 
 
@@ -965,9 +1189,76 @@ label.form-label{
     }
     
 
-    
+    /*
+    HOMEPAGE
+    */
+
+    .home_page_panel{
+        display: block;
+        margin: auto;
+        padding: 0;
+    }
+
+    .home_page_panel .display-item{
+        width: 90%;
+        display: block;
+        margin: auto;
+        padding: 0;
+        margin-bottom: 2rem;
+    }
+
+    .home_page_panel .display-item .left{
+        width: 90%;
+        height: 100%;
+        display: block;
+        margin: auto;
+        padding: 0;
+        border-radius: 0.5rem;
+    }
+
+    .home_page_panel .display-item .left img{
+        width: 100%;
+        margin: 0;
+        margin-bottom: 2rem;
+        padding: 0;
+    }
+
+    .home_page_panel .display-item .right{
+        width: 100%;
+        height: 100%;
+        display: block;
+        margin: auto;
+        padding: 0;
+        border-radius: 0.5rem;
+    }
 
 
+
+    .home_page_panel .display-item .right p,
+    .home_page_panel .display-item .left p{
+        font-size: clamp(18px, 2vw, 14px);
+    }
+
+
+
+
+
+    .home_page_panel .display-item .left h1{
+        font-size: clamp(12px, 20vw, 40px);
+    }
+
+    .home_page_panel .display-item .right h2{
+        font-size: clamp(12px, 15vw, 30px);
+        margin: 0;
+        padding: 0;
+    }
+
+    .home_page_panel .display-item .right .cta-button{
+        display: block;
+        width: 90%;
+        margin: auto;
+        font-size: clamp(12px, 5vw, 5vw);
+    }
 
 
 }

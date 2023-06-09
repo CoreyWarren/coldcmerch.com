@@ -315,18 +315,37 @@ const StorePage = () => {
         return (
             <Layout title = 'Cold Cut Merch | Store' content = 'Store page'>
                 <div className="dashboard_panel">
-                    <h1 style={{fontFamily: 'Arial', fontSize: '3rem'}}>Store Error:</h1>
+                    <h1>Store...?</h1>
+                    <br></br>
                     <div className="info-item">
+                    <h2 style={{fontWeight:"600"}}>Sorry, Bro...</h2>
 
-                    <p style={{fontFamily: 'Arial', fontSize: '1.2rem'}}> Either products or product sizes were unable to be loaded.</p>
-                    <p style={{fontFamily: 'Arial', fontSize: '1.2rem'}}> If you are not a developer and you are seeing this, then
-                        that means that there are either no available products being sold right now, or there is a technical issue on our backend.</p>
+                    <p> Either products or product sizes were unable to be loaded...</p>
+                    <p> ...at this very moment, at least.</p>
 
-                    <p style={{fontFamily: 'Arial', fontSize: '1.2rem'}}>If you are a developer, you may be seeing this as a result of not starting the API backend server properly. The front-end was unable to reach out to the backend's database and grab Products and Product Sizes.</p>
+                    </div>
 
-                    <p style={{fontFamily: 'Arial', fontSize: '1.2rem'}}> - Corey from the Past</p>
-                    
+                    <div className="info-item">
+                    <h2 style={{fontWeight:"600"}}>Not to worry.</h2>
+                    <p> - [Known Bug:] Registered users, try logging back in again. </p>
+                    <p> - If that doesn't fix it, then I might be working on the site right now. </p>
+                    <p> - [Unknown Bugs?] Usually spotted quickly. Come back in 1-4 hours?</p>
+
+
+                    <p></p>
+                    <p style={{margin:"0", paddingBottom:"0"}}>Love,</p>
+                    <p style={{margin:"0", paddingTop:"0", fontWeight:"600"}}>Your Cold Cut Admin</p>
                         
+                    </div>
+
+
+                    <div className="info-item">
+                    <h2>Need Help?</h2>
+                    <p></p>
+                    <p>Please contact our admin Corey at:</p>
+                    <p style={{fontSize:"1.1rem", textDecoration:"underline"}}>support@coldcmerch.com</p>
+                    <p>for suggestions or reports.</p>
+
                     </div>
 
 
