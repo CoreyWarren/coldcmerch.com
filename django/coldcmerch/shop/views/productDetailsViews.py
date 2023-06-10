@@ -13,6 +13,7 @@ import json
 # SIZES
 #
 class RetrieveProductSizeView(APIView):
+    authentication_classes = []
     permission_classes = []
 
     def get(self, request):
