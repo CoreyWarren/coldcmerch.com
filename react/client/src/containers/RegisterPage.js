@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Layout from 'components/Layout';
+import Layout from 'components/layouts/Layout';
 import { Navigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
 import { register } from 'features/user';
@@ -43,7 +43,7 @@ const RegisterPage = () => {
 
     return (
         <Layout title = 'Cold Cut Merch | Register Page' content = 'Register page'> 
-            <h1>Register for an Account:</h1>
+            <h1>Register</h1>
 
             <form className='mt-5' onSubmit={onSubmit}>
 

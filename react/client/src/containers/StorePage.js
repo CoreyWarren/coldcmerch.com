@@ -19,7 +19,7 @@ import { getProductSize } from '../features/productSize';
 import { addToCart } from 'features/cartItems';
 
 // Components Imports
-import Layout from 'components/Layout';
+import Layout from 'components/layouts/Layout';
 import ProductSizeDropdownMenu from 'components/products/productSizeDropdownMenu';
 import { MY_URL, API_URL } from "config";
 

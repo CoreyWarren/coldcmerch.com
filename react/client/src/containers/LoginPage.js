@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import Layout from 'components/Layout';
+import Layout from 'components/layouts/Layout';
 import { Navigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { resetRegistered, login } from 'features/user';
@@ -93,7 +93,7 @@ const LoginPage = () => {
 
     return (
         <Layout title = 'Cold Cut Merch | Login Page' content = 'Login page'>
-            <h1>Log into your account:</h1>
+            <h1>Login</h1>
 
             <form className='mt-5' onSubmit={onSubmit}>
 

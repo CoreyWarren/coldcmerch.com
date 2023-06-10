@@ -8,37 +8,62 @@ const Navbar = () => {
     const dispatch = useDispatch();
     const { isAuthenticated } = useSelector(state => state.user);
 
-    const chars1 = ['.', ',', 'u', '+', '=', '%', 'O', 'U', 'U', 'O', '%', '=', '+', 'u', ',', '.'];
-    const chars2 = ['/', '\\', '{', '}', 't', '\\', '/', 'T'];
 
+    const chars0 = ['/'];
+    const chars1 = ['_', 'u', '_', '_', '_', '_'];
+    const chars2 = ['_', 't', '_', '_', '_', '_'];
+    const chars3 = ['/'];
+
+    const [char0, setChar0] = useState(chars0[0]);
     const [char1, setChar1] = useState(chars1[0]);
     const [char2, setChar2] = useState(chars2[0]);
+    const [char3, setChar3] = useState(chars3[0]);
 
     useEffect(() => {
+        let cycleCount0 = 0;
         let cycleCount1 = 0;
         let cycleCount2 = 0;
-        let intervalId1, intervalId2;
+        let cycleCount3 = 0;
+        let intervalId0, intervalId1, intervalId2, intervalId3;
+
+        const animate0 = () => {
+            const char = chars0[cycleCount0 % chars0.length];
+            setChar0(char);
+            cycleCount0++;
+            intervalId0 = setTimeout(animate0, 100 + 100 * Math.abs(Math.sin(cycleCount0/10)));
+        }
 
         const animate1 = () => {
             const char = chars1[cycleCount1 % chars1.length];
             setChar1(char);
             cycleCount1++;
-            intervalId1 = setTimeout(animate1, 100 + 100 * Math.abs(Math.sin(cycleCount1/10)));
+            intervalId1 = setTimeout(animate1, 100 + 100 * Math.abs(Math.sin(cycleCount1/0.2)));
         }
 
         const animate2 = () => {
             const char = chars2[cycleCount2 % chars2.length];
             setChar2(char);
             cycleCount2++;
-            intervalId2 = setTimeout(animate2, 100 + 100 * Math.abs(Math.cos(cycleCount2/10)));
+            intervalId2 = setTimeout(animate2, 100 + 100 * Math.abs(Math.sin(cycleCount2/0.2)));
         }
 
+        const animate3 = () => {
+            const char = chars3[cycleCount3 % chars3.length];
+            setChar3(char);
+            cycleCount3++;
+            intervalId3 = setTimeout(animate3, 100 + 100 * Math.abs(Math.cos(cycleCount3/10)));
+        }
+
+        animate0();
         animate1();
         animate2();
+        animate3();
 
         return () => {
+            clearInterval(intervalId0);
             clearInterval(intervalId1);
             clearInterval(intervalId2);
+            clearInterval(intervalId3);
         }
     }, []);
 
@@ -102,10 +127,14 @@ const Navbar = () => {
             <div className="container-fluid">
 
             <h1 aria-label="Cold Cut Merch at coldcmerch.com">
-                <span>ColdC[</span>
-                <span class="glitch-char" id="char1">{char1}</span>
-                <span class="glitch-char" id="char2">{char2}</span>
-                <span>]Merch.com</span>
+
+
+                <span>ColdC</span>
+                <span class="glitch-char">{char0}{char1}</span>
+                <span class="glitch-char">{char2}{char3}</span>
+                <span>Merch.com</span>
+
+
             </h1>
 
                 <button 

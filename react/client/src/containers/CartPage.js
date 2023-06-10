@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
-import Layout from 'components/Layout';
+import Layout from 'components/layouts/Layout';
 import { resetProductsMap } from 'features/product';
 import { resetCartItemsMap } from "features/cartItems";
 import { getCartItems, deleteCartItem } from 'features/cartItems';

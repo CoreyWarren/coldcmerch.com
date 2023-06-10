@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet';
-import Navbar from 'components/Navbar';
-import './fonts/ModernAntiqua-Book.ttf'
+import Navbar from 'components/layouts/Navbar';
+import '../fonts/ModernAntiqua-Book.ttf'
 
 const LayoutStripeCheckout = ({ title, content, children}) => (
     <>

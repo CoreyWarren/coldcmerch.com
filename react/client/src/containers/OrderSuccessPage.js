@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch } from 'react-redux';
-import Layout from 'components/Layout';
+import Layout from 'components/layouts/Layout';
 
 
 const OrderSuccessPage = () => {

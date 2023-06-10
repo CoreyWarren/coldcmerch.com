@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet';
-import Navbar from 'components/Navbar';
-import '../components/css/Dashboard.css';
-import './fonts/ModernAntiqua-Book.ttf'
+import Navbar from 'components/layouts/Navbar';
+import '../../components/css/Dashboard.css';
+import '../fonts/ModernAntiqua-Book.ttf'
 
 const Layout = ({ title, content, children}) => (
     <>

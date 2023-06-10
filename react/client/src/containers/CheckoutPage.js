@@ -1,6 +1,6 @@
 // import Layout from 'components/Layout';
 import { loadStripe } from "@stripe/stripe-js";
-import LayoutStripeCheckout from 'components/LayoutStripeCheckout';
+import LayoutStripeCheckout from 'components/layouts/LayoutStripeCheckout';
 import { Elements } from "@stripe/react-stripe-js";
 import {  useEffect, useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';

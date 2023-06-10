@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
-import Layout from 'components/Layout';
+import Layout from 'components/layouts/Layout';
 
 import StripePoweredButton from '../components/stripe/StripePoweredButton';
 

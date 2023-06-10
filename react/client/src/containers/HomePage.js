@@ -1,12 +1,16 @@
-import Layout from 'components/Layout';
+import Layout from 'components/layouts/Layout';
 import upcoming_shows from '../assets/upcoming_show.jpg';
+import elmar_image from '../assets/elmar.png';
+import brian_image from '../assets/brian.png';
+import lou_image from '../assets/lou.png';
+
 
 const HomePage = () => {
     return (
         <Layout title = 'ColdC(ut) Merch | Home' content='Home Page'>
 
             <div className="home_page_panel">
-            <h1 className='mb-5'>Home</h1>
+            <h1 className='mb-5'>Cold Cut</h1>
 
             <div className="display-item">
 

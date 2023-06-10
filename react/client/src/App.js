@@ -14,7 +14,7 @@ import OrderSuccessPage from 'containers/OrderSuccessPage';
 import PrivacyPage from 'containers/PrivacyPage';
 import AboutPage from 'containers/AboutPage';
 
-import BackgroundContainer from 'components/BackgroundContainer';
+import BackgroundContainer from 'components/layouts/BackgroundContainer';
 
 import RouteWrapper from 'features/RouteWrapper';
 
