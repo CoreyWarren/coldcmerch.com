@@ -152,10 +152,10 @@ def order_confirmation_webhook(request):
         )
     except ValueError as e:
         # Invalid payload
-        return HttpResponse(status=400)
+        return HttpResponse(status=400, content=str(e))
     except stripe.error.SignatureVerificationError as e:
         # Invalid signature
-        return HttpResponse(status=400)
+        return HttpResponse(status=400, content=str(e))
 
     # Handle the event
 
@@ -345,6 +345,7 @@ def order_confirmation_webhook(request):
     # ... handle other event types
     else:
         # Unexpected event type
+        print(f"Received unexpected event type: {event.type}")
         return HttpResponse(status=400)
 
 

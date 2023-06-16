@@ -127,11 +127,13 @@ const StorePage = () => {
         await dispatch(addToCart(product_to_add)).then((action) =>
         {
             console.log("action.payload:", action.payload);
-            if (action.payload.success) {
-                success = true;
-            } else{
-                if (action.payload.custom_error){
-                    custom_error = action.payload.custom_error;
+            if (action && action.payload) {
+                if ('success' in action.payload) {
+                    if (action.payload.success) {
+                        success = true;
+                    } else if ('custom_error' in action.payload) {
+                        custom_error = action.payload.custom_error;
+                    }
                 }
             }
         });
