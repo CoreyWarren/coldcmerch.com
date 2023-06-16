@@ -144,7 +144,7 @@ class OrderConfirmationWebhookView(APIView):
     permission_classes = []
 
     @csrf_exempt
-    def post(request):
+    def post(self, request):
         payload = request.body
         sig_header = request.META['HTTP_STRIPE_SIGNATURE']
         event = None
