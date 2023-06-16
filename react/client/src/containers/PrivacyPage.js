@@ -26,7 +26,7 @@ const HomePage = () => {
             </div>
             </div>
 
-            <div className="info-item"  style={{backgroundColor:"darkred"}}>
+            <div className="info-item"  style={{backgroundColor:"brown"}}>
                 <h2>This site DOES store:</h2>
                 <p>- Your registered email</p>
                 <p>- Your password, but encrypted</p>
@@ -34,7 +34,7 @@ const HomePage = () => {
                 <p>- Your current cart</p>
             </div>
 
-            <div className="info-item"  style={{backgroundColor:"darkgreen"}}>
+            <div className="info-item"  style={{backgroundColor:"darkorange"}}>
                 <h2>This site DOES NOT store:</h2>
                 <p>- Your navigation behavior</p>
                 <p>- Your biometrics</p>
@@ -60,7 +60,7 @@ const HomePage = () => {
                 <p>- Our admins who deliver your goods and give you refunds.</p>
             </div>
 
-            <div className="info-item" style={{backgroundColor:"darkorange"}}>
+            <div className="info-item" style={{backgroundColor:"brown"}}>
                 <h2>List of All Parties with access to your EMAIL, CART, & CART ITEMS:</h2>
                 <p>- Our admins who adjust our product catalogue.</p>
             </div>

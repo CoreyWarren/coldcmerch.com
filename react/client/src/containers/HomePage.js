@@ -24,7 +24,7 @@ const HomePage = () => {
 
                 <div className="right">
                     <h2>[TIME]</h2>
-                    <p>Saturday, June 17th, 2023</p>
+                    <p>7:00 PM on Saturday, June 17th, 2023</p>
                     <h2>[LOCATION]</h2>
                     <p>"Veterans of Foreign Wars" - 9190 Fontana Avenue Fontana, CA 92335</p>
                     <a href="https://www.eventbrite.com/e/river-ratts-wcold-cut-the-ghetto-on-phyre-and-more-tickets-645865640517">
@@ -36,6 +36,9 @@ const HomePage = () => {
 
             </div>
 
+            <div style={{borderTop:"3px solid", borderBottom:"3px solid", borderColor:"lightgreen"}}className="info-item" >
+            <h2 style={{textAlign:"center", lineHeight:"3rem"}}>See our new <a href="/store" className="link-to-merch">Merch</a> in the shop!</h2>
+            </div>
 
             <div className="info-item">
             <h2>Thanks for supporting us!</h2>
@@ -44,6 +47,8 @@ const HomePage = () => {
             <p>- Brian</p>
             <p>- (and Corey, too!)</p>
             </div>
+
+
 
 
             <br></br>

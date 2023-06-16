@@ -89,7 +89,7 @@ const Navbar = () => {
             </li>
 
             <li className='nav-item' id="logout">
-                <a className='nav-link' href='#!' onClick={() => dispatch( logout() )}>
+                <a className='nav-link' href='/' onClick={() => dispatch( logout() )}>
                     Logout
                 </a>
             </li>

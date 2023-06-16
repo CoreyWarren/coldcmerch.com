@@ -29,10 +29,12 @@ const HomePage = () => {
             <div className="info-item">
             <h2>What We're Working On:</h2>
             <p></p>
-            <p>- Looking for Bugs</p>
-            <p>- Password Resets</p>
-            <p>- Order History</p>
+            <p>- Bugs in User Experience</p>
+            <p>- User Password Resets</p>
+            <p>- User Order History</p>
             <p>- User Rewards</p>
+            <p>- Band Member Portfolios</p>
+            <p>- Single Product View Pages</p>
             </div>
 
             <div className="info-item">

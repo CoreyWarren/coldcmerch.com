@@ -252,7 +252,7 @@ const StorePage = () => {
                 whileHover={{
                     scale: 1.03, 
                     transition: {
-                        duration: 0.5, 
+                        duration: 0.3, 
                         type: 'spring',
                         bounce: 0.6,
                     },
@@ -358,10 +358,10 @@ const StorePage = () => {
     else{
         return (
             <Layout title = 'Cold Cut Merch | Store' content = 'Store page'>
-                <div className="dashboard_panel">
+                <div className="shop_panel">
                     <h1 className='mb-5'>Store</h1>
                     <div className="mb-4"></div>
-                    <div className="home_panel">
+                    <div className="shop_panel">
                         {display_products()}
                     </div>
                 </div>
