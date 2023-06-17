@@ -1,5 +1,6 @@
 import { Helmet } from 'react-helmet';
 import Navbar from 'components/layouts/Navbar';
+import Footer from 'components/layouts/Footer';
 import '../../components/css/Dashboard.css';
 import '../fonts/ModernAntiqua-Book.ttf'
 
@@ -28,6 +29,10 @@ const Layout = ({ title, content, children}) => (
         <div className='container mt-5'>
             {children}
         </div>
+
+        <br /><br />
+
+        <Footer />
     </>
 )
 

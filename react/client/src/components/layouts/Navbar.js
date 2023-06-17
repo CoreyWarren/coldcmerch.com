@@ -165,20 +165,8 @@ const Navbar = () => {
                     </li>
 
 
-
                     { isAuthenticated ? authLinks : guestLinks }
 
-                    <li className="nav-item">
-                        <NavLink className='nav-link' to='/privacy'>
-                            Privacy
-                        </NavLink>
-                    </li>
-
-                    <li className="nav-item">
-                        <NavLink className='nav-link' to='/about'>
-                            About
-                        </NavLink>
-                    </li>    
 
                 </ul>
                 </div>

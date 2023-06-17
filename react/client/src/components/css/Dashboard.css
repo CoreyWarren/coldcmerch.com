@@ -185,10 +185,15 @@ nav{
     margin: auto;
 }
 
-#navbarNav > ul {
+#navbarNav ul {
     position: absolute;
-    left:28vw;
+    left:36vw;
     width: 72vw;
+}
+
+#navbarNav ul li{
+    padding: 0vw 1vw;
+    font-size: 1.4rem;
 }
 
 #logout{
@@ -1217,6 +1222,7 @@ div.container.mt-5 form label{
     form.mt-5{
         width: 100%;
         padding: 1rem;
+        max-width: 95vw;
     }
 
     form.mt-5 .btn.btn-primary.mt-4 {
@@ -1319,6 +1325,12 @@ div.container.mt-5 form label{
 
     button.navbar-toggler{
         background-color: rgba(255, 255, 255, 0);
+    }
+
+    #navbarNav ul {
+        position: absolute;
+        left: 0vw;
+        width: 100vw;
     }
 
 
