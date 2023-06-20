@@ -895,6 +895,7 @@ label.form-label{
     margin: 2rem auto;
     min-height: 300px;
     height: auto;
+    box-shadow:rgb(15, 15, 15) 0.5rem 0.5rem 0.5rem;
   }
   
   .social-media-slice.single-item {
@@ -1701,6 +1702,33 @@ div.container.mt-5 form label{
         margin: auto;
         font-size: 1.5rem;
     }
+
+    /* youtube embeds */
+
+    .home_page_panel .youtube-embed-container{
+        display: block;
+        min-height: 350px;
+        width: 100%;
+        overflow: hidden;
+        border-radius: 0;
+    }
+
+    .home_page_panel .youtube-embed-container h2{
+        font-size: clamp(12px, 15vw, 22px);
+    }
+
+    .social-media-slice {
+        padding: 1rem;
+        width: 100%;
+        border-radius: 0;
+        min-height: 150px;
+        
+      }
+
+      .social-media-slice h2{
+        font-size: clamp(12px, 15vw, 20px);
+      }
+      
 
       
       

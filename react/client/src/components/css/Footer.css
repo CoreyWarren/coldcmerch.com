@@ -124,7 +124,7 @@ footer .footer-bottom span{
 @media (max-width: 991px){
     .footer-container {
         flex-direction: column;
-        align-items: center;
+        align-items: left;
         padding: 1%;
     }
 
@@ -132,6 +132,19 @@ footer .footer-bottom span{
         padding-top: 2rem;
         height: 38rem;
     }
+
+     footer .footer-content h4{
+        text-align: left;
+     }
+
+     footer .footer-content .links{
+        text-align: left;
+     }
+
+     footer .footer-content .links ul li a{
+        text-decoration: underline dashed #ffffff67 1.25px;
+        font-weight: normal;
+     }
 
     .footer-content {
         flex-direction: column;
@@ -174,13 +187,14 @@ footer .footer-bottom span{
     }
 
     footer .footer-bottom {
+        text-align: left;
         right: 0;
         bottom: 0;
         margin-bottom: 3rem;
     }
 
     .footer-content .footer-section.contact p {
-        text-align: center!important;
+        text-align: left!important;
         margin-left: 0;
         margin-right: 0;
         margin-top: 0.8rem;
@@ -189,7 +203,7 @@ footer .footer-bottom span{
     }
 
     footer .footer-bottom span{
-        text-align: center;
+        text-align: left;
     }
 
     .back-to-top {
