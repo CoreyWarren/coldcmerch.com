@@ -18,7 +18,7 @@ const Footer = () => (
 
 
                 <div className='footer-section links'>
-                    <h4>Information:</h4>
+                    <h4>Information</h4>
                     <ul>
                         <li><a href='/about'>About</a></li>
                         <li><a href='/privacy'>User Privacy</a></li>
@@ -26,7 +26,7 @@ const Footer = () => (
                 </div>
 
                 <div className='footer-section contact'>
-                    <h4>Contact Us!</h4>
+                    <h4>Contact Us</h4>
                     <p>support@coldcmerch.com</p>
                 </div>
             </div>
