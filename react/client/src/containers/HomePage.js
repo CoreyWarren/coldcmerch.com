@@ -103,7 +103,7 @@ const HomePage = () => {
 
 
             <div className="merch-home-banner" >
-            <h2 style={{textAlign:"center", lineHeight:"3rem"}}>See our new <a href="/store" className="link-to-merch">Merch</a> in the shop!</h2>
+            <h2 style={{textAlign:"center", lineHeight:"3rem"}}>See our new <a href="/merch" className="link-to-merch">Merch</a> in the shop!</h2>
             </div>
             
             {conditionallyRenderUpcomingShow()}
