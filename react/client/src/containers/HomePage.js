@@ -7,6 +7,9 @@ import insta_icon from '../assets/insta_icon.png';
 import spotify_icon from '../assets/spotify_icon.png';
 import youtube_icon from '../assets/youtube_icon.png';
 
+import ImageGallery from 'components/ImageGallery';
+
+
 
 const HomePage = () => {
 
@@ -73,14 +76,21 @@ const HomePage = () => {
         return (
             <SocialMediaSlice
             items={[
-                { title: 'Insta', icon: insta_icon, link: 'https://www.instagram.com/coldcut_/'},
-                { title: 'Spotify', icon: spotify_icon, link: 'https://open.spotify.com/artist/5kSVXoBjzVbHGJg3KND4XW'},
-                { title: 'YouTube', icon: youtube_icon, link:'https://www.youtube.com/channel/UCZKNsuPrK5koGQUWB-cpoxg'},
+                { title: 'Our Insta', icon: insta_icon, link: 'https://www.instagram.com/coldcut_/'},
+                { title: 'Our Spotify', icon: spotify_icon, link: 'https://open.spotify.com/artist/5kSVXoBjzVbHGJg3KND4XW'},
+                { title: 'Our YouTube', icon: youtube_icon, link:'https://www.youtube.com/channel/UCZKNsuPrK5koGQUWB-cpoxg'},
             ]}
             />
         )
     }
         
+
+    // Photo Gallery
+
+
+      
+
+
 
 
 
@@ -92,8 +102,27 @@ const HomePage = () => {
             <h1 className='mb-5'>Cold Cut</h1>
 
 
+            <div className="merch-home-banner" >
+            <h2 style={{textAlign:"center", lineHeight:"3rem"}}>See our new <a href="/store" className="link-to-merch">Merch</a> in the shop!</h2>
+            </div>
+            
             {conditionallyRenderUpcomingShow()}
 
+            <ImageGallery title="RIVER RATTS"
+             gallery="gallery1" 
+             type_original="" 
+             type_thumbnail="_t" 
+             credit="@Psychi.Media -- Nate Bena -- 03/17/2023 @ [Veterans of Foreign Wars]"
+             />
+
+
+
+
+
+
+            {conditionallyRenderYouTubeVideo()}
+
+            {conditionallyRenderYouTubeVideo2()}
 
             <div className="info-item">
             <h2>Thanks for supporting us!</h2>
@@ -103,19 +132,7 @@ const HomePage = () => {
             <p>- (and Corey, too!)</p>
             </div>
 
-
-            <div style={{borderTop:"3px solid", borderBottom:"3px solid", borderColor:"lightgreen"}}className="info-item" >
-            <h2 style={{textAlign:"center", lineHeight:"3rem"}}>See our new <a href="/store" className="link-to-merch">Merch</a> in the shop!</h2>
-            </div>
-
-
             {renderSocialMediaSlice()}
-
-            {conditionallyRenderYouTubeVideo()}
-
-            {conditionallyRenderYouTubeVideo2()}
-
-
 
             <br></br>
 

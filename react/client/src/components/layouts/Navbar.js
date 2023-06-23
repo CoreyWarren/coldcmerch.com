@@ -77,8 +77,8 @@ const Navbar = () => {
             </li>
 
             <li className="nav-item">
-            <NavLink className='nav-link' to='/store'>
-                Store
+            <NavLink className='nav-link' to='/merch'>
+                Merch
             </NavLink>
             </li>
 
@@ -111,8 +111,8 @@ const Navbar = () => {
         </li>
 
         <li className="nav-item">
-            <NavLink className='nav-link' to='/store'>
-                Store
+            <NavLink className='nav-link' to='/merch'>
+                Merch
             </NavLink>
         </li>
 

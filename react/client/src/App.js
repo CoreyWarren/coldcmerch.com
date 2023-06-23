@@ -7,7 +7,7 @@ import HomePage from 'containers/HomePage';
 import DashboardPage from 'containers/DashboardPage';
 import LoginPage from 'containers/LoginPage';
 import RegisterPage from 'containers/RegisterPage';
-import StorePage from 'containers/StorePage';
+import MerchPage from 'containers/MerchPage';
 import CartPage from 'containers/CartPage';
 import CheckoutPage from 'containers/CheckoutPage';
 import OrderSuccessPage from 'containers/OrderSuccessPage';
@@ -43,10 +43,10 @@ const App = () => {
         <Route path='/login' element={<LoginPage/>} />
         <Route path='/register' element={<RegisterPage/>} />
         <Route
-          path="/store"
+          path="/merch"
           element={
             <RouteWrapper>
-              <StorePage />
+              <MerchPage />
             </RouteWrapper>
           }
         />
