@@ -359,8 +359,8 @@ a.link-to-merch:hover{
     elements!!! */
     margin: 1% 1.5%;
     border-radius: 0.5rem;
-    min-height: 50vh;
-    height: 600px;
+    min-height: 40vh;
+    height: 550px;
     width: 30%;
     vertical-align: top;
     position: relative;
@@ -377,6 +377,12 @@ a.link-to-merch:hover{
     font-weight: 600;
 }
 
+.shop_item .shop_item_image_container{
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    width: 100%;
+}
+
 
 .shop_item img{
     width:100%;
@@ -384,6 +390,8 @@ a.link-to-merch:hover{
     max-height: 260px;
     border-radius: 0.5rem;
     display:block;
+    /* object-fit can have the following parameters: */
+    /* fill, contain, cover, none, scale-down */
     object-fit: contain;
 }
 
@@ -1186,7 +1194,7 @@ img.image-loader img {
 }
 
 img.image-loader.loaded {
-    opacity: 0.7;
+    opacity: 0.8;
     visibility: visible;
 }
 
@@ -1396,7 +1404,7 @@ img.image-loader.loaded:hover {
     }
 
     .shop_item {
-        min-height:25rem;
+        min-height:22rem;
         height: auto;
         width: 98%;
         display: block;
@@ -1405,11 +1413,18 @@ img.image-loader.loaded:hover {
         background-color: rgb(15, 15, 15);
     }
 
+    .shop_item .shop_item_image_container{
+        position: relative;
+        padding: 1rem;
+    }
+
     .shop_item img {
+        position: relative;
         display: block;
         max-width: 90%;
-        height: 10rem;
-        display: block;
+        min-height: 10rem;
+        margin: auto;
+        left: 0;
     }
 
     .shop_item #dropdown-basic{
@@ -1576,7 +1591,6 @@ img.image-loader.loaded:hover {
         word-wrap: break-word;
     }
 
-    .info-item,
     .home_panel .info-item{
         width: 100%;
         margin-left: 0;
@@ -1842,6 +1856,39 @@ img.image-loader.loaded:hover {
         font-size: clamp(12px, 15vw, 20px);
       }
       
+
+      /* image g*llery */
+
+      .image-gallery {
+        padding: 0.2rem;
+      }
+
+      .image-gallery img {
+        flex: 1 0 calc(50% - 20px);
+        margin: 5px;
+        max-width: calc(50% - 20px);
+        height: auto;
+        border-radius: 0.2rem;
+        overflow: hidden;
+        object-fit: cover;
+        opacity: 0.5;
+        transition: 0.1s;
+    }
+
+    .image-gallery img:hover{
+        transition: 0.1s;
+        transform: scale(1.5);
+        opacity: 1;
+    }
+
+    img.image-loader.loaded:hover {
+        opacity: 1;
+        transition: 0.1s;
+        transform: scale(1.30);
+        border-radius: 0;
+        transition: 0.1s;
+        z-index: 99;
+    }
 
       
       

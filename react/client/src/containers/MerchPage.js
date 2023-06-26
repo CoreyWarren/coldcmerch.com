@@ -246,9 +246,10 @@ const MerchPage = () => {
             result.push(
             <div className="shop_item" key={i}>
                 <h2>{products_map[i].title}</h2>
-                <p>{products_map[i].description}</p><br></br>
+                <p>{products_map[i].description}</p>
 
                 <motion.div
+                className="shop_item_image_container"
                 whileHover={{
                     scale: 1.03, 
                     transition: {
